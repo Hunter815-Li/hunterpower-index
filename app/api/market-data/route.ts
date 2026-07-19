@@ -3,20 +3,27 @@ import { getMarketSnapshot, MarketDataError } from "@/lib/marketData";
 
 export const dynamic = "force-dynamic";
 
-export async function GET(request: Request) {
-  const url = new URL(request.url);
-  if (url.searchParams.get("fail") === "1") {
-    return NextResponse.json({ message: "模拟行情服务暂时不可用，请稍后重试" }, { status: 503 });
-  }
-
+export async function GET() {
   try {
     const snapshot = await getMarketSnapshot();
     return NextResponse.json(snapshot, {
-      headers: { "Cache-Control": "public, max-age=60, stale-while-revalidate=300" },
+      headers: {
+        "Cache-Control": "private, no-store",
+        "X-Market-Data-Provider": snapshot.provider,
+        "X-Market-Data-Cache": "memory; ttl=10",
+      },
     });
   } catch (error) {
+    console.error(JSON.stringify({
+      level: "error",
+      event: "market_snapshot_failed",
+      message: error instanceof Error ? error.message : String(error),
+      timestamp: new Date().toISOString(),
+    }));
     const message = error instanceof Error ? error.message : "行情加载失败";
-    const status = error instanceof MarketDataError && error.code === "RATE_LIMIT" ? 429 : 503;
-    return NextResponse.json({ message }, { status });
+    const status = error instanceof MarketDataError
+      ? error.code === "RATE_LIMIT" ? 429 : error.code === "CONFIGURATION" ? 503 : 502
+      : 503;
+    return NextResponse.json({ message }, { status, headers: { "Cache-Control": "no-store" } });
   }
 }

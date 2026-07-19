@@ -1,8 +1,8 @@
 # Hunter 电力指数 / Hunter Power Index
 
-面向研究与信息展示的专业电力基础设施指数页面。整体采用深色金融终端风格，包含指数摘要、交互式对比走势图、成分股筛选与排序、CSV 导出、行业贡献、涨跌贡献榜、个股详情以及指数编制说明。
+面向研究与信息展示的专业电力基础设施指数网站。页面包括指数摘要、交互式对比走势图、成分股筛选与 CSV 导出、行业贡献、涨跌贡献榜、个股详情和指数编制说明。
 
-本项目采用 [MIT License](./LICENSE) 开源，任何人都可以使用、修改和分发，但需保留许可证与版权声明。
+项目采用 [MIT License](./LICENSE) 开源。
 
 ## 本地运行
 
@@ -10,40 +10,65 @@
 
 ```bash
 npm install
+copy .env.example .env.local
 npm run dev
 ```
 
-浏览器访问 `http://localhost:3000`。
+访问 `http://localhost:3000`。没有 API Key 时，仅在开发环境使用明确标注的模拟数据；生产环境不会静默使用模拟行情。
 
-生产构建：
+## 行情数据架构
 
-```bash
-npm run build
-npm run start
-```
+项目使用 Data Provider Pattern，浏览器只请求本站的 Next.js API Route，不会直接连接或暴露任何第三方行情 API Key。
 
-## 行情数据与 API 密钥
+- 默认供应商：Finnhub
+- 备用供应商：Polygon、Twelve Data
+- REST 行情：`/api/market-data`
+- 服务端实时通道：供应商 WebSocket → `/api/market-data/stream` → 浏览器 SSE
+- 同一服务器实例共享一条供应商 WebSocket，多个访客不会重复建立上游连接
+- 浏览器每30秒刷新一次完整快照
+- 美股开盘时启用服务端 WebSocket；收盘后使用 REST
+- 报价缓存10秒，历史数据缓存15分钟
+- 请求超时8秒，失败后自动重试3次并输出结构化日志
+- 指数、行业和个股贡献全部在服务器计算；浏览器仅展示服务器结果
+- 单只股票无效或历史不足时会记录警告并跳过，不会让整页行情崩溃
 
-项目默认使用可复现的模拟行情，无需任何 API 密钥即可完整预览。模拟数据会明确标注，不代表真实市场表现。
+### 环境变量
 
-若需接入 Twelve Data：
-
-1. 复制 `.env.example` 为 `.env.local`。
-2. 填写 `TWELVE_DATA_API_KEY`。
-3. 重启开发服务。
+复制 `.env.example` 为 `.env.local`，至少配置 Finnhub：
 
 ```env
-TWELVE_DATA_API_KEY=your_api_key_here
+MARKET_DATA_PROVIDER=finnhub
+MARKET_DATA_FALLBACKS=polygon,twelvedata
+FINNHUB_API_KEY=your_finnhub_key
+POLYGON_API_KEY=
+TWELVE_DATA_API_KEY=
+ALLOW_MOCK_MARKET_DATA=false
 ```
 
-服务端会以最多 4 个并发请求获取成分股、SPY 和 QQQ 的日线行情，单次请求超时为 8 秒。单只股票请求失败、代码无效、数据不足或遇到限流时，会记录友好提示并仅对该股票回退到模拟数据。免费套餐可能无法一次覆盖全部成分股，生产环境建议使用支持批量行情的付费套餐或在 `lib/marketData.ts` 中替换数据提供商。
+不要提交 `.env.local`。部署到 Vercel 时，在 Project Settings → Environment Variables 中配置相同变量，然后重新部署。
+
+### 切换供应商
+
+只需修改一个环境变量并重新部署：
+
+```env
+MARKET_DATA_PROVIDER=polygon
+```
+
+或：
+
+```env
+MARKET_DATA_PROVIDER=twelvedata
+```
+
+即使主供应商不可用，系统也会在完成3次重试后，按照 `MARKET_DATA_FALLBACKS` 自动尝试已配置密钥的备用供应商。
 
 ## 指数计算方法
 
 核心逻辑位于 `lib/calculateHunterIndex.ts`。每日等权指数不是直接平均股票涨跌幅，而是：
 
 1. 使用每只股票的复权收盘价；
-2. 将每只股票基准日价格标准化为 100；
+2. 将每只股票基准日价格标准化为100；
 3. 对同一交易日各股票的标准化价格做等权算术平均；
 4. 缺失交易日使用最近有效价格向前填充，上市前不回填；
 5. 有效数据不足两条的股票会被排除并产生警告。
@@ -53,30 +78,16 @@ TWELVE_DATA_API_KEY=your_api_key_here
 ## 主要目录
 
 ```text
-app/
-  api/market-data/route.ts    行情 API
-  page.tsx                    页面入口
-components/
-  IndexSummary.tsx            指数摘要
-  IndexChart.tsx              ECharts 对比走势图
-  ConstituentTable.tsx        成分股表格与个股详情
-  SectorAnalysis.tsx          行业分析
-  ContributionRankings.tsx   涨跌贡献榜
-lib/
-  calculateHunterIndex.ts     等权指数计算
-  marketData.ts               行情获取、模拟数据与指标聚合
-data/
-  constituents.ts             成分股清单
+app/api/market-data/            REST 与实时流 API
+components/                     页面组件
+data/constituents.ts            成分股清单
+lib/calculateHunterIndex.ts     等权指数计算
+lib/marketData.ts               服务端行情聚合与指数快照
+lib/market-data/providers/      Finnhub、Polygon、Twelve Data Provider
+lib/market-data/cache.ts        10秒内存缓存与请求合并
+lib/market-data/http.ts         超时、重试与日志
 ```
-
-## 异常处理
-
-- 客户端加载时展示骨架屏；
-- 请求失败或超时时展示错误页和“重新加载”按钮；
-- 服务端处理接口超时、限流、无效代码、历史不足、缺失值和非交易日；
-- 新上市或不足一年的股票会标记“历史不足”，年度收益显示为空；
-- 不配置 API 密钥时自动使用模拟行情。
 
 ## 说明
 
-本项目仅用于研究和信息展示，不构成任何投资建议。上线前请复核成分股清单、公司行为调整、数据许可和指数维护规则。
+本项目仅用于研究和信息展示，不构成任何投资建议。生产使用前请确认所选行情套餐支持所需的实时、历史和 WebSocket 权限，并遵守供应商的数据展示许可。

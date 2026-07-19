@@ -4,6 +4,19 @@ import {
   type AdjustedPricePoint,
   type HunterIndexPoint,
 } from "@/lib/calculateHunterIndex";
+import { withMemoryCache } from "@/lib/market-data/cache";
+import { MarketDataError } from "@/lib/market-data/errors";
+import { easternDate, getUsMarketStatus } from "@/lib/market-data/marketClock";
+import { getConfiguredProviderChain, getProviderByName } from "@/lib/market-data/providers";
+import type {
+  MarketDataProvider,
+  MarketDataProviderName,
+  MarketSession,
+  ProviderQuote,
+  ProviderTrade,
+} from "@/lib/market-data/types";
+
+export { MarketDataError } from "@/lib/market-data/errors";
 
 export interface ConstituentPerformance extends Constituent {
   latestPrice: number;
@@ -32,8 +45,14 @@ export interface ComparisonPoint {
 }
 
 export interface MarketSnapshot {
-  source: "simulation" | "twelvedata" | "mixed";
+  source: MarketDataProviderName | "simulation" | "mixed";
+  provider: MarketDataProviderName | "simulation";
+  providerLabel: string;
   sourceLabel: string;
+  marketSession: MarketSession;
+  transport: "rest" | "websocket";
+  streamAvailable: boolean;
+  refreshIntervalMs: 30000;
   updatedAt: string;
   baseDate: string;
   baseValue: 100;
@@ -48,86 +67,58 @@ export interface MarketSnapshot {
   warnings: string[];
 }
 
-export class MarketDataError extends Error {
-  constructor(
-    message: string,
-    public code: "TIMEOUT" | "RATE_LIMIT" | "INVALID_SYMBOL" | "UPSTREAM" | "INSUFFICIENT_DATA",
-  ) {
-    super(message);
-  }
+export interface RealtimeMarketUpdate {
+  kind: "market-update";
+  provider: MarketDataProviderName | "simulation";
+  providerLabel: string;
+  sourceLabel: string;
+  marketSession: MarketSession;
+  transport: "websocket";
+  updatedAt: string;
+  latestValue: number;
+  dailyChange: number;
+  dailyChangePercent: number;
+  latestIndexPoint: HunterIndexPoint;
+  latestComparisonPoint: ComparisonPoint;
+  constituents: Array<Pick<ConstituentPerformance,
+    "ticker" | "latestPrice" | "dailyReturn" | "oneMonthReturn" | "threeMonthReturn" | "oneYearReturn" | "contributionOneYear" | "dataStatus"
+  >>;
+  sectors: SectorPerformance[];
 }
 
-const BASE_PRICES: Record<string, number> = {
-  GEV: 510, ETN: 378, HUBB: 436, PWR: 405, POWL: 245, VRT: 154,
-  CEG: 338, VST: 213, NEE: 84, DUK: 125, SO: 96, EXC: 48,
-  AEP: 113, XEL: 79, NRG: 166, BWXT: 178, SMR: 46, OKLO: 69,
-  FLNC: 9.8, STEM: 1.4, SPY: 626, QQQ: 562,
-};
+interface LoadedTicker {
+  ticker: string;
+  history: AdjustedPricePoint[];
+  quote: ProviderQuote;
+  provider: MarketDataProvider;
+}
 
-const TRENDS: Record<string, number> = {
-  GEV: 0.55, ETN: 0.18, HUBB: 0.16, PWR: 0.39, POWL: 0.44, VRT: 0.62,
-  CEG: 0.47, VST: 0.49, NEE: 0.08, DUK: 0.12, SO: 0.16, EXC: 0.06,
-  AEP: 0.14, XEL: 0.1, NRG: 0.45, BWXT: 0.36, SMR: 0.72, OKLO: 0.88,
-  FLNC: -0.28, STEM: -0.55, SPY: 0.15, QQQ: 0.2,
-};
-
-const VOLATILITY: Record<string, number> = {
-  SMR: 0.045, OKLO: 0.052, FLNC: 0.038, STEM: 0.06, VRT: 0.032,
-  GEV: 0.028, NRG: 0.027, CEG: 0.026, VST: 0.028, QQQ: 0.015,
-  SPY: 0.01,
-};
-
-const LIMITED_HISTORY: Record<string, number> = { OKLO: 168, SMR: 205, STEM: 225 };
+const INDEX_TICKERS = [...constituents.map((item) => item.ticker), "SPY", "QQQ"];
 const round = (value: number, digits = 2) => Number(value.toFixed(digits));
 
-function hashString(value: string) {
-  return Array.from(value).reduce((hash, char) => Math.imul(hash ^ char.charCodeAt(0), 2654435761), 2166136261) >>> 0;
+type LiveTradeStore = Map<string, ProviderTrade>;
+const globalMarket = globalThis as typeof globalThis & { __hunterLiveTrades?: LiveTradeStore };
+const liveTrades = globalMarket.__hunterLiveTrades ?? new Map<string, ProviderTrade>();
+globalMarket.__hunterLiveTrades = liveTrades;
+
+function liveTradeKey(provider: MarketDataProviderName, ticker: string) {
+  return `${provider}:${ticker}`;
 }
 
-function seededRandom(seed: number) {
-  let state = seed || 1;
-  return () => {
-    state = Math.imul(1664525, state) + 1013904223 >>> 0;
-    return state / 4294967296;
-  };
+export function recordRealtimeTrade(provider: MarketDataProviderName, trade: ProviderTrade) {
+  const key = liveTradeKey(provider, trade.ticker);
+  const current = liveTrades.get(key);
+  if (!current || trade.timestamp >= current.timestamp) liveTrades.set(key, trade);
 }
 
-function businessDates(count: number) {
-  const dates: string[] = [];
-  const cursor = new Date();
-  cursor.setHours(0, 0, 0, 0);
-  while (dates.length < count) {
-    const day = cursor.getDay();
-    if (day !== 0 && day !== 6) dates.unshift(cursor.toISOString().slice(0, 10));
-    cursor.setDate(cursor.getDate() - 1);
-  }
-  return dates;
-}
-
-function generateMockSeries(ticker: string, dates: string[]): AdjustedPricePoint[] {
-  const random = seededRandom(hashString(ticker));
-  const startIndex = Math.max(0, dates.length - (LIMITED_HISTORY[ticker] ?? dates.length));
-  const annualTrend = TRENDS[ticker] ?? 0.12;
-  const volatility = VOLATILITY[ticker] ?? 0.018;
-  const target = BASE_PRICES[ticker] ?? 100;
-  let value = target / (1 + annualTrend);
-  const series: AdjustedPricePoint[] = [];
-
-  for (let index = startIndex; index < dates.length; index += 1) {
-    const cyclical = Math.sin((index + hashString(ticker) % 31) / 16) * 0.0025;
-    const shock = (random() + random() + random() - 1.5) * volatility;
-    const drift = Math.log(1 + annualTrend) / 252;
-    value *= Math.exp(drift + cyclical + shock);
-    series.push({ date: dates[index], adjustedClose: round(Math.max(0.2, value), 4) });
-  }
-
-  const scale = target / (series.at(-1)?.adjustedClose ?? target);
-  return series.map((point) => ({ ...point, adjustedClose: round(point.adjustedClose! * scale, 4) }));
+function mergeLatestQuote(history: AdjustedPricePoint[], quote: ProviderQuote): AdjustedPricePoint[] {
+  const points = new Map(history.map((point) => [point.date, point]));
+  points.set(easternDate(quote.timestamp), { date: easternDate(quote.timestamp), adjustedClose: quote.current });
+  return Array.from(points.values()).sort((a, b) => a.date.localeCompare(b.date));
 }
 
 function priceAtOffset(history: AdjustedPricePoint[], offset: number) {
-  const point = history.at(-1 - offset);
-  return point?.adjustedClose ?? null;
+  return history.at(-1 - offset)?.adjustedClose ?? null;
 }
 
 function returnFor(history: AdjustedPricePoint[], offset: number) {
@@ -143,24 +134,51 @@ function normalizeSeries(history: AdjustedPricePoint[]) {
   return new Map(history.filter((point) => point.adjustedClose).map((point) => [point.date, round((point.adjustedClose! / base) * 100)]));
 }
 
+function formatUpdatedAt(timestamp: number) {
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  }).format(new Date(timestamp)) + " ET";
+}
+
 function buildSnapshot(
-  histories: Record<string, AdjustedPricePoint[]>,
-  source: MarketSnapshot["source"],
+  loaded: LoadedTicker[],
+  session: MarketSession,
   warnings: string[],
+  simulation = false,
 ): MarketSnapshot {
+  const histories = Object.fromEntries(loaded.map((item) => [item.ticker, mergeLatestQuote(item.history, item.quote)]));
+  const providerNames = Array.from(new Set(loaded.map((item) => item.provider.name)));
+  const providerCounts = loaded.reduce((counts, item) => counts.set(item.provider.name, (counts.get(item.provider.name) ?? 0) + 1), new Map<MarketDataProviderName, number>());
+  const primary = loaded.map((item) => item.provider).sort((a, b) => (providerCounts.get(b.name) ?? 0) - (providerCounts.get(a.name) ?? 0))[0];
+  if (!primary) throw new MarketDataError("没有可用行情，无法计算指数", "INSUFFICIENT_DATA");
+  const source = simulation ? "simulation" : providerNames.length === 1 ? providerNames[0] : "mixed";
+  const provider = simulation ? "simulation" : primary.name;
+  const providerLabel = simulation ? "开发模拟数据" : providerNames.length > 1 ? `${primary.label}（含备用源）` : primary.label;
+  const transport = session === "open" && !simulation && primary.supportsWebSocket ? "websocket" : "rest";
+  const streamAvailable = transport === "websocket";
+
   const constituentHistories = Object.fromEntries(constituents.map(({ ticker }) => [ticker, histories[ticker] ?? []]));
   const calculated = calculateHunterIndex(constituentHistories);
   const indexSeries = calculated.points;
   if (!indexSeries.length) throw new MarketDataError("有效行情不足，无法计算指数", "INSUFFICIENT_DATA");
 
+  const quoteByTicker = new Map(loaded.map((item) => [item.ticker, item.quote]));
   const performances = constituents.map((item) => {
     const history = histories[item.ticker] ?? [];
-    const latest = history.at(-1)?.adjustedClose ?? 0;
+    const quote = quoteByTicker.get(item.ticker);
+    const latest = quote?.current ?? history.at(-1)?.adjustedClose ?? 0;
     const oneYearReturn = returnFor(history, 251);
     return {
       ...item,
       latestPrice: round(latest),
-      dailyReturn: returnFor(history, 1) ?? 0,
+      dailyReturn: round(quote?.changePercent ?? returnFor(history, 1) ?? 0),
       oneMonthReturn: returnFor(history, 21),
       threeMonthReturn: returnFor(history, 63),
       oneYearReturn,
@@ -196,12 +214,20 @@ function buildSnapshot(
   const latest = indexSeries.at(-1)!;
   const previous = indexSeries.at(-2) ?? latest;
   const limited = performances.filter((item) => item.dataStatus === "limited").map((item) => item.ticker);
-  if (limited.length) warnings.push(`${limited.join("、")} 上市或有效行情不足一年，年度收益按可用区间展示为空`);
+  if (limited.length) warnings.push(`${limited.join("、")} 历史数据不足一年，年度收益显示为空`);
+  const quoteTimestamps = loaded.map((item) => item.quote.timestamp).filter(Number.isFinite);
+  const latestTimestamp = quoteTimestamps.length ? Math.max(...quoteTimestamps) : Date.now();
 
   return {
     source,
-    sourceLabel: source === "simulation" ? "模拟行情 · 可交互预览" : source === "mixed" ? "实时与模拟混合数据" : "Twelve Data 实时行情",
-    updatedAt: `${latest.date} 16:00 ET`,
+    provider,
+    providerLabel,
+    sourceLabel: `${providerLabel} · ${transport === "websocket" ? "WebSocket 实时" : "REST 行情"}`,
+    marketSession: session,
+    transport,
+    streamAvailable,
+    refreshIntervalMs: 30_000,
+    updatedAt: formatUpdatedAt(latestTimestamp),
     baseDate: indexSeries[0].date,
     baseValue: 100,
     latestValue: latest.value,
@@ -214,34 +240,6 @@ function buildSnapshot(
     sectors,
     warnings: [...warnings, ...calculated.warnings],
   };
-}
-
-async function fetchTwelveDataSeries(ticker: string, apiKey: string): Promise<AdjustedPricePoint[]> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 8000);
-  try {
-    const url = new URL("https://api.twelvedata.com/time_series");
-    url.searchParams.set("symbol", ticker);
-    url.searchParams.set("interval", "1day");
-    url.searchParams.set("outputsize", "280");
-    url.searchParams.set("order", "ASC");
-    url.searchParams.set("apikey", apiKey);
-    const response = await fetch(url, { signal: controller.signal });
-    if (response.status === 429) throw new MarketDataError("行情服务请求过于频繁", "RATE_LIMIT");
-    if (!response.ok) throw new MarketDataError(`行情服务返回 ${response.status}`, "UPSTREAM");
-    const payload = await response.json() as { status?: string; code?: number; message?: string; values?: Array<{ datetime: string; close: string }> };
-    if (payload.code === 429) throw new MarketDataError(payload.message ?? "API 限流", "RATE_LIMIT");
-    if (payload.status === "error" || !payload.values) throw new MarketDataError(payload.message ?? `${ticker} 代码无效`, "INVALID_SYMBOL");
-    return payload.values
-      .map((item) => ({ date: item.datetime.slice(0, 10), adjustedClose: Number(item.close) }))
-      .filter((item) => Number.isFinite(item.adjustedClose));
-  } catch (error) {
-    if (error instanceof MarketDataError) throw error;
-    if (error instanceof Error && error.name === "AbortError") throw new MarketDataError(`${ticker} 行情请求超时`, "TIMEOUT");
-    throw new MarketDataError(`${ticker} 行情请求失败`, "UPSTREAM");
-  } finally {
-    clearTimeout(timeout);
-  }
 }
 
 async function mapWithConcurrency<T, R>(items: T[], limit: number, worker: (item: T) => Promise<R>) {
@@ -257,27 +255,118 @@ async function mapWithConcurrency<T, R>(items: T[], limit: number, worker: (item
   return results;
 }
 
-export async function getMarketSnapshot(): Promise<MarketSnapshot> {
-  const dates = businessDates(262);
-  const tickers = [...constituents.map((item) => item.ticker), "SPY", "QQQ"];
-  const mock = Object.fromEntries(tickers.map((ticker) => [ticker, generateMockSeries(ticker, dates)]));
-  const apiKey = process.env.TWELVE_DATA_API_KEY;
-  if (!apiKey) return buildSnapshot(mock, "simulation", ["未配置行情 API 密钥，当前使用确定性模拟行情"]);
-
-  const warnings: string[] = [];
-  let successful = 0;
-  const entries = await mapWithConcurrency(tickers, 4, async (ticker) => {
+async function loadTicker(ticker: string, chain: MarketDataProvider[], warnings: string[]): Promise<LoadedTicker | null> {
+  let lastError: unknown;
+  for (const provider of chain) {
     try {
-      const series = await fetchTwelveDataSeries(ticker, apiKey);
-      if (series.length < 2) throw new MarketDataError(`${ticker} 数据不足`, "INSUFFICIENT_DATA");
-      successful += 1;
-      return [ticker, series] as const;
+      const [history, restQuote] = await Promise.all([provider.getHistory(ticker), provider.getQuote(ticker)]);
+      if (history.length < 2) throw new MarketDataError(`${ticker} 历史数据不足`, "INSUFFICIENT_DATA");
+      const trade = liveTrades.get(liveTradeKey(provider.name, ticker));
+      const quote = trade && trade.timestamp >= restQuote.timestamp
+        ? {
+            ...restQuote,
+            current: trade.price,
+            change: trade.price - restQuote.previousClose,
+            changePercent: ((trade.price / restQuote.previousClose) - 1) * 100,
+            timestamp: trade.timestamp,
+          }
+        : restQuote;
+      return { ticker, history, quote, provider };
     } catch (error) {
-      const message = error instanceof Error ? error.message : `${ticker} 行情不可用`;
-      warnings.push(`${message}，已回退到模拟数据`);
-      return [ticker, mock[ticker]] as const;
+      lastError = error;
+      warnings.push(`${provider.label} 获取 ${ticker} 失败，正在尝试备用数据源`);
     }
-  });
+  }
+  const message = lastError instanceof Error ? lastError.message : "行情不可用";
+  warnings.push(`${ticker} 暂无有效行情，已从本次指数计算中跳过：${message}`);
+  return null;
+}
 
-  return buildSnapshot(Object.fromEntries(entries), successful === tickers.length ? "twelvedata" : "mixed", warnings);
+function businessDates(count: number) {
+  const dates: string[] = [];
+  const cursor = new Date();
+  while (dates.length < count) {
+    if (cursor.getDay() !== 0 && cursor.getDay() !== 6) dates.unshift(cursor.toISOString().slice(0, 10));
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return dates;
+}
+
+function buildDevelopmentSimulation(): MarketSnapshot {
+  const dates = businessDates(262);
+  const loaded = INDEX_TICKERS.map((ticker, tickerIndex) => {
+    const history = dates.map((date, index) => ({
+      date,
+      adjustedClose: round(80 + tickerIndex * 4 + index * (0.08 + tickerIndex * 0.002) + Math.sin(index / 11 + tickerIndex) * 3, 4),
+    }));
+    const current = history.at(-1)!.adjustedClose!;
+    const previousClose = history.at(-2)!.adjustedClose!;
+    return {
+      ticker,
+      history,
+      quote: { ticker, current, previousClose, change: current - previousClose, changePercent: ((current / previousClose) - 1) * 100, timestamp: Date.now() },
+      provider: { name: "finnhub", label: "开发模拟数据", supportsWebSocket: false } as MarketDataProvider,
+    };
+  });
+  return buildSnapshot(loaded, getUsMarketStatus().session, ["仅开发环境：未配置行情 API Key，当前显示模拟数据"], true);
+}
+
+export async function getMarketSnapshot(options: { bypassCache?: boolean } = {}): Promise<MarketSnapshot> {
+  const load = async () => {
+    let chain: MarketDataProvider[];
+    try {
+      chain = getConfiguredProviderChain();
+    } catch (error) {
+      if (process.env.NODE_ENV !== "production" || process.env.ALLOW_MOCK_MARKET_DATA === "true") return buildDevelopmentSimulation();
+      throw error;
+    }
+
+    const warnings: string[] = [];
+    const marketStatus = await chain[0].getMarketStatus().catch(() => getUsMarketStatus());
+    const results = await mapWithConcurrency(INDEX_TICKERS, 4, (ticker) => loadTicker(ticker, chain, warnings));
+    const loaded = results.filter((item): item is LoadedTicker => item !== null);
+    return buildSnapshot(loaded, marketStatus.session, Array.from(new Set(warnings)));
+  };
+
+  if (options.bypassCache) return load();
+  let providerKey = "unconfigured";
+  try { providerKey = getConfiguredProviderChain().map((provider) => provider.name).join("-"); } catch { /* handled by load */ }
+  return withMemoryCache(`snapshot:${providerKey}`, 10_000, load);
+}
+
+export async function getRealtimeProvider() {
+  const snapshot = await getMarketSnapshot();
+  const provider = snapshot.provider === "simulation"
+    ? getConfiguredProviderChain()[0]
+    : getProviderByName(snapshot.provider);
+  const marketStatus = await provider.getMarketStatus().catch(() => ({ session: snapshot.marketSession, checkedAt: new Date().toISOString() }));
+  return { provider, marketStatus, tickers: INDEX_TICKERS };
+}
+
+export function toRealtimeMarketUpdate(snapshot: MarketSnapshot): RealtimeMarketUpdate {
+  return {
+    kind: "market-update",
+    provider: snapshot.provider,
+    providerLabel: snapshot.providerLabel,
+    sourceLabel: `${snapshot.providerLabel} · WebSocket 实时`,
+    marketSession: snapshot.marketSession,
+    transport: "websocket",
+    updatedAt: snapshot.updatedAt,
+    latestValue: snapshot.latestValue,
+    dailyChange: snapshot.dailyChange,
+    dailyChangePercent: snapshot.dailyChangePercent,
+    latestIndexPoint: snapshot.indexSeries.at(-1)!,
+    latestComparisonPoint: snapshot.comparisonSeries.at(-1)!,
+    constituents: snapshot.constituents.map((item) => ({
+      ticker: item.ticker,
+      latestPrice: item.latestPrice,
+      dailyReturn: item.dailyReturn,
+      oneMonthReturn: item.oneMonthReturn,
+      threeMonthReturn: item.threeMonthReturn,
+      oneYearReturn: item.oneYearReturn,
+      contributionOneYear: item.contributionOneYear,
+      dataStatus: item.dataStatus,
+    })),
+    sectors: snapshot.sectors,
+  };
 }
