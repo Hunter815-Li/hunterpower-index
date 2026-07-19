@@ -10,6 +10,10 @@ interface RequestContext {
   timeoutMs?: number;
 }
 
+type MarketRequestInit = RequestInit & {
+  next?: { revalidate?: number; tags?: string[] };
+};
+
 const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function logFailure(context: RequestContext, attempt: number, error: unknown) {
@@ -26,14 +30,18 @@ function logFailure(context: RequestContext, attempt: number, error: unknown) {
 }
 
 /** Fetch JSON with an 8-second timeout and three automatic retries. */
-export async function fetchJsonWithRetry<T>(url: URL, context: RequestContext, init?: RequestInit): Promise<T> {
+export async function fetchJsonWithRetry<T>(url: URL, context: RequestContext, init?: MarketRequestInit): Promise<T> {
   let lastError: unknown;
 
   for (let attempt = 0; attempt <= MAX_RETRIES; attempt += 1) {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), context.timeoutMs ?? DEFAULT_TIMEOUT_MS);
     try {
-      const response = await fetch(url, { ...init, signal: controller.signal, cache: "no-store" });
+      const response = await fetch(url, {
+        ...init,
+        signal: controller.signal,
+        cache: init?.cache ?? (init?.next ? undefined : "no-store"),
+      });
       if (response.status === 429) throw new MarketDataError("行情服务请求过于频繁", "RATE_LIMIT", 429);
       if (!response.ok) {
         const code = response.status >= 500 ? "UPSTREAM" : "INVALID_SYMBOL";

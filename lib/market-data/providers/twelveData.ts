@@ -3,7 +3,7 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { getUsMarketStatus } from "@/lib/market-data/marketClock";
-import type { MarketDataProvider, ProviderQuote, ProviderTrade } from "@/lib/market-data/types";
+import type { MarketDataProvider, ProviderQuote } from "@/lib/market-data/types";
 
 interface TwelveQuote { close?: string; previous_close?: string; change?: string; percent_change?: string; timestamp?: number; status?: string; message?: string }
 interface TwelveSeries { values?: Array<{ datetime: string; close: string }>; status?: string; message?: string }
@@ -11,7 +11,6 @@ interface TwelveSeries { values?: Array<{ datetime: string; close: string }>; st
 export class TwelveDataProvider implements MarketDataProvider {
   readonly name = "twelvedata" as const;
   readonly label = "Twelve Data";
-  readonly supportsWebSocket = true;
   private get apiKey() { return process.env.TWELVE_DATA_API_KEY?.trim() ?? ""; }
   isConfigured() { return Boolean(this.apiKey); }
 
@@ -50,25 +49,4 @@ export class TwelveDataProvider implements MarketDataProvider {
   }
 
   async getMarketStatus() { return getUsMarketStatus(); }
-
-  subscribe(tickers: string[], onTrade: (trade: ProviderTrade) => void, onError: (error: Error) => void) {
-    if (typeof WebSocket === "undefined") throw new MarketDataError("当前服务运行环境不支持 WebSocket", "UPSTREAM");
-    const socket = new WebSocket(`wss://ws.twelvedata.com/v1/quotes/price?apikey=${encodeURIComponent(this.apiKey)}`);
-    let heartbeat: ReturnType<typeof setInterval> | undefined;
-    socket.addEventListener("open", () => {
-      socket.send(JSON.stringify({ action: "subscribe", params: { symbols: tickers.join(",") } }));
-      heartbeat = setInterval(() => socket.send(JSON.stringify({ action: "heartbeat" })), 10_000);
-    });
-    socket.addEventListener("message", (event) => {
-      try {
-        const item = JSON.parse(String(event.data)) as { event?: string; symbol?: string; price?: number; timestamp?: number };
-        if (item.event === "price" && item.symbol && item.price) {
-          const rawTimestamp = item.timestamp ?? Date.now();
-          onTrade({ ticker: item.symbol, price: item.price, timestamp: rawTimestamp > 1_000_000_000_000 ? rawTimestamp : rawTimestamp * 1000 });
-        }
-      } catch (error) { onError(error instanceof Error ? error : new Error("Twelve Data WebSocket 消息无效")); }
-    });
-    socket.addEventListener("error", () => onError(new Error("Twelve Data WebSocket 连接失败")));
-    return () => { if (heartbeat) clearInterval(heartbeat); socket.close(); };
-  }
 }

@@ -3,7 +3,7 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { getUsMarketStatus } from "@/lib/market-data/marketClock";
-import type { MarketDataProvider, ProviderQuote, ProviderTrade } from "@/lib/market-data/types";
+import type { MarketDataProvider, ProviderQuote } from "@/lib/market-data/types";
 
 interface PolygonSnapshot {
   ticker?: { lastTrade?: { p?: number; t?: number }; prevDay?: { c?: number }; todaysChange?: number; todaysChangePerc?: number };
@@ -13,7 +13,6 @@ interface PolygonAggregates { results?: Array<{ c?: number; t?: number }>; statu
 export class PolygonProvider implements MarketDataProvider {
   readonly name = "polygon" as const;
   readonly label = "Polygon";
-  readonly supportsWebSocket = true;
   private get apiKey() { return process.env.POLYGON_API_KEY?.trim() ?? ""; }
   isConfigured() { return Boolean(this.apiKey); }
 
@@ -52,22 +51,4 @@ export class PolygonProvider implements MarketDataProvider {
   }
 
   async getMarketStatus() { return getUsMarketStatus(); }
-
-  subscribe(tickers: string[], onTrade: (trade: ProviderTrade) => void, onError: (error: Error) => void) {
-    if (typeof WebSocket === "undefined") throw new MarketDataError("当前服务运行环境不支持 WebSocket", "UPSTREAM");
-    const socket = new WebSocket("wss://socket.polygon.io/stocks");
-    socket.addEventListener("open", () => socket.send(JSON.stringify({ action: "auth", params: this.apiKey })));
-    socket.addEventListener("message", (event) => {
-      try {
-        const parsed = JSON.parse(String(event.data)) as { ev?: string; sym?: string; p?: number; t?: number; status?: string } | Array<{ ev?: string; sym?: string; p?: number; t?: number; status?: string }>;
-        const items = Array.isArray(parsed) ? parsed : [parsed];
-        if (items.some((item) => item.status === "auth_success")) {
-          socket.send(JSON.stringify({ action: "subscribe", params: tickers.map((ticker) => `T.${ticker}`).join(",") }));
-        }
-        items.filter((item) => item.ev === "T" && item.sym && item.p && item.t).forEach((item) => onTrade({ ticker: item.sym!, price: item.p!, timestamp: item.t! }));
-      } catch (error) { onError(error instanceof Error ? error : new Error("Polygon WebSocket 消息无效")); }
-    });
-    socket.addEventListener("error", () => onError(new Error("Polygon WebSocket 连接失败")));
-    return () => socket.close();
-  }
 }

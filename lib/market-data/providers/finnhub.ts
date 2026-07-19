@@ -3,7 +3,7 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { getUsMarketStatus } from "@/lib/market-data/marketClock";
-import type { MarketDataProvider, MarketStatus, ProviderQuote, ProviderTrade } from "@/lib/market-data/types";
+import type { MarketDataProvider, MarketStatus, ProviderQuote } from "@/lib/market-data/types";
 
 interface FinnhubQuoteResponse { c?: number; d?: number; dp?: number; pc?: number; t?: number }
 interface FinnhubCandleResponse { s?: string; c?: number[]; t?: number[] }
@@ -12,7 +12,6 @@ interface FinnhubMarketStatusResponse { isOpen?: boolean }
 export class FinnhubProvider implements MarketDataProvider {
   readonly name = "finnhub" as const;
   readonly label = "Finnhub";
-  readonly supportsWebSocket = true;
 
   private get apiKey() { return process.env.FINNHUB_API_KEY?.trim() ?? ""; }
 
@@ -69,29 +68,5 @@ export class FinnhubProvider implements MarketDataProvider {
         return getUsMarketStatus();
       }
     });
-  }
-
-  subscribe(tickers: string[], onTrade: (trade: ProviderTrade) => void, onError: (error: Error) => void) {
-    if (typeof WebSocket === "undefined") throw new MarketDataError("当前服务运行环境不支持 WebSocket", "UPSTREAM");
-    const socket = new WebSocket(`wss://ws.finnhub.io?token=${encodeURIComponent(this.apiKey)}`);
-    socket.addEventListener("open", () => {
-      tickers.forEach((ticker) => socket.send(JSON.stringify({ type: "subscribe", symbol: ticker })));
-    });
-    socket.addEventListener("message", (event) => {
-      try {
-        const payload = JSON.parse(String(event.data)) as { type?: string; data?: Array<{ s?: string; p?: number; t?: number }> };
-        if (payload.type !== "trade") return;
-        payload.data?.forEach((item) => {
-          if (item.s && item.p && item.t) onTrade({ ticker: item.s, price: item.p, timestamp: item.t });
-        });
-      } catch (error) {
-        onError(error instanceof Error ? error : new Error("Finnhub WebSocket 消息无效"));
-      }
-    });
-    socket.addEventListener("error", () => onError(new Error("Finnhub WebSocket 连接失败")));
-    return () => {
-      if (socket.readyState === WebSocket.OPEN) tickers.forEach((ticker) => socket.send(JSON.stringify({ type: "unsubscribe", symbol: ticker })));
-      socket.close();
-    };
   }
 }

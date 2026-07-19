@@ -4,19 +4,15 @@ import {
   type AdjustedPricePoint,
   type HunterIndexPoint,
 } from "@/lib/calculateHunterIndex";
-import { withMemoryCache } from "@/lib/market-data/cache";
+import { clearMemoryCache, withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
-import { easternDate, getUsMarketStatus } from "@/lib/market-data/marketClock";
-import { getConfiguredProviderChain, getProviderByName } from "@/lib/market-data/providers";
-import type {
-  MarketDataProvider,
-  MarketDataProviderName,
-  MarketSession,
-  ProviderQuote,
-  ProviderTrade,
-} from "@/lib/market-data/types";
+import { easternDate } from "@/lib/market-data/marketClock";
+import { getConfiguredProviderChain } from "@/lib/market-data/providers";
+import type { MarketDataProvider, MarketDataProviderName, ProviderQuote } from "@/lib/market-data/types";
 
 export { MarketDataError } from "@/lib/market-data/errors";
+
+const DAILY_CACHE_MS = 20 * 60 * 60 * 1000;
 
 export interface ConstituentPerformance extends Constituent {
   latestPrice: number;
@@ -25,7 +21,6 @@ export interface ConstituentPerformance extends Constituent {
   threeMonthReturn: number | null;
   oneYearReturn: number | null;
   contributionOneYear: number | null;
-  history: AdjustedPricePoint[];
   dataStatus: "complete" | "limited";
 }
 
@@ -49,10 +44,8 @@ export interface MarketSnapshot {
   provider: MarketDataProviderName | "simulation";
   providerLabel: string;
   sourceLabel: string;
-  marketSession: MarketSession;
-  transport: "rest" | "websocket";
-  streamAvailable: boolean;
-  refreshIntervalMs: 30000;
+  cadence: "daily";
+  dataDate: string;
   updatedAt: string;
   baseDate: string;
   baseValue: 100;
@@ -67,25 +60,6 @@ export interface MarketSnapshot {
   warnings: string[];
 }
 
-export interface RealtimeMarketUpdate {
-  kind: "market-update";
-  provider: MarketDataProviderName | "simulation";
-  providerLabel: string;
-  sourceLabel: string;
-  marketSession: MarketSession;
-  transport: "websocket";
-  updatedAt: string;
-  latestValue: number;
-  dailyChange: number;
-  dailyChangePercent: number;
-  latestIndexPoint: HunterIndexPoint;
-  latestComparisonPoint: ComparisonPoint;
-  constituents: Array<Pick<ConstituentPerformance,
-    "ticker" | "latestPrice" | "dailyReturn" | "oneMonthReturn" | "threeMonthReturn" | "oneYearReturn" | "contributionOneYear" | "dataStatus"
-  >>;
-  sectors: SectorPerformance[];
-}
-
 interface LoadedTicker {
   ticker: string;
   history: AdjustedPricePoint[];
@@ -95,27 +69,6 @@ interface LoadedTicker {
 
 const INDEX_TICKERS = [...constituents.map((item) => item.ticker), "SPY", "QQQ"];
 const round = (value: number, digits = 2) => Number(value.toFixed(digits));
-
-type LiveTradeStore = Map<string, ProviderTrade>;
-const globalMarket = globalThis as typeof globalThis & { __hunterLiveTrades?: LiveTradeStore };
-const liveTrades = globalMarket.__hunterLiveTrades ?? new Map<string, ProviderTrade>();
-globalMarket.__hunterLiveTrades = liveTrades;
-
-function liveTradeKey(provider: MarketDataProviderName, ticker: string) {
-  return `${provider}:${ticker}`;
-}
-
-export function recordRealtimeTrade(provider: MarketDataProviderName, trade: ProviderTrade) {
-  const key = liveTradeKey(provider, trade.ticker);
-  const current = liveTrades.get(key);
-  if (!current || trade.timestamp >= current.timestamp) liveTrades.set(key, trade);
-}
-
-function mergeLatestQuote(history: AdjustedPricePoint[], quote: ProviderQuote): AdjustedPricePoint[] {
-  const points = new Map(history.map((point) => [point.date, point]));
-  points.set(easternDate(quote.timestamp), { date: easternDate(quote.timestamp), adjustedClose: quote.current });
-  return Array.from(points.values()).sort((a, b) => a.date.localeCompare(b.date));
-}
 
 function priceAtOffset(history: AdjustedPricePoint[], offset: number) {
   return history.at(-1 - offset)?.adjustedClose ?? null;
@@ -131,38 +84,47 @@ function returnFor(history: AdjustedPricePoint[], offset: number) {
 function normalizeSeries(history: AdjustedPricePoint[]) {
   const base = history.find((point) => point.adjustedClose)?.adjustedClose;
   if (!base) return new Map<string, number>();
-  return new Map(history.filter((point) => point.adjustedClose).map((point) => [point.date, round((point.adjustedClose! / base) * 100)]));
+  return new Map(history
+    .filter((point) => point.adjustedClose)
+    .map((point) => [point.date, round((point.adjustedClose! / base) * 100)]));
 }
 
-function formatUpdatedAt(timestamp: number) {
-  return new Intl.DateTimeFormat("zh-CN", {
-    timeZone: "America/New_York",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  }).format(new Date(timestamp)) + " ET";
+function quoteFromHistory(ticker: string, history: AdjustedPricePoint[]): ProviderQuote {
+  const latest = history.at(-1);
+  const previous = history.at(-2);
+  if (!latest?.adjustedClose || !previous?.adjustedClose) {
+    throw new MarketDataError(`${ticker} 历史数据不足`, "INSUFFICIENT_DATA");
+  }
+  const current = latest.adjustedClose;
+  const previousClose = previous.adjustedClose;
+  return {
+    ticker,
+    current,
+    previousClose,
+    change: current - previousClose,
+    changePercent: ((current / previousClose) - 1) * 100,
+    timestamp: Date.parse(`${latest.date}T21:00:00Z`),
+  };
 }
 
-function buildSnapshot(
-  loaded: LoadedTicker[],
-  session: MarketSession,
-  warnings: string[],
-  simulation = false,
-): MarketSnapshot {
-  const histories = Object.fromEntries(loaded.map((item) => [item.ticker, mergeLatestQuote(item.history, item.quote)]));
+function formatUpdatedAt(dataDate: string) {
+  return `${dataDate} 美股收盘`;
+}
+
+function buildSnapshot(loaded: LoadedTicker[], warnings: string[], simulation = false): MarketSnapshot {
+  const histories = Object.fromEntries(loaded.map((item) => [item.ticker, item.history]));
   const providerNames = Array.from(new Set(loaded.map((item) => item.provider.name)));
-  const providerCounts = loaded.reduce((counts, item) => counts.set(item.provider.name, (counts.get(item.provider.name) ?? 0) + 1), new Map<MarketDataProviderName, number>());
-  const primary = loaded.map((item) => item.provider).sort((a, b) => (providerCounts.get(b.name) ?? 0) - (providerCounts.get(a.name) ?? 0))[0];
+  const providerCounts = loaded.reduce(
+    (counts, item) => counts.set(item.provider.name, (counts.get(item.provider.name) ?? 0) + 1),
+    new Map<MarketDataProviderName, number>(),
+  );
+  const primary = loaded.map((item) => item.provider)
+    .sort((a, b) => (providerCounts.get(b.name) ?? 0) - (providerCounts.get(a.name) ?? 0))[0];
   if (!primary) throw new MarketDataError("没有可用行情，无法计算指数", "INSUFFICIENT_DATA");
+
   const source = simulation ? "simulation" : providerNames.length === 1 ? providerNames[0] : "mixed";
   const provider = simulation ? "simulation" : primary.name;
   const providerLabel = simulation ? "开发模拟数据" : providerNames.length > 1 ? `${primary.label}（含备用源）` : primary.label;
-  const transport = session === "open" && !simulation && primary.supportsWebSocket ? "websocket" : "rest";
-  const streamAvailable = transport === "websocket";
 
   const constituentHistories = Object.fromEntries(constituents.map(({ ticker }) => [ticker, histories[ticker] ?? []]));
   const calculated = calculateHunterIndex(constituentHistories);
@@ -183,7 +145,6 @@ function buildSnapshot(
       threeMonthReturn: returnFor(history, 63),
       oneYearReturn,
       contributionOneYear: oneYearReturn === null ? null : round(oneYearReturn * item.weight),
-      history,
       dataStatus: history.length >= 252 ? "complete" as const : "limited" as const,
     };
   });
@@ -215,19 +176,15 @@ function buildSnapshot(
   const previous = indexSeries.at(-2) ?? latest;
   const limited = performances.filter((item) => item.dataStatus === "limited").map((item) => item.ticker);
   if (limited.length) warnings.push(`${limited.join("、")} 历史数据不足一年，年度收益显示为空`);
-  const quoteTimestamps = loaded.map((item) => item.quote.timestamp).filter(Number.isFinite);
-  const latestTimestamp = quoteTimestamps.length ? Math.max(...quoteTimestamps) : Date.now();
 
   return {
     source,
     provider,
     providerLabel,
-    sourceLabel: `${providerLabel} · ${transport === "websocket" ? "WebSocket 实时" : "REST 行情"}`,
-    marketSession: session,
-    transport,
-    streamAvailable,
-    refreshIntervalMs: 30_000,
-    updatedAt: formatUpdatedAt(latestTimestamp),
+    sourceLabel: `${providerLabel} · 延迟日线复权收盘价`,
+    cadence: "daily",
+    dataDate: latest.date,
+    updatedAt: formatUpdatedAt(latest.date),
     baseDate: indexSeries[0].date,
     baseValue: 100,
     latestValue: latest.value,
@@ -259,18 +216,9 @@ async function loadTicker(ticker: string, chain: MarketDataProvider[], warnings:
   let lastError: unknown;
   for (const provider of chain) {
     try {
-      const [history, restQuote] = await Promise.all([provider.getHistory(ticker), provider.getQuote(ticker)]);
-      if (history.length < 2) throw new MarketDataError(`${ticker} 历史数据不足`, "INSUFFICIENT_DATA");
-      const trade = liveTrades.get(liveTradeKey(provider.name, ticker));
-      const quote = trade && trade.timestamp >= restQuote.timestamp
-        ? {
-            ...restQuote,
-            current: trade.price,
-            change: trade.price - restQuote.previousClose,
-            changePercent: ((trade.price / restQuote.previousClose) - 1) * 100,
-            timestamp: trade.timestamp,
-          }
-        : restQuote;
+      const publicCutoffDate = easternDate(Date.now() - 86_400_000);
+      const history = (await provider.getHistory(ticker)).filter((point) => point.date <= publicCutoffDate);
+      const quote = quoteFromHistory(ticker, history);
       return { ticker, history, quote, provider };
     } catch (error) {
       lastError = error;
@@ -299,16 +247,14 @@ function buildDevelopmentSimulation(): MarketSnapshot {
       date,
       adjustedClose: round(80 + tickerIndex * 4 + index * (0.08 + tickerIndex * 0.002) + Math.sin(index / 11 + tickerIndex) * 3, 4),
     }));
-    const current = history.at(-1)!.adjustedClose!;
-    const previousClose = history.at(-2)!.adjustedClose!;
     return {
       ticker,
       history,
-      quote: { ticker, current, previousClose, change: current - previousClose, changePercent: ((current / previousClose) - 1) * 100, timestamp: Date.now() },
-      provider: { name: "finnhub", label: "开发模拟数据", supportsWebSocket: false } as MarketDataProvider,
+      quote: quoteFromHistory(ticker, history),
+      provider: { name: "marketdata", label: "开发模拟数据" } as MarketDataProvider,
     };
   });
-  return buildSnapshot(loaded, getUsMarketStatus().session, ["仅开发环境：未配置行情 API Key，当前显示模拟数据"], true);
+  return buildSnapshot(loaded, ["仅开发环境：未配置日线行情密钥，当前显示模拟数据"], true);
 }
 
 export async function getMarketSnapshot(options: { bypassCache?: boolean } = {}): Promise<MarketSnapshot> {
@@ -322,51 +268,16 @@ export async function getMarketSnapshot(options: { bypassCache?: boolean } = {})
     }
 
     const warnings: string[] = [];
-    const marketStatus = await chain[0].getMarketStatus().catch(() => getUsMarketStatus());
     const results = await mapWithConcurrency(INDEX_TICKERS, 4, (ticker) => loadTicker(ticker, chain, warnings));
     const loaded = results.filter((item): item is LoadedTicker => item !== null);
-    return buildSnapshot(loaded, marketStatus.session, Array.from(new Set(warnings)));
+    return buildSnapshot(loaded, Array.from(new Set(warnings)));
   };
 
-  if (options.bypassCache) return load();
+  if (options.bypassCache) {
+    clearMemoryCache("snapshot:");
+    return load();
+  }
   let providerKey = "unconfigured";
   try { providerKey = getConfiguredProviderChain().map((provider) => provider.name).join("-"); } catch { /* handled by load */ }
-  return withMemoryCache(`snapshot:${providerKey}`, 10_000, load);
-}
-
-export async function getRealtimeProvider() {
-  const snapshot = await getMarketSnapshot();
-  const provider = snapshot.provider === "simulation"
-    ? getConfiguredProviderChain()[0]
-    : getProviderByName(snapshot.provider);
-  const marketStatus = await provider.getMarketStatus().catch(() => ({ session: snapshot.marketSession, checkedAt: new Date().toISOString() }));
-  return { provider, marketStatus, tickers: INDEX_TICKERS };
-}
-
-export function toRealtimeMarketUpdate(snapshot: MarketSnapshot): RealtimeMarketUpdate {
-  return {
-    kind: "market-update",
-    provider: snapshot.provider,
-    providerLabel: snapshot.providerLabel,
-    sourceLabel: `${snapshot.providerLabel} · WebSocket 实时`,
-    marketSession: snapshot.marketSession,
-    transport: "websocket",
-    updatedAt: snapshot.updatedAt,
-    latestValue: snapshot.latestValue,
-    dailyChange: snapshot.dailyChange,
-    dailyChangePercent: snapshot.dailyChangePercent,
-    latestIndexPoint: snapshot.indexSeries.at(-1)!,
-    latestComparisonPoint: snapshot.comparisonSeries.at(-1)!,
-    constituents: snapshot.constituents.map((item) => ({
-      ticker: item.ticker,
-      latestPrice: item.latestPrice,
-      dailyReturn: item.dailyReturn,
-      oneMonthReturn: item.oneMonthReturn,
-      threeMonthReturn: item.threeMonthReturn,
-      oneYearReturn: item.oneYearReturn,
-      contributionOneYear: item.contributionOneYear,
-      dataStatus: item.dataStatus,
-    })),
-    sectors: snapshot.sectors,
-  };
+  return withMemoryCache(`snapshot:${providerKey}`, DAILY_CACHE_MS, load);
 }

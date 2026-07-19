@@ -35,6 +35,7 @@ a { color: inherit; text-decoration: none; }
 .market-status { min-width: 210px; text-align: right; color: var(--muted); font: 10px/1 var(--font-geist-mono), monospace; letter-spacing: .7px; }
 .market-status b { color: var(--green); margin-left: 4px; }
 .live-dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px rgba(24, 201, 140, .12); }
+.daily-dot { display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 1px; background: var(--gold); box-shadow: 0 0 0 3px rgba(242, 185, 75, .12); }
 
 .site-shell { width: min(1580px, calc(100% - 40px)); margin: 0 auto; padding: 102px 0 42px; }
 .page-intro { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
@@ -88,6 +89,7 @@ a { color: inherit; text-decoration: none; }
 .table-panel { margin-bottom: 12px; overflow: hidden; }
 .table-heading { align-items: flex-end; }
 .table-actions { display: flex; gap: 8px; }
+.table-license-note { margin: 0; color: var(--faint); font: 9px/1 var(--font-geist-mono), monospace; text-transform: uppercase; letter-spacing: .5px; }
 .search-box { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 10px; background: #080e15; border: 1px solid var(--line); }
 .search-box span { color: var(--muted); font-size: 18px; }
 .search-box input { width: 170px; color: var(--text); background: none; border: 0; outline: 0; font-size: 11px; }
@@ -98,8 +100,8 @@ a { color: inherit; text-decoration: none; }
 table { width: 100%; min-width: 1350px; border-collapse: collapse; font-size: 11px; }
 th { position: sticky; top: 0; z-index: 2; height: 42px; padding: 0 12px; text-align: left; color: #75879b; background: #0a111a; border-bottom: 1px solid var(--line); font-weight: 500; white-space: nowrap; }
 td { height: 52px; padding: 0 12px; color: #aab7c6; border-bottom: 1px solid #172230; white-space: nowrap; }
-tbody tr { cursor: pointer; transition: background .1s; }
-tbody tr:hover, tbody tr:focus { background: #121e2b; outline: none; }
+tbody tr { transition: background .1s; }
+tbody tr:hover { background: #121e2b; }
 .sort-button { display: flex; gap: 5px; color: inherit; padding: 0; background: none; border: 0; cursor: pointer; }
 .sort-button.active { color: var(--gold); }
 .ticker { color: #eef3f8; font: 650 12px/1 var(--font-geist-mono), monospace; }
@@ -184,6 +186,7 @@ footer a { color: var(--gold); border-bottom: 1px solid #66532d; }
 .error-panel h1 { margin: 5px 0 10px; font-size: 23px; }
 .error-panel p { color: var(--muted); font-size: 13px; }
 .error-panel button { margin: 17px 0; padding: 10px 22px; color: #081018; background: var(--gold); border: 0; cursor: pointer; font-weight: 700; }
+.retry-link { margin: 17px 0; padding: 10px 22px; color: #081018; background: var(--gold); font-weight: 700; }
 .error-panel small { color: var(--faint); }
 
 @media (max-width: 1120px) {
