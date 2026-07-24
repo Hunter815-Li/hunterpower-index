@@ -1,0 +1,1 @@
+import { PlannedPage } from "@/components/ui/PlannedPage"; export default function Page() { return <PlannedPage eyebrow="FIXED INCOME · CURRENCIES · COMMODITIES" title="FICC" titleEn="FICC" description="利率、信用、外汇与商品的跨市场研究。" descriptionEn="Cross-market research across rates, credit, currencies and commodities." />; }

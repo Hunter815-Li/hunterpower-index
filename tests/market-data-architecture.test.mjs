@@ -1,61 +1,48 @@
 import assert from "node:assert/strict";
-import { access, readFile } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import test from "node:test";
 
 const root = new URL("../", import.meta.url);
-const read = (path) => readFile(new URL(path, root), "utf8");
+const read = (file) => readFile(new URL(file, root), "utf8");
 
-test("uses a server-only Market Data daily adapter and never Yahoo Finance", async () => {
-  const [provider, marketData, dashboard] = await Promise.all([
-    read("lib/market-data/providers/marketDataApp.ts"),
-    read("lib/marketData.ts"),
-    read("components/HunterDashboard.tsx"),
-  ]);
-  assert.match(provider, /api\.marketdata\.app\/v1\/stocks\/candles\/D/);
-  assert.match(provider, /Authorization: `Bearer \$\{this\.apiToken\}`/);
-  assert.match(provider, /adjustsplits/);
-  assert.match(provider, /countback.*280/s);
-  assert.doesNotMatch(`${provider}${marketData}${dashboard}`, /yahoo/i);
-  assert.doesNotMatch(dashboard, /marketdata\.app\/v1|MARKETDATA_TOKEN/);
+test("preserves the Hunter constituents and server-side index engine", async () => {
+  const [constituents, calculator, definition, route] = await Promise.all([read("data/constituents.ts"), read("lib/calculateHunterIndex.ts"), read("data/indices/hunter-power.ts"), read("app/api/indices/[slug]/route.ts")]);
+  assert.equal((constituents.match(/\{ ticker:/g) ?? []).length, 20);
+  assert.match(calculator, /normalizedValues/);
+  assert.match(definition, /ticker: "HPI"/);
+  assert.match(route, /calculateIndexStatistics/);
 });
 
-test("updates once daily with protected Vercel cron and persistent fetch caching", async () => {
-  const [envExample, cron, vercel, provider, page] = await Promise.all([
-    read(".env.example"),
-    read("app/api/cron/refresh-market-data/route.ts"),
-    read("vercel.json"),
-    read("lib/market-data/providers/marketDataApp.ts"),
-    read("app/page.tsx"),
-  ]);
-  assert.match(envExample, /MARKET_DATA_PROVIDER=marketdata/);
-  assert.match(envExample, /MARKETDATA_TOKEN=/);
-  assert.match(envExample, /CRON_SECRET=/);
-  assert.match(cron, /authorization/);
-  assert.match(cron, /revalidateTag\("market-data-eod"/);
-  assert.match(vercel, /0 2 \* \* 2-6/);
-  assert.match(provider, /revalidate: DAILY_REVALIDATE_SECONDS/);
-  assert.match(page, /revalidate = 86_400/);
+test("uses a server-only provider chain with retries, cache, rate limiting and explicit mock opt-in", async () => {
+  const [types, providers, http, cache, limiter, facade, board, fred, coinGecko, marketDataStocks] = await Promise.all([read("lib/market-data/types.ts"), read("lib/market-data/providers/index.ts"), read("lib/market-data/http.ts"), read("lib/market-data/cache.ts"), read("lib/market-data/rate-limit.ts"), read("lib/marketData.ts"), read("lib/market-data/market-board.ts"), read("lib/market-data/providers/fred.ts"), read("lib/market-data/providers/coingecko.ts"), read("lib/market-data/providers/marketDataStocks.ts")]);
+  assert.match(types, /getQuotes/); assert.match(types, /getHistoricalPrices/); assert.match(types, /getFundamentals/);
+  assert.match(providers, /MARKET_DATA_PROVIDER/); assert.match(providers, /MARKET_DATA_FALLBACKS/);
+  assert.match(http, /MAX_RETRIES = 3/); assert.match(cache, /withMemoryCache/); assert.match(limiter, /takeRateLimitToken/);
+  assert.match(facade, /ALLOW_MOCK_MARKET_DATA === "true" && process\.env\.NODE_ENV !== "production"/);
+  assert.match(board, /sourceSymbol: "SP500"/); assert.match(board, /sourceSymbol: "NASDAQ100"/); assert.match(board, /sourceSymbol: "VIXCLS"/); assert.match(board, /sourceSymbol: "DTWEXBGS"/); assert.match(board, /sourceSymbol: "CBBTCUSD"/); assert.match(board, /provider: "marketdata-stocks"/);
+  assert.match(fred, /api\.stlouisfed\.org\/fred\/series\/observations/); assert.match(coinGecko, /api\.coingecko\.com\/api\/v3/); assert.match(marketDataStocks, /MarketDataAppProvider/);
+  assert.doesNotMatch(`${types}${providers}${http}${facade}`, /NEXT_PUBLIC_.*API_KEY/);
 });
 
-test("publishes derived server calculations without raw history, CSV or realtime routes", async () => {
-  const [marketData, table, dashboard] = await Promise.all([
-    read("lib/marketData.ts"),
-    read("components/ConstituentTable.tsx"),
-    read("components/HunterDashboard.tsx"),
-  ]);
-  assert.match(marketData, /calculateHunterIndex/);
-  assert.doesNotMatch(table, /history|Blob|CSV|download/);
-  assert.doesNotMatch(dashboard, /EventSource|30_000|\/api\/market-data/);
-  assert.match(dashboard, /www\.marketdata\.app/);
-  assert.doesNotMatch(marketData.match(/export interface ConstituentPerformance[\s\S]*?\n}/)?.[0] ?? "", /history/);
-  await assert.rejects(access(new URL("app/api/market-data/stream/route.ts", root)));
-  await assert.rejects(access(new URL("app/api/market-data/route.ts", root)));
+test("ships all phase-one routes and honest empty states", async () => {
+  const required = ["app/page.tsx", "app/markets/page.tsx", "app/indices/page.tsx", "app/indices/hunter-power/page.tsx", "app/research/page.tsx", "app/research/[slug]/page.tsx", "app/research/wechat/page.tsx", "app/about/page.tsx", "app/methodology/hunter-power/page.tsx", "app/disclaimer/page.tsx"];
+  const sources = await Promise.all(required.map(read));
+  assert.match(sources.join("\n"), /Data unavailable/);
+  assert.doesNotMatch(sources.join("\n"), /Math\.random/);
 });
 
-test("keeps secrets out of git and retries upstream failures three times", async () => {
-  const [gitignore, http] = await Promise.all([read(".gitignore"), read("lib/market-data/http.ts")]);
-  assert.match(gitignore, /\.env\*/);
-  assert.match(gitignore, /!\.env\.example/);
-  assert.match(http, /MAX_RETRIES = 3/);
-  assert.match(http, /market_data_request_failed/);
+test("keeps local configuration and secrets safe", async () => {
+  const [env, gitignore, readme, wechat, regime] = await Promise.all([read(".env.example"), read(".gitignore"), read("README.md"), read("config/wechat.ts"), read("config/market-regime.ts")]);
+  assert.match(env, /MARKETDATA_TOKEN=/); assert.match(env, /FRED_API_KEY=/); assert.match(env, /COINGECKO_DEMO_API_KEY=/); assert.match(env, /DATABASE_URL=/); assert.match(env, /ALLOW_MOCK_MARKET_DATA=false/);
+  assert.match(gitignore, /\.env\*/); assert.match(readme, /content\/research/); assert.match(wechat, /wechatArticles/); assert.match(regime, /marketRegime/);
+});
+
+test("all hard-coded blank-target links use safe rel attributes", async () => {
+  const files = await readdir(new URL("../components/", import.meta.url), { recursive: true });
+  const appFiles = await readdir(new URL("../app/", import.meta.url), { recursive: true });
+  const candidates = [...files.map((file) => `components/${file}`), ...appFiles.map((file) => `app/${file}`)].filter((file) => file.endsWith(".tsx"));
+  for (const file of candidates) {
+    const source = await read(file);
+    for (const match of source.matchAll(/<a[^>]*target="_blank"[^>]*>/g)) assert.match(match[0], /rel="noopener noreferrer"/, file);
+  }
 });

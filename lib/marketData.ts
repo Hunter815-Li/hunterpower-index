@@ -37,6 +37,7 @@ export interface ComparisonPoint {
   hunter: number;
   sp500: number;
   nasdaq100: number;
+  utilities: number;
 }
 
 export interface MarketSnapshot {
@@ -67,7 +68,7 @@ interface LoadedTicker {
   provider: MarketDataProvider;
 }
 
-const INDEX_TICKERS = [...constituents.map((item) => item.ticker), "SPY", "QQQ"];
+const INDEX_TICKERS = [...constituents.map((item) => item.ticker), "SPY", "QQQ", "XLU"];
 const round = (value: number, digits = 2) => Number(value.toFixed(digits));
 
 function priceAtOffset(history: AdjustedPricePoint[], offset: number) {
@@ -165,11 +166,13 @@ function buildSnapshot(loaded: LoadedTicker[], warnings: string[], simulation = 
 
   const spyMap = normalizeSeries(histories.SPY ?? []);
   const qqqMap = normalizeSeries(histories.QQQ ?? []);
+  const xluMap = normalizeSeries(histories.XLU ?? []);
   const comparisonSeries = indexSeries.map((point) => ({
     date: point.date,
     hunter: point.value,
     sp500: spyMap.get(point.date) ?? 100,
     nasdaq100: qqqMap.get(point.date) ?? 100,
+    utilities: xluMap.get(point.date) ?? 100,
   }));
 
   const latest = indexSeries.at(-1)!;
@@ -263,7 +266,7 @@ export async function getMarketSnapshot(options: { bypassCache?: boolean } = {})
     try {
       chain = getConfiguredProviderChain();
     } catch (error) {
-      if (process.env.NODE_ENV !== "production" || process.env.ALLOW_MOCK_MARKET_DATA === "true") return buildDevelopmentSimulation();
+      if (process.env.ALLOW_MOCK_MARKET_DATA === "true" && process.env.NODE_ENV !== "production") return buildDevelopmentSimulation();
       throw error;
     }
 

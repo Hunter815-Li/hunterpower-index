@@ -1,0 +1,1 @@
+import { PlannedPage } from "@/components/ui/PlannedPage"; export default function Page() { return <PlannedPage eyebrow="EQUITY RESEARCH" title="权益研究" titleEn="Equity Research" description="行业景气、盈利周期与估值框架。" descriptionEn="Industry cycles, earnings trends and valuation frameworks." />; }

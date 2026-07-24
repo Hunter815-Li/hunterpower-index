@@ -3,14 +3,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ComparisonPoint } from "@/lib/marketData";
 
-const ranges = { "1D": 2, "5D": 5, "1M": 22, "3M": 66, "6M": 132, "1Y": 262 } as const;
+const ranges = { "1D": 2, "1W": 5, "1M": 22, "3M": 66, "YTD": 262, "1Y": 262, "成立以来": Number.POSITIVE_INFINITY } as const;
 type Range = keyof typeof ranges;
 
 export function IndexChart({ data }: { data: ComparisonPoint[] }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [range, setRange] = useState<Range>("1Y");
   const [showNasdaq, setShowNasdaq] = useState(false);
-  const visible = useMemo(() => data.slice(-ranges[range]), [data, range]);
+  const [showUtilities, setShowUtilities] = useState(false);
+  const visible = useMemo(() => Number.isFinite(ranges[range]) ? data.slice(-ranges[range]) : data, [data, range]);
 
   useEffect(() => {
     let disposed = false;
@@ -73,13 +74,21 @@ export function IndexChart({ data }: { data: ComparisonPoint[] }) {
             smooth: 0.16,
             lineStyle: { color: "#b085ff", width: 1.5 },
           }] : []),
+          ...(showUtilities ? [{
+            name: "公用事业",
+            type: "line",
+            data: visible.map((point) => point.utilities),
+            showSymbol: false,
+            smooth: 0.16,
+            lineStyle: { color: "#67c5a8", width: 1.5 },
+          }] : []),
         ],
       });
       observer = new ResizeObserver(() => chart?.resize());
       observer.observe(containerRef.current);
     })();
     return () => { disposed = true; observer?.disconnect(); chart?.dispose(); };
-  }, [visible, showNasdaq]);
+  }, [visible, showNasdaq, showUtilities]);
 
   return (
     <section className="panel chart-panel" id="trend">
@@ -99,6 +108,9 @@ export function IndexChart({ data }: { data: ComparisonPoint[] }) {
         <span><i className="legend-sp" /> 标普500</span>
         <button className={showNasdaq ? "comparison-toggle active" : "comparison-toggle"} onClick={() => setShowNasdaq((value) => !value)}>
           <i className="legend-ndx" /> 纳斯达克100 {showNasdaq ? "×" : "+"}
+        </button>
+        <button className={showUtilities ? "comparison-toggle active" : "comparison-toggle"} onClick={() => setShowUtilities((value) => !value)}>
+          公用事业 XLU {showUtilities ? "×" : "+"}
         </button>
       </div>
       <div ref={containerRef} className="index-chart" role="img" aria-label="Hunter电力指数与基准指数走势对比图" />

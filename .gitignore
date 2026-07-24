@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/node_modules.*
+/.npm-cache/
 /.pnp
 .pnp.*
 .yarn/*
@@ -46,4 +48,3 @@ next-env.d.ts
 
 # Locally generated distribution artifacts
 public/hunter-power-index-source.zip
-public/og.png

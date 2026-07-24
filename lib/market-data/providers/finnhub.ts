@@ -3,13 +3,14 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { getUsMarketStatus } from "@/lib/market-data/marketClock";
+import { BaseMarketDataProvider } from "@/lib/market-data/provider-base";
 import type { MarketDataProvider, MarketStatus, ProviderQuote } from "@/lib/market-data/types";
 
 interface FinnhubQuoteResponse { c?: number; d?: number; dp?: number; pc?: number; t?: number }
 interface FinnhubCandleResponse { s?: string; c?: number[]; t?: number[] }
 interface FinnhubMarketStatusResponse { isOpen?: boolean }
 
-export class FinnhubProvider implements MarketDataProvider {
+export class FinnhubProvider extends BaseMarketDataProvider implements MarketDataProvider {
   readonly name = "finnhub" as const;
   readonly label = "Finnhub";
 

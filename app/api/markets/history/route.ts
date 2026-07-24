@@ -1,0 +1,5 @@
+import { NextRequest, NextResponse } from "next/server";
+import { getNormalizedComparison } from "@/lib/market-data/market-board";
+import type { HistoricalRange } from "@/lib/market-data/types";
+const allowedSymbols = new Set(["sp500", "nasdaq100", "us10y", "dxy", "gold", "wti", "btc", "vix", "move"]); const allowedRanges = new Set<HistoricalRange>(["1M", "3M", "6M", "YTD", "1Y", "3Y", "MAX"]);
+export async function GET(request: NextRequest) { const symbols = (request.nextUrl.searchParams.get("symbols") ?? "sp500,nasdaq100,gold,btc").split(",").filter((value) => allowedSymbols.has(value)); const requested = request.nextUrl.searchParams.get("range") as HistoricalRange; const range = allowedRanges.has(requested) ? requested : "1Y"; if (!symbols.length) return NextResponse.json({ error: "No supported symbols" }, { status: 400 }); const data = await getNormalizedComparison(symbols, range); return NextResponse.json({ data, range, cadence: "next-day-eod", updatedAt: new Date().toISOString() }); }

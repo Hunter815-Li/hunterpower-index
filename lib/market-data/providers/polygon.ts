@@ -3,6 +3,7 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { getUsMarketStatus } from "@/lib/market-data/marketClock";
+import { BaseMarketDataProvider } from "@/lib/market-data/provider-base";
 import type { MarketDataProvider, ProviderQuote } from "@/lib/market-data/types";
 
 interface PolygonSnapshot {
@@ -10,7 +11,7 @@ interface PolygonSnapshot {
 }
 interface PolygonAggregates { results?: Array<{ c?: number; t?: number }>; status?: string }
 
-export class PolygonProvider implements MarketDataProvider {
+export class PolygonProvider extends BaseMarketDataProvider implements MarketDataProvider {
   readonly name = "polygon" as const;
   readonly label = "Polygon";
   private get apiKey() { return process.env.POLYGON_API_KEY?.trim() ?? ""; }

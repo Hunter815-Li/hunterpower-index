@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model ResearchRevision {
+  id        String   @id @default(cuid())
+  slug      String
+  index     Int
+  createdAt DateTime @default(now())
+
+  @@unique([slug, index])
+  @@index([slug])
+}
+
+model MacroSeries {
+  id           String   @id @default(cuid())
+  code         String   @unique
+  name         String
+  nameZh       String
+  country      String
+  category     String
+  unit         String
+  frequency    String
+  provider     String
+  providerCode String?
+  source       String
+  sourceUrl    String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  observations MacroObservation[]
+  revisions    MacroRevision[]
+  events       MacroEvent[]
+
+  @@index([country, category])
+  @@index([provider])
+}
+
+model MacroObservation {
+  id            String   @id @default(cuid())
+  seriesId      String
+  period        String
+  value         Decimal  @db.Decimal(24, 8)
+  publishedAt   DateTime?
+  fetchedAt     DateTime @default(now())
+  isPreliminary Boolean  @default(false)
+  isRevised     Boolean  @default(false)
+  source        String
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  series   MacroSeries   @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  revisions MacroRevision[]
+
+  @@unique([seriesId, period])
+  @@index([seriesId, fetchedAt])
+}
+
+model MacroRevision {
+  id            String   @id @default(cuid())
+  seriesId      String
+  observationId String?
+  period        String
+  previousValue Decimal  @db.Decimal(24, 8)
+  revisedValue  Decimal  @db.Decimal(24, 8)
+  reason        String?
+  revisedAt     DateTime @default(now())
+  fetchedAt     DateTime @default(now())
+
+  series      MacroSeries      @relation(fields: [seriesId], references: [id], onDelete: Cascade)
+  observation MacroObservation? @relation(fields: [observationId], references: [id], onDelete: SetNull)
+
+  @@index([seriesId, period])
+}
+
+model MacroEvent {
+  id              String   @id @default(cuid())
+  seriesId        String?
+  country         String
+  eventName       String
+  eventNameZh     String
+  scheduledAt     DateTime
+  importance      String
+  topic           String
+  previous        Decimal? @db.Decimal(24, 8)
+  consensus       Decimal? @db.Decimal(24, 8)
+  actual          Decimal? @db.Decimal(24, 8)
+  unit            String?
+  status          String
+  source          String
+  sourceUrl       String
+  externalId      String?  @unique
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  series MacroSeries? @relation(fields: [seriesId], references: [id], onDelete: SetNull)
+
+  @@index([scheduledAt, country])
+  @@index([status, importance])
+}
+
+model MacroFetchLog {
+  id          String    @id @default(cuid())
+  provider    String
+  operation   String
+  seriesCode  String?
+  status      String
+  message     String?
+  startedAt   DateTime
+  completedAt DateTime?
+  recordsRead Int       @default(0)
+  recordsSaved Int      @default(0)
+  createdAt   DateTime  @default(now())
+
+  @@index([provider, startedAt])
+  @@index([status, startedAt])
+}

@@ -3,12 +3,13 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { getUsMarketStatus } from "@/lib/market-data/marketClock";
+import { BaseMarketDataProvider } from "@/lib/market-data/provider-base";
 import type { MarketDataProvider, ProviderQuote } from "@/lib/market-data/types";
 
 interface TwelveQuote { close?: string; previous_close?: string; change?: string; percent_change?: string; timestamp?: number; status?: string; message?: string }
 interface TwelveSeries { values?: Array<{ datetime: string; close: string }>; status?: string; message?: string }
 
-export class TwelveDataProvider implements MarketDataProvider {
+export class TwelveDataProvider extends BaseMarketDataProvider implements MarketDataProvider {
   readonly name = "twelvedata" as const;
   readonly label = "Twelve Data";
   private get apiKey() { return process.env.TWELVE_DATA_API_KEY?.trim() ?? ""; }

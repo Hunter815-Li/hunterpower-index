@@ -1,24 +1,30 @@
 {
-  "name": "hunter-power-index",
+  "name": "taotalk-finance",
   "version": "0.1.0",
   "private": true,
   "engines": {
     "node": ">=22.13.0"
   },
   "scripts": {
-    "dev": "vinext dev",
+    "dev": "next dev --webpack",
+    "dev:sites": "vinext dev",
     "build": "vinext build",
     "build:cloudbase": "node scripts/build-cloudbase.mjs",
     "build:vercel": "next build",
     "start": "vinext start",
-    "test": "npm run build && node --test tests/*.test.mjs",
+    "test": "vinext build && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "prisma generate"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.8.0",
+    "@prisma/client": "^7.8.0",
     "drizzle-orm": "0.45.2",
     "echarts": "^6.0.0",
+    "gray-matter": "^4.0.3",
     "next": "16.2.6",
+    "next-mdx-remote": "^6.0.0",
+    "pg": "^8.22.0",
     "react": "19.2.6",
     "react-dom": "19.2.6"
   },
@@ -33,6 +39,7 @@
     "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
     "eslint-config-next": "16.2.6",
+    "prisma": "^7.8.0",
     "react-server-dom-webpack": "19.2.6",
     "tailwindcss": "4.2.1",
     "typescript": "5.9.3",

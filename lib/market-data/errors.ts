@@ -4,7 +4,8 @@ export type MarketDataErrorCode =
   | "INVALID_SYMBOL"
   | "UPSTREAM"
   | "INSUFFICIENT_DATA"
-  | "CONFIGURATION";
+  | "CONFIGURATION"
+  | "UNSUPPORTED";
 
 export class MarketDataError extends Error {
   constructor(message: string, public code: MarketDataErrorCode, public status?: number) {

@@ -29,8 +29,8 @@ export function HunterDashboard({ data }: { data: MarketSnapshot }) {
     </main>
     <footer>
       <span>HPI / HUNTER POWER INDEX</span>
-      <span>Historical EOD data by <a href="https://www.marketdata.app" target="_blank">Market Data</a></span>
-      <span>MIT Open Source · <a href="https://github.com/Hunter815-Li/hunterpower-index" target="_blank">GitHub 源码</a></span>
+      <span>Historical EOD data by <a href="https://www.marketdata.app" target="_blank" rel="noopener noreferrer">Market Data</a></span>
+      <span>MIT Open Source · <a href="https://github.com/Hunter815-Li/hunterpower-index" target="_blank" rel="noopener noreferrer">GitHub 源码</a></span>
       <span>© {new Date().getFullYear()} Hunter Research · Non-commercial research only</span>
     </footer>
   </>;

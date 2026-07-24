@@ -1,0 +1,3 @@
+import type { IndexStatistics as Statistics } from "@/lib/index-engine/types";
+const format = (value: number | null, suffix = "") => value === null ? "—" : `${value.toFixed(2)}${suffix}`;
+export function IndexStatistics({ data }: { data: Statistics }) { const items = [["年化收益率", format(data.annualizedReturn, "%")], ["年化波动率", format(data.annualizedVolatility, "%")], ["最大回撤", format(data.maximumDrawdown, "%")], ["Sharpe Ratio", format(data.sharpeRatio)], ["Beta vs S&P 500", format(data.beta)]]; return <section className="statistics-grid">{items.map(([label, value]) => <article className="panel" key={label}><span>{label}</span><strong>{value}</strong><small>Server calculated</small></article>)}</section>; }

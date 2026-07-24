@@ -3,6 +3,7 @@ import { withMemoryCache } from "@/lib/market-data/cache";
 import { MarketDataError } from "@/lib/market-data/errors";
 import { fetchJsonWithRetry } from "@/lib/market-data/http";
 import { easternDate } from "@/lib/market-data/marketClock";
+import { BaseMarketDataProvider } from "@/lib/market-data/provider-base";
 import type { MarketDataProvider, MarketStatus, ProviderQuote } from "@/lib/market-data/types";
 
 const DAILY_CACHE_MS = 20 * 60 * 60 * 1000;
@@ -21,7 +22,7 @@ interface MarketDataCandleResponse {
  * One split-adjusted candle request supplies both the one-year history and the
  * latest/previous close, keeping the daily credit usage to one request per symbol.
  */
-export class MarketDataAppProvider implements MarketDataProvider {
+export class MarketDataAppProvider extends BaseMarketDataProvider implements MarketDataProvider {
   readonly name = "marketdata" as const;
   readonly label = "Market Data";
 
