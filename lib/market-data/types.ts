@@ -1,6 +1,6 @@
 import type { AdjustedPricePoint } from "@/lib/calculateHunterIndex";
 
-export type MarketDataProviderName = "marketdata" | "finnhub" | "polygon" | "twelvedata";
+export type MarketDataProviderName = "fmp" | "marketdata" | "finnhub" | "polygon" | "twelvedata";
 export type MarketSession = "open" | "closed";
 export type HistoricalRange = "1M" | "3M" | "6M" | "YTD" | "1Y" | "3Y" | "MAX";
 

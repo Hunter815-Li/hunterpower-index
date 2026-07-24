@@ -125,13 +125,13 @@ async function loadDefinition(definition: MacroSeriesDefinition, options: LoadDe
 }
 
 export async function refreshMacroDefinitions(definitions: readonly MacroSeriesDefinition[]) {
-  const data = await Promise.all(definitions.map(loadDefinition));
+  const data = await Promise.all(definitions.map((definition) => loadDefinition(definition)));
   return { total: data.length, available: data.filter((item) => item.value !== null).length, refreshedAt: new Date().toISOString() };
 }
 
 export async function getMacroDashboard(country: "CN" | "US"): Promise<MacroDashboardPayload> {
   const definitions = macroSeriesDefinitions.filter((series) => series.country === country);
-  const data = await Promise.all(definitions.map(loadDefinition));
+  const data = await Promise.all(definitions.map((definition) => loadDefinition(definition)));
   const available = data.filter((metric) => metric.value !== null);
   const status: MacroDataStatus = available.length === 0 ? "unavailable" : available.some((metric) => metric.status === "stale") ? "stale" : "fresh";
   return { country, data, status, updatedAt: available.map((metric) => metric.updatedAt).filter((value): value is string => Boolean(value)).sort().at(-1) ?? null };

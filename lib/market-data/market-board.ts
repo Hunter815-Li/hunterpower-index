@@ -113,7 +113,7 @@ export async function getHomeMarketBoard() {
   let hpi: MarketBoardQuote = { key: "hpi", name: "Hunter Power Index", symbol: "HPI", sourceSymbol: "HPI", provider: "marketdata-stocks", group: "Equities", decimals: 2, changeKind: "percent", price: null, changePercent: null, changeLabel: null, updatedAt: null, marketStatus: "unavailable", source: null, sourceUrl: null, error: "Index data unavailable" };
   try {
     const { getMarketSnapshot } = await import("@/lib/marketData"); const snapshot = await getMarketSnapshot();
-    hpi = { ...hpi, price: snapshot.latestValue, changePercent: snapshot.dailyChangePercent, changeLabel: `${snapshot.dailyChangePercent >= 0 ? "+" : ""}${snapshot.dailyChangePercent.toFixed(2)}%`, updatedAt: `${snapshot.dataDate}T21:00:00.000Z`, marketStatus: "delayed", source: snapshot.providerLabel, sourceUrl: "https://www.marketdata.app" };
+    hpi = { ...hpi, price: snapshot.latestValue, changePercent: snapshot.dailyChangePercent, changeLabel: `${snapshot.dailyChangePercent >= 0 ? "+" : ""}${snapshot.dailyChangePercent.toFixed(2)}%`, updatedAt: `${snapshot.dataDate}T21:00:00.000Z`, marketStatus: "delayed", source: snapshot.providerLabel, sourceUrl: snapshot.provider === "fmp" ? "https://financialmodelingprep.com" : "https://www.marketdata.app" };
   } catch { /* explicit unavailable state retained */ }
   return [...quotes.slice(0, 7), hpi];
 }
