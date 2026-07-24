@@ -10,7 +10,7 @@
     "dev:sites": "vinext dev",
     "build": "vinext build",
     "build:cloudbase": "node scripts/build-cloudbase.mjs",
-    "build:vercel": "next build",
+    "build:vercel": "prisma generate && next build",
     "start": "vinext start",
     "test": "vinext build && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern .next-stale-*",
