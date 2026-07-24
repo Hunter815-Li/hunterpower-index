@@ -12,6 +12,7 @@ const HISTORY_CALENDAR_DAYS = 370;
 
 interface FmpHistoricalPoint {
   date?: string;
+  price?: number;
   close?: number;
   adjClose?: number;
   adjustedClose?: number;
@@ -61,7 +62,7 @@ export class FmpProvider extends BaseMarketDataProvider {
       const start = new Date(`${cutoff}T12:00:00Z`);
       start.setUTCDate(start.getUTCDate() - HISTORY_CALENDAR_DAYS);
 
-      const url = new URL("https://financialmodelingprep.com/stable/historical-price-eod/full");
+      const url = new URL("https://financialmodelingprep.com/stable/historical-price-eod/light");
       url.searchParams.set("symbol", ticker);
       url.searchParams.set("from", start.toISOString().slice(0, 10));
       url.searchParams.set("to", cutoff);
@@ -76,7 +77,7 @@ export class FmpProvider extends BaseMarketDataProvider {
       const points = responsePoints(data)
         .map((point) => ({
           date: point.date ?? "",
-          adjustedClose: Number(point.adjustedClose ?? point.adjClose ?? point.close),
+          adjustedClose: Number(point.adjustedClose ?? point.adjClose ?? point.close ?? point.price),
         }))
         .filter((point) => /^\d{4}-\d{2}-\d{2}$/.test(point.date)
           && Number.isFinite(point.adjustedClose)
