@@ -9,6 +9,23 @@ import type { MarketStatus, ProviderQuote } from "@/lib/market-data/types";
 const DAILY_CACHE_MS = 20 * 60 * 60 * 1000;
 const DAILY_REVALIDATE_SECONDS = 20 * 60 * 60;
 const HISTORY_CALENDAR_DAYS = 370;
+const MIN_REQUEST_INTERVAL_MS = 350;
+
+let requestQueue: Promise<void> = Promise.resolve();
+let lastRequestStartedAt = 0;
+
+async function enqueueFmpRequest<T>(request: () => Promise<T>): Promise<T> {
+  const queued = requestQueue.then(async () => {
+    const waitMs = Math.max(0, MIN_REQUEST_INTERVAL_MS - (Date.now() - lastRequestStartedAt));
+    if (waitMs > 0) {
+      await new Promise((resolve) => setTimeout(resolve, waitMs));
+    }
+    lastRequestStartedAt = Date.now();
+    return request();
+  });
+  requestQueue = queued.then(() => undefined, () => undefined);
+  return queued;
+}
 
 interface FmpHistoricalPoint {
   date?: string;
@@ -68,10 +85,12 @@ export class FmpProvider extends BaseMarketDataProvider {
       url.searchParams.set("to", cutoff);
       url.searchParams.set("apikey", this.apiKey);
 
-      const data = await fetchJsonWithRetry<FmpHistoricalResponse>(
-        url,
-        { provider: this.name, operation: "daily-history", ticker },
-        { next: { revalidate: DAILY_REVALIDATE_SECONDS, tags: ["market-data-eod"] } },
+      const data = await enqueueFmpRequest(() =>
+        fetchJsonWithRetry<FmpHistoricalResponse>(
+          url,
+          { provider: this.name, operation: "daily-history", ticker },
+          { next: { revalidate: DAILY_REVALIDATE_SECONDS, tags: ["market-data-eod"] } },
+        ),
       );
 
       const points = responsePoints(data)

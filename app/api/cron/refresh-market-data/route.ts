@@ -1,4 +1,4 @@
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 import { clearMemoryCache } from "@/lib/market-data/cache";
 import { getMarketBoard } from "@/lib/market-data/market-board";
@@ -22,6 +22,11 @@ export async function GET(request: Request) {
     const board = boardResult.status === "fulfilled" ? boardResult.value : [];
     const availableMarkets = board.filter((item) => item.marketStatus !== "unavailable").length;
     if (!snapshot && availableMarkets === 0) throw new Error("No real EOD dataset refreshed successfully");
+    if (snapshot) {
+      revalidatePath("/indices/hunter-power");
+      revalidatePath("/indices");
+      revalidatePath("/");
+    }
     return NextResponse.json({
       ok: true,
       provider: snapshot?.provider ?? null,
