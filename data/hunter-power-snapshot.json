@@ -1,0 +1,3401 @@
+{
+  "generatedAt": "2026-07-26T07:28:46.195Z",
+  "data": {
+    "source": "marketdata",
+    "provider": "marketdata",
+    "providerLabel": "Market Data",
+    "sourceLabel": "Market Data · 延迟日线复权收盘价 · 本地固定 IP 更新",
+    "cadence": "daily",
+    "dataDate": "2026-07-24",
+    "updatedAt": "2026-07-24 美股收盘",
+    "baseDate": "2025-07-24",
+    "baseValue": 100,
+    "latestValue": 119.25,
+    "dailyChange": -2.86,
+    "dailyChangePercent": -2.3409,
+    "constituentCount": 20,
+    "indexSeries": [
+      {
+        "date": "2025-07-24",
+        "value": 100,
+        "dailyReturn": 0
+      },
+      {
+        "date": "2025-07-25",
+        "value": 101.4,
+        "dailyReturn": 1.4041
+      },
+      {
+        "date": "2025-07-28",
+        "value": 102.14,
+        "dailyReturn": 0.724
+      },
+      {
+        "date": "2025-07-29",
+        "value": 100.21,
+        "dailyReturn": -1.8864
+      },
+      {
+        "date": "2025-07-30",
+        "value": 101.4,
+        "dailyReturn": 1.1874
+      },
+      {
+        "date": "2025-07-31",
+        "value": 101.33,
+        "dailyReturn": -0.0719
+      },
+      {
+        "date": "2025-08-01",
+        "value": 99.13,
+        "dailyReturn": -2.1702
+      },
+      {
+        "date": "2025-08-04",
+        "value": 101.3,
+        "dailyReturn": 2.1931
+      },
+      {
+        "date": "2025-08-05",
+        "value": 101.4,
+        "dailyReturn": 0.0917
+      },
+      {
+        "date": "2025-08-06",
+        "value": 100.12,
+        "dailyReturn": -1.2539
+      },
+      {
+        "date": "2025-08-07",
+        "value": 100.78,
+        "dailyReturn": 0.6533
+      },
+      {
+        "date": "2025-08-08",
+        "value": 100.2,
+        "dailyReturn": -0.571
+      },
+      {
+        "date": "2025-08-11",
+        "value": 100.36,
+        "dailyReturn": 0.1609
+      },
+      {
+        "date": "2025-08-12",
+        "value": 100.96,
+        "dailyReturn": 0.5936
+      },
+      {
+        "date": "2025-08-13",
+        "value": 100.4,
+        "dailyReturn": -0.5584
+      },
+      {
+        "date": "2025-08-14",
+        "value": 98.93,
+        "dailyReturn": -1.4567
+      },
+      {
+        "date": "2025-08-15",
+        "value": 98.5,
+        "dailyReturn": -0.4352
+      },
+      {
+        "date": "2025-08-18",
+        "value": 98.47,
+        "dailyReturn": -0.0337
+      },
+      {
+        "date": "2025-08-19",
+        "value": 97.27,
+        "dailyReturn": -1.2158
+      },
+      {
+        "date": "2025-08-20",
+        "value": 97.59,
+        "dailyReturn": 0.3301
+      },
+      {
+        "date": "2025-08-21",
+        "value": 96.72,
+        "dailyReturn": -0.8916
+      },
+      {
+        "date": "2025-08-22",
+        "value": 98.44,
+        "dailyReturn": 1.7713
+      },
+      {
+        "date": "2025-08-25",
+        "value": 97.84,
+        "dailyReturn": -0.6068
+      },
+      {
+        "date": "2025-08-26",
+        "value": 99.31,
+        "dailyReturn": 1.4988
+      },
+      {
+        "date": "2025-08-27",
+        "value": 98.85,
+        "dailyReturn": -0.4554
+      },
+      {
+        "date": "2025-08-28",
+        "value": 99.45,
+        "dailyReturn": 0.6074
+      },
+      {
+        "date": "2025-08-29",
+        "value": 97.1,
+        "dailyReturn": -2.3656
+      },
+      {
+        "date": "2025-09-02",
+        "value": 96.16,
+        "dailyReturn": -0.9724
+      },
+      {
+        "date": "2025-09-03",
+        "value": 96.11,
+        "dailyReturn": -0.0511
+      },
+      {
+        "date": "2025-09-04",
+        "value": 96.09,
+        "dailyReturn": -0.0182
+      },
+      {
+        "date": "2025-09-05",
+        "value": 95.83,
+        "dailyReturn": -0.2729
+      },
+      {
+        "date": "2025-09-08",
+        "value": 95.36,
+        "dailyReturn": -0.4862
+      },
+      {
+        "date": "2025-09-09",
+        "value": 96.24,
+        "dailyReturn": 0.9204
+      },
+      {
+        "date": "2025-09-10",
+        "value": 98.34,
+        "dailyReturn": 2.1827
+      },
+      {
+        "date": "2025-09-11",
+        "value": 99.73,
+        "dailyReturn": 1.4139
+      },
+      {
+        "date": "2025-09-12",
+        "value": 100.23,
+        "dailyReturn": 0.496
+      },
+      {
+        "date": "2025-09-15",
+        "value": 102.81,
+        "dailyReturn": 2.5746
+      },
+      {
+        "date": "2025-09-16",
+        "value": 102.05,
+        "dailyReturn": -0.7324
+      },
+      {
+        "date": "2025-09-17",
+        "value": 101.76,
+        "dailyReturn": -0.2843
+      },
+      {
+        "date": "2025-09-18",
+        "value": 103.69,
+        "dailyReturn": 1.8939
+      },
+      {
+        "date": "2025-09-19",
+        "value": 108.04,
+        "dailyReturn": 4.1908
+      },
+      {
+        "date": "2025-09-22",
+        "value": 111.17,
+        "dailyReturn": 2.9006
+      },
+      {
+        "date": "2025-09-23",
+        "value": 109.55,
+        "dailyReturn": -1.4557
+      },
+      {
+        "date": "2025-09-24",
+        "value": 110.35,
+        "dailyReturn": 0.7312
+      },
+      {
+        "date": "2025-09-25",
+        "value": 107.54,
+        "dailyReturn": -2.5502
+      },
+      {
+        "date": "2025-09-26",
+        "value": 107.71,
+        "dailyReturn": 0.1603
+      },
+      {
+        "date": "2025-09-29",
+        "value": 107.94,
+        "dailyReturn": 0.2149
+      },
+      {
+        "date": "2025-09-30",
+        "value": 107.97,
+        "dailyReturn": 0.0238
+      },
+      {
+        "date": "2025-10-01",
+        "value": 112.08,
+        "dailyReturn": 3.8039
+      },
+      {
+        "date": "2025-10-02",
+        "value": 113.35,
+        "dailyReturn": 1.1396
+      },
+      {
+        "date": "2025-10-03",
+        "value": 113.99,
+        "dailyReturn": 0.5597
+      },
+      {
+        "date": "2025-10-06",
+        "value": 116.47,
+        "dailyReturn": 2.182
+      },
+      {
+        "date": "2025-10-07",
+        "value": 115.63,
+        "dailyReturn": -0.7219
+      },
+      {
+        "date": "2025-10-08",
+        "value": 118.01,
+        "dailyReturn": 2.051
+      },
+      {
+        "date": "2025-10-09",
+        "value": 118.24,
+        "dailyReturn": 0.1957
+      },
+      {
+        "date": "2025-10-10",
+        "value": 115.42,
+        "dailyReturn": -2.3807
+      },
+      {
+        "date": "2025-10-13",
+        "value": 122.44,
+        "dailyReturn": 6.0785
+      },
+      {
+        "date": "2025-10-14",
+        "value": 125.83,
+        "dailyReturn": 2.7738
+      },
+      {
+        "date": "2025-10-15",
+        "value": 130.1,
+        "dailyReturn": 3.3915
+      },
+      {
+        "date": "2025-10-16",
+        "value": 126.08,
+        "dailyReturn": -3.0886
+      },
+      {
+        "date": "2025-10-17",
+        "value": 123.35,
+        "dailyReturn": -2.1643
+      },
+      {
+        "date": "2025-10-20",
+        "value": 123.83,
+        "dailyReturn": 0.3885
+      },
+      {
+        "date": "2025-10-21",
+        "value": 119.5,
+        "dailyReturn": -3.4992
+      },
+      {
+        "date": "2025-10-22",
+        "value": 114.39,
+        "dailyReturn": -4.2802
+      },
+      {
+        "date": "2025-10-23",
+        "value": 117.18,
+        "dailyReturn": 2.4444
+      },
+      {
+        "date": "2025-10-24",
+        "value": 122.7,
+        "dailyReturn": 4.7108
+      },
+      {
+        "date": "2025-10-27",
+        "value": 122.74,
+        "dailyReturn": 0.0275
+      },
+      {
+        "date": "2025-10-28",
+        "value": 122.21,
+        "dailyReturn": -0.4266
+      },
+      {
+        "date": "2025-10-29",
+        "value": 126.38,
+        "dailyReturn": 3.4103
+      },
+      {
+        "date": "2025-10-30",
+        "value": 122.46,
+        "dailyReturn": -3.1032
+      },
+      {
+        "date": "2025-10-31",
+        "value": 123.22,
+        "dailyReturn": 0.6189
+      },
+      {
+        "date": "2025-11-03",
+        "value": 122.48,
+        "dailyReturn": -0.5973
+      },
+      {
+        "date": "2025-11-04",
+        "value": 117.3,
+        "dailyReturn": -4.229
+      },
+      {
+        "date": "2025-11-05",
+        "value": 120.86,
+        "dailyReturn": 3.0312
+      },
+      {
+        "date": "2025-11-06",
+        "value": 116.31,
+        "dailyReturn": -3.7647
+      },
+      {
+        "date": "2025-11-07",
+        "value": 117.92,
+        "dailyReturn": 1.3879
+      },
+      {
+        "date": "2025-11-10",
+        "value": 118.91,
+        "dailyReturn": 0.8419
+      },
+      {
+        "date": "2025-11-11",
+        "value": 116.35,
+        "dailyReturn": -2.1552
+      },
+      {
+        "date": "2025-11-12",
+        "value": 115.65,
+        "dailyReturn": -0.6
+      },
+      {
+        "date": "2025-11-13",
+        "value": 109.43,
+        "dailyReturn": -5.3794
+      },
+      {
+        "date": "2025-11-14",
+        "value": 110.63,
+        "dailyReturn": 1.0934
+      },
+      {
+        "date": "2025-11-17",
+        "value": 109.26,
+        "dailyReturn": -1.2347
+      },
+      {
+        "date": "2025-11-18",
+        "value": 109.28,
+        "dailyReturn": 0.0196
+      },
+      {
+        "date": "2025-11-19",
+        "value": 109.44,
+        "dailyReturn": 0.1411
+      },
+      {
+        "date": "2025-11-20",
+        "value": 105.06,
+        "dailyReturn": -3.9955
+      },
+      {
+        "date": "2025-11-21",
+        "value": 104.72,
+        "dailyReturn": -0.3295
+      },
+      {
+        "date": "2025-11-24",
+        "value": 107.45,
+        "dailyReturn": 2.6106
+      },
+      {
+        "date": "2025-11-25",
+        "value": 108.19,
+        "dailyReturn": 0.685
+      },
+      {
+        "date": "2025-11-26",
+        "value": 111.21,
+        "dailyReturn": 2.7962
+      },
+      {
+        "date": "2025-11-28",
+        "value": 113.2,
+        "dailyReturn": 1.7895
+      },
+      {
+        "date": "2025-12-01",
+        "value": 110.53,
+        "dailyReturn": -2.3652
+      },
+      {
+        "date": "2025-12-02",
+        "value": 111.45,
+        "dailyReturn": 0.8372
+      },
+      {
+        "date": "2025-12-03",
+        "value": 111.6,
+        "dailyReturn": 0.138
+      },
+      {
+        "date": "2025-12-04",
+        "value": 116.27,
+        "dailyReturn": 4.1828
+      },
+      {
+        "date": "2025-12-05",
+        "value": 115.41,
+        "dailyReturn": -0.7434
+      },
+      {
+        "date": "2025-12-08",
+        "value": 114.16,
+        "dailyReturn": -1.0809
+      },
+      {
+        "date": "2025-12-09",
+        "value": 114.46,
+        "dailyReturn": 0.2616
+      },
+      {
+        "date": "2025-12-10",
+        "value": 115.79,
+        "dailyReturn": 1.162
+      },
+      {
+        "date": "2025-12-11",
+        "value": 118.82,
+        "dailyReturn": 2.6138
+      },
+      {
+        "date": "2025-12-12",
+        "value": 111.44,
+        "dailyReturn": -6.2047
+      },
+      {
+        "date": "2025-12-15",
+        "value": 110.24,
+        "dailyReturn": -1.0807
+      },
+      {
+        "date": "2025-12-16",
+        "value": 110.05,
+        "dailyReturn": -0.1705
+      },
+      {
+        "date": "2025-12-17",
+        "value": 104.36,
+        "dailyReturn": -5.1728
+      },
+      {
+        "date": "2025-12-18",
+        "value": 106.74,
+        "dailyReturn": 2.2825
+      },
+      {
+        "date": "2025-12-19",
+        "value": 107.75,
+        "dailyReturn": 0.9414
+      },
+      {
+        "date": "2025-12-22",
+        "value": 108.96,
+        "dailyReturn": 1.1268
+      },
+      {
+        "date": "2025-12-23",
+        "value": 108.52,
+        "dailyReturn": -0.4057
+      },
+      {
+        "date": "2025-12-24",
+        "value": 108.82,
+        "dailyReturn": 0.2795
+      },
+      {
+        "date": "2025-12-26",
+        "value": 108.46,
+        "dailyReturn": -0.3308
+      },
+      {
+        "date": "2025-12-29",
+        "value": 107.57,
+        "dailyReturn": -0.8218
+      },
+      {
+        "date": "2025-12-30",
+        "value": 107.05,
+        "dailyReturn": -0.4843
+      },
+      {
+        "date": "2025-12-31",
+        "value": 106.13,
+        "dailyReturn": -0.8586
+      },
+      {
+        "date": "2026-01-02",
+        "value": 112.12,
+        "dailyReturn": 5.647
+      },
+      {
+        "date": "2026-01-05",
+        "value": 112.93,
+        "dailyReturn": 0.7232
+      },
+      {
+        "date": "2026-01-06",
+        "value": 114.13,
+        "dailyReturn": 1.0551
+      },
+      {
+        "date": "2026-01-07",
+        "value": 111.06,
+        "dailyReturn": -2.6845
+      },
+      {
+        "date": "2026-01-08",
+        "value": 109.95,
+        "dailyReturn": -1.0034
+      },
+      {
+        "date": "2026-01-09",
+        "value": 113.57,
+        "dailyReturn": 3.2958
+      },
+      {
+        "date": "2026-01-12",
+        "value": 114.62,
+        "dailyReturn": 0.922
+      },
+      {
+        "date": "2026-01-13",
+        "value": 115.99,
+        "dailyReturn": 1.1945
+      },
+      {
+        "date": "2026-01-14",
+        "value": 115.39,
+        "dailyReturn": -0.515
+      },
+      {
+        "date": "2026-01-15",
+        "value": 118,
+        "dailyReturn": 2.2663
+      },
+      {
+        "date": "2026-01-16",
+        "value": 120.03,
+        "dailyReturn": 1.7198
+      },
+      {
+        "date": "2026-01-20",
+        "value": 117.4,
+        "dailyReturn": -2.1948
+      },
+      {
+        "date": "2026-01-21",
+        "value": 118.07,
+        "dailyReturn": 0.5711
+      },
+      {
+        "date": "2026-01-22",
+        "value": 118.27,
+        "dailyReturn": 0.1698
+      },
+      {
+        "date": "2026-01-23",
+        "value": 117.37,
+        "dailyReturn": -0.7644
+      },
+      {
+        "date": "2026-01-26",
+        "value": 117,
+        "dailyReturn": -0.3165
+      },
+      {
+        "date": "2026-01-27",
+        "value": 119.89,
+        "dailyReturn": 2.4742
+      },
+      {
+        "date": "2026-01-28",
+        "value": 122.42,
+        "dailyReturn": 2.1077
+      },
+      {
+        "date": "2026-01-29",
+        "value": 122.27,
+        "dailyReturn": -0.118
+      },
+      {
+        "date": "2026-01-30",
+        "value": 119.78,
+        "dailyReturn": -2.0358
+      },
+      {
+        "date": "2026-02-02",
+        "value": 119.03,
+        "dailyReturn": -0.6318
+      },
+      {
+        "date": "2026-02-03",
+        "value": 121.63,
+        "dailyReturn": 2.1846
+      },
+      {
+        "date": "2026-02-04",
+        "value": 117.76,
+        "dailyReturn": -3.1826
+      },
+      {
+        "date": "2026-02-05",
+        "value": 111.06,
+        "dailyReturn": -5.6843
+      },
+      {
+        "date": "2026-02-06",
+        "value": 116.17,
+        "dailyReturn": 4.5957
+      },
+      {
+        "date": "2026-02-09",
+        "value": 116.92,
+        "dailyReturn": 0.6469
+      },
+      {
+        "date": "2026-02-10",
+        "value": 116.47,
+        "dailyReturn": -0.3864
+      },
+      {
+        "date": "2026-02-11",
+        "value": 118.74,
+        "dailyReturn": 1.9495
+      },
+      {
+        "date": "2026-02-12",
+        "value": 118.42,
+        "dailyReturn": -0.2637
+      },
+      {
+        "date": "2026-02-13",
+        "value": 120.72,
+        "dailyReturn": 1.9374
+      },
+      {
+        "date": "2026-02-17",
+        "value": 120.5,
+        "dailyReturn": -0.1782
+      },
+      {
+        "date": "2026-02-18",
+        "value": 118.86,
+        "dailyReturn": -1.3619
+      },
+      {
+        "date": "2026-02-19",
+        "value": 119.76,
+        "dailyReturn": 0.7583
+      },
+      {
+        "date": "2026-02-20",
+        "value": 119.68,
+        "dailyReturn": -0.0697
+      },
+      {
+        "date": "2026-02-23",
+        "value": 118.83,
+        "dailyReturn": -0.7074
+      },
+      {
+        "date": "2026-02-24",
+        "value": 122.07,
+        "dailyReturn": 2.7223
+      },
+      {
+        "date": "2026-02-25",
+        "value": 122.66,
+        "dailyReturn": 0.4827
+      },
+      {
+        "date": "2026-02-26",
+        "value": 121.91,
+        "dailyReturn": -0.6088
+      },
+      {
+        "date": "2026-02-27",
+        "value": 120.67,
+        "dailyReturn": -1.0174
+      },
+      {
+        "date": "2026-03-02",
+        "value": 120.97,
+        "dailyReturn": 0.2461
+      },
+      {
+        "date": "2026-03-03",
+        "value": 117.43,
+        "dailyReturn": -2.9218
+      },
+      {
+        "date": "2026-03-04",
+        "value": 118.8,
+        "dailyReturn": 1.1646
+      },
+      {
+        "date": "2026-03-05",
+        "value": 117.85,
+        "dailyReturn": -0.796
+      },
+      {
+        "date": "2026-03-06",
+        "value": 115.31,
+        "dailyReturn": -2.1573
+      },
+      {
+        "date": "2026-03-09",
+        "value": 118.71,
+        "dailyReturn": 2.946
+      },
+      {
+        "date": "2026-03-10",
+        "value": 119.2,
+        "dailyReturn": 0.4149
+      },
+      {
+        "date": "2026-03-11",
+        "value": 118.36,
+        "dailyReturn": -0.7103
+      },
+      {
+        "date": "2026-03-12",
+        "value": 117.69,
+        "dailyReturn": -0.56
+      },
+      {
+        "date": "2026-03-13",
+        "value": 117.08,
+        "dailyReturn": -0.5204
+      },
+      {
+        "date": "2026-03-16",
+        "value": 119.09,
+        "dailyReturn": 1.7145
+      },
+      {
+        "date": "2026-03-17",
+        "value": 119.64,
+        "dailyReturn": 0.4618
+      },
+      {
+        "date": "2026-03-18",
+        "value": 118.43,
+        "dailyReturn": -1.0121
+      },
+      {
+        "date": "2026-03-19",
+        "value": 119.1,
+        "dailyReturn": 0.5706
+      },
+      {
+        "date": "2026-03-20",
+        "value": 113.88,
+        "dailyReturn": -4.3861
+      },
+      {
+        "date": "2026-03-23",
+        "value": 116.41,
+        "dailyReturn": 2.2248
+      },
+      {
+        "date": "2026-03-24",
+        "value": 118.67,
+        "dailyReturn": 1.9385
+      },
+      {
+        "date": "2026-03-25",
+        "value": 120.47,
+        "dailyReturn": 1.5199
+      },
+      {
+        "date": "2026-03-26",
+        "value": 115.14,
+        "dailyReturn": -4.4256
+      },
+      {
+        "date": "2026-03-27",
+        "value": 114.57,
+        "dailyReturn": -0.4914
+      },
+      {
+        "date": "2026-03-30",
+        "value": 110.88,
+        "dailyReturn": -3.2212
+      },
+      {
+        "date": "2026-03-31",
+        "value": 114.67,
+        "dailyReturn": 3.4164
+      },
+      {
+        "date": "2026-04-01",
+        "value": 115.8,
+        "dailyReturn": 0.9858
+      },
+      {
+        "date": "2026-04-02",
+        "value": 116.01,
+        "dailyReturn": 0.1773
+      },
+      {
+        "date": "2026-04-06",
+        "value": 116.12,
+        "dailyReturn": 0.0966
+      },
+      {
+        "date": "2026-04-07",
+        "value": 117.27,
+        "dailyReturn": 0.9865
+      },
+      {
+        "date": "2026-04-08",
+        "value": 121.83,
+        "dailyReturn": 3.8931
+      },
+      {
+        "date": "2026-04-09",
+        "value": 123.72,
+        "dailyReturn": 1.5493
+      },
+      {
+        "date": "2026-04-10",
+        "value": 124.38,
+        "dailyReturn": 0.5352
+      },
+      {
+        "date": "2026-04-13",
+        "value": 124.87,
+        "dailyReturn": 0.3942
+      },
+      {
+        "date": "2026-04-14",
+        "value": 127.25,
+        "dailyReturn": 1.9089
+      },
+      {
+        "date": "2026-04-15",
+        "value": 126.56,
+        "dailyReturn": -0.5422
+      },
+      {
+        "date": "2026-04-16",
+        "value": 126.27,
+        "dailyReturn": -0.2337
+      },
+      {
+        "date": "2026-04-17",
+        "value": 127.47,
+        "dailyReturn": 0.9483
+      },
+      {
+        "date": "2026-04-20",
+        "value": 126.6,
+        "dailyReturn": -0.6796
+      },
+      {
+        "date": "2026-04-21",
+        "value": 124.64,
+        "dailyReturn": -1.5451
+      },
+      {
+        "date": "2026-04-22",
+        "value": 127.35,
+        "dailyReturn": 2.1746
+      },
+      {
+        "date": "2026-04-23",
+        "value": 130.78,
+        "dailyReturn": 2.6889
+      },
+      {
+        "date": "2026-04-24",
+        "value": 130.7,
+        "dailyReturn": -0.0629
+      },
+      {
+        "date": "2026-04-27",
+        "value": 131.37,
+        "dailyReturn": 0.5151
+      },
+      {
+        "date": "2026-04-28",
+        "value": 128.18,
+        "dailyReturn": -2.4245
+      },
+      {
+        "date": "2026-04-29",
+        "value": 125.98,
+        "dailyReturn": -1.7169
+      },
+      {
+        "date": "2026-04-30",
+        "value": 132.2,
+        "dailyReturn": 4.9373
+      },
+      {
+        "date": "2026-05-01",
+        "value": 131.56,
+        "dailyReturn": -0.4859
+      },
+      {
+        "date": "2026-05-04",
+        "value": 131.41,
+        "dailyReturn": -0.1123
+      },
+      {
+        "date": "2026-05-05",
+        "value": 133.58,
+        "dailyReturn": 1.6479
+      },
+      {
+        "date": "2026-05-06",
+        "value": 137.19,
+        "dailyReturn": 2.7007
+      },
+      {
+        "date": "2026-05-07",
+        "value": 134.57,
+        "dailyReturn": -1.9108
+      },
+      {
+        "date": "2026-05-08",
+        "value": 136.87,
+        "dailyReturn": 1.7128
+      },
+      {
+        "date": "2026-05-11",
+        "value": 141.24,
+        "dailyReturn": 3.1914
+      },
+      {
+        "date": "2026-05-12",
+        "value": 136.98,
+        "dailyReturn": -3.0167
+      },
+      {
+        "date": "2026-05-13",
+        "value": 135.99,
+        "dailyReturn": -0.7247
+      },
+      {
+        "date": "2026-05-14",
+        "value": 136.03,
+        "dailyReturn": 0.0362
+      },
+      {
+        "date": "2026-05-15",
+        "value": 132.89,
+        "dailyReturn": -2.3123
+      },
+      {
+        "date": "2026-05-18",
+        "value": 127.66,
+        "dailyReturn": -3.9369
+      },
+      {
+        "date": "2026-05-19",
+        "value": 125.31,
+        "dailyReturn": -1.836
+      },
+      {
+        "date": "2026-05-20",
+        "value": 127.87,
+        "dailyReturn": 2.0393
+      },
+      {
+        "date": "2026-05-21",
+        "value": 129.98,
+        "dailyReturn": 1.6477
+      },
+      {
+        "date": "2026-05-22",
+        "value": 132.44,
+        "dailyReturn": 1.897
+      },
+      {
+        "date": "2026-05-26",
+        "value": 134.52,
+        "dailyReturn": 1.5694
+      },
+      {
+        "date": "2026-05-27",
+        "value": 133.55,
+        "dailyReturn": -0.7184
+      },
+      {
+        "date": "2026-05-28",
+        "value": 132,
+        "dailyReturn": -1.1624
+      },
+      {
+        "date": "2026-05-29",
+        "value": 129.47,
+        "dailyReturn": -1.9139
+      },
+      {
+        "date": "2026-06-01",
+        "value": 132.14,
+        "dailyReturn": 2.0556
+      },
+      {
+        "date": "2026-06-02",
+        "value": 135.82,
+        "dailyReturn": 2.7866
+      },
+      {
+        "date": "2026-06-03",
+        "value": 132.77,
+        "dailyReturn": -2.2456
+      },
+      {
+        "date": "2026-06-04",
+        "value": 134.23,
+        "dailyReturn": 1.0996
+      },
+      {
+        "date": "2026-06-05",
+        "value": 127.96,
+        "dailyReturn": -4.6706
+      },
+      {
+        "date": "2026-06-08",
+        "value": 128.68,
+        "dailyReturn": 0.5673
+      },
+      {
+        "date": "2026-06-09",
+        "value": 127.38,
+        "dailyReturn": -1.0152
+      },
+      {
+        "date": "2026-06-10",
+        "value": 122.28,
+        "dailyReturn": -4.0054
+      },
+      {
+        "date": "2026-06-11",
+        "value": 128.1,
+        "dailyReturn": 4.7665
+      },
+      {
+        "date": "2026-06-12",
+        "value": 129.31,
+        "dailyReturn": 0.9415
+      },
+      {
+        "date": "2026-06-15",
+        "value": 132.29,
+        "dailyReturn": 2.3029
+      },
+      {
+        "date": "2026-06-16",
+        "value": 131.33,
+        "dailyReturn": -0.7264
+      },
+      {
+        "date": "2026-06-17",
+        "value": 132.19,
+        "dailyReturn": 0.6529
+      },
+      {
+        "date": "2026-06-18",
+        "value": 135.38,
+        "dailyReturn": 2.4134
+      },
+      {
+        "date": "2026-06-22",
+        "value": 138.48,
+        "dailyReturn": 2.2946
+      },
+      {
+        "date": "2026-06-23",
+        "value": 131.87,
+        "dailyReturn": -4.7714
+      },
+      {
+        "date": "2026-06-24",
+        "value": 131.48,
+        "dailyReturn": -0.301
+      },
+      {
+        "date": "2026-06-25",
+        "value": 133.5,
+        "dailyReturn": 1.5347
+      },
+      {
+        "date": "2026-06-26",
+        "value": 129.62,
+        "dailyReturn": -2.9014
+      },
+      {
+        "date": "2026-06-29",
+        "value": 130.32,
+        "dailyReturn": 0.5384
+      },
+      {
+        "date": "2026-06-30",
+        "value": 132.54,
+        "dailyReturn": 1.7052
+      },
+      {
+        "date": "2026-07-01",
+        "value": 127.36,
+        "dailyReturn": -3.9112
+      },
+      {
+        "date": "2026-07-02",
+        "value": 125.14,
+        "dailyReturn": -1.7383
+      },
+      {
+        "date": "2026-07-06",
+        "value": 126.93,
+        "dailyReturn": 1.4239
+      },
+      {
+        "date": "2026-07-07",
+        "value": 122.7,
+        "dailyReturn": -3.3288
+      },
+      {
+        "date": "2026-07-08",
+        "value": 122.15,
+        "dailyReturn": -0.4461
+      },
+      {
+        "date": "2026-07-09",
+        "value": 123.82,
+        "dailyReturn": 1.3631
+      },
+      {
+        "date": "2026-07-10",
+        "value": 123.35,
+        "dailyReturn": -0.3759
+      },
+      {
+        "date": "2026-07-13",
+        "value": 120.68,
+        "dailyReturn": -2.1677
+      },
+      {
+        "date": "2026-07-14",
+        "value": 122.07,
+        "dailyReturn": 1.1532
+      },
+      {
+        "date": "2026-07-15",
+        "value": 121.85,
+        "dailyReturn": -0.1788
+      },
+      {
+        "date": "2026-07-16",
+        "value": 119.04,
+        "dailyReturn": -2.3079
+      },
+      {
+        "date": "2026-07-17",
+        "value": 118.26,
+        "dailyReturn": -0.6547
+      },
+      {
+        "date": "2026-07-20",
+        "value": 118.27,
+        "dailyReturn": 0.0094
+      },
+      {
+        "date": "2026-07-21",
+        "value": 121,
+        "dailyReturn": 2.3072
+      },
+      {
+        "date": "2026-07-22",
+        "value": 120.82,
+        "dailyReturn": -0.1489
+      },
+      {
+        "date": "2026-07-23",
+        "value": 122.11,
+        "dailyReturn": 1.0668
+      },
+      {
+        "date": "2026-07-24",
+        "value": 119.25,
+        "dailyReturn": -2.3409
+      }
+    ],
+    "comparisonSeries": [
+      {
+        "date": "2025-07-24",
+        "hunter": 100,
+        "sp500": 100,
+        "nasdaq100": 100,
+        "utilities": 100
+      },
+      {
+        "date": "2025-07-25",
+        "hunter": 101.4,
+        "sp500": 100.42,
+        "nasdaq100": 100.24,
+        "utilities": 100.24
+      },
+      {
+        "date": "2025-07-28",
+        "hunter": 102.14,
+        "sp500": 100.4,
+        "nasdaq100": 100.55,
+        "utilities": 99.2
+      },
+      {
+        "date": "2025-07-29",
+        "hunter": 100.21,
+        "sp500": 100.13,
+        "nasdaq100": 100.4,
+        "utilities": 100.32
+      },
+      {
+        "date": "2025-07-30",
+        "hunter": 101.4,
+        "sp500": 100.01,
+        "nasdaq100": 100.53,
+        "utilities": 101.07
+      },
+      {
+        "date": "2025-07-31",
+        "hunter": 101.33,
+        "sp500": 99.63,
+        "nasdaq100": 100,
+        "utilities": 101.61
+      },
+      {
+        "date": "2025-08-01",
+        "hunter": 99.13,
+        "sp500": 98,
+        "nasdaq100": 98.03,
+        "utilities": 101.78
+      },
+      {
+        "date": "2025-08-04",
+        "hunter": 101.3,
+        "sp500": 99.49,
+        "nasdaq100": 99.84,
+        "utilities": 103.58
+      },
+      {
+        "date": "2025-08-05",
+        "hunter": 101.4,
+        "sp500": 98.98,
+        "nasdaq100": 99.16,
+        "utilities": 102.46
+      },
+      {
+        "date": "2025-08-06",
+        "hunter": 100.12,
+        "sp500": 99.74,
+        "nasdaq100": 100.41,
+        "utilities": 101.56
+      },
+      {
+        "date": "2025-08-07",
+        "hunter": 100.78,
+        "sp500": 99.66,
+        "nasdaq100": 100.75,
+        "utilities": 102.66
+      },
+      {
+        "date": "2025-08-08",
+        "hunter": 100.2,
+        "sp500": 100.44,
+        "nasdaq100": 101.69,
+        "utilities": 102.22
+      },
+      {
+        "date": "2025-08-11",
+        "hunter": 100.36,
+        "sp500": 100.24,
+        "nasdaq100": 101.39,
+        "utilities": 101.9
+      },
+      {
+        "date": "2025-08-12",
+        "hunter": 100.96,
+        "sp500": 101.3,
+        "nasdaq100": 102.66,
+        "utilities": 102.34
+      },
+      {
+        "date": "2025-08-13",
+        "hunter": 100.4,
+        "sp500": 101.65,
+        "nasdaq100": 102.71,
+        "utilities": 102.56
+      },
+      {
+        "date": "2025-08-14",
+        "hunter": 98.93,
+        "sp500": 101.66,
+        "nasdaq100": 102.63,
+        "utilities": 101.85
+      },
+      {
+        "date": "2025-08-15",
+        "hunter": 98.5,
+        "sp500": 101.42,
+        "nasdaq100": 102.18,
+        "utilities": 101.56
+      },
+      {
+        "date": "2025-08-18",
+        "hunter": 98.47,
+        "sp500": 101.4,
+        "nasdaq100": 102.14,
+        "utilities": 101.12
+      },
+      {
+        "date": "2025-08-19",
+        "hunter": 97.27,
+        "sp500": 100.85,
+        "nasdaq100": 100.76,
+        "utilities": 102.1
+      },
+      {
+        "date": "2025-08-20",
+        "hunter": 97.59,
+        "sp500": 100.58,
+        "nasdaq100": 100.16,
+        "utilities": 102.22
+      },
+      {
+        "date": "2025-08-21",
+        "hunter": 96.72,
+        "sp500": 100.18,
+        "nasdaq100": 99.69,
+        "utilities": 101.51
+      },
+      {
+        "date": "2025-08-22",
+        "hunter": 98.44,
+        "sp500": 101.72,
+        "nasdaq100": 101.23,
+        "utilities": 102.05
+      },
+      {
+        "date": "2025-08-25",
+        "hunter": 97.84,
+        "sp500": 101.27,
+        "nasdaq100": 100.94,
+        "utilities": 100.9
+      },
+      {
+        "date": "2025-08-26",
+        "hunter": 99.31,
+        "sp500": 101.69,
+        "nasdaq100": 101.35,
+        "utilities": 101.12
+      },
+      {
+        "date": "2025-08-27",
+        "hunter": 98.85,
+        "sp500": 101.93,
+        "nasdaq100": 101.5,
+        "utilities": 101.15
+      },
+      {
+        "date": "2025-08-28",
+        "hunter": 99.45,
+        "sp500": 102.29,
+        "nasdaq100": 102.14,
+        "utilities": 100.39
+      },
+      {
+        "date": "2025-08-29",
+        "hunter": 97.1,
+        "sp500": 101.68,
+        "nasdaq100": 100.96,
+        "utilities": 100.02
+      },
+      {
+        "date": "2025-09-02",
+        "hunter": 96.16,
+        "sp500": 100.92,
+        "nasdaq100": 100.11,
+        "utilities": 99.68
+      },
+      {
+        "date": "2025-09-03",
+        "hunter": 96.11,
+        "sp500": 101.47,
+        "nasdaq100": 100.9,
+        "utilities": 99.44
+      },
+      {
+        "date": "2025-09-04",
+        "hunter": 96.09,
+        "sp500": 102.32,
+        "nasdaq100": 101.81,
+        "utilities": 99.32
+      },
+      {
+        "date": "2025-09-05",
+        "hunter": 95.83,
+        "sp500": 102.02,
+        "nasdaq100": 101.96,
+        "utilities": 99
+      },
+      {
+        "date": "2025-09-08",
+        "hunter": 95.36,
+        "sp500": 102.27,
+        "nasdaq100": 102.45,
+        "utilities": 98
+      },
+      {
+        "date": "2025-09-09",
+        "hunter": 96.24,
+        "sp500": 102.51,
+        "nasdaq100": 102.74,
+        "utilities": 98.68
+      },
+      {
+        "date": "2025-09-10",
+        "hunter": 98.34,
+        "sp500": 102.8,
+        "nasdaq100": 102.78,
+        "utilities": 100.37
+      },
+      {
+        "date": "2025-09-11",
+        "hunter": 99.73,
+        "sp500": 103.66,
+        "nasdaq100": 103.38,
+        "utilities": 100.9
+      },
+      {
+        "date": "2025-09-12",
+        "hunter": 100.23,
+        "sp500": 103.62,
+        "nasdaq100": 103.83,
+        "utilities": 101.41
+      },
+      {
+        "date": "2025-09-15",
+        "hunter": 102.81,
+        "sp500": 104.18,
+        "nasdaq100": 104.72,
+        "utilities": 101.66
+      },
+      {
+        "date": "2025-09-16",
+        "hunter": 102.05,
+        "sp500": 104.03,
+        "nasdaq100": 104.63,
+        "utilities": 99.8
+      },
+      {
+        "date": "2025-09-17",
+        "hunter": 101.76,
+        "sp500": 103.9,
+        "nasdaq100": 104.42,
+        "utilities": 100.05
+      },
+      {
+        "date": "2025-09-18",
+        "hunter": 103.69,
+        "sp500": 104.39,
+        "nasdaq100": 105.37,
+        "utilities": 100.12
+      },
+      {
+        "date": "2025-09-19",
+        "hunter": 108.04,
+        "sp500": 104.91,
+        "nasdaq100": 106.08,
+        "utilities": 100.76
+      },
+      {
+        "date": "2025-09-22",
+        "hunter": 111.17,
+        "sp500": 105.4,
+        "nasdaq100": 106.71,
+        "utilities": 101.73
+      },
+      {
+        "date": "2025-09-23",
+        "hunter": 109.55,
+        "sp500": 104.83,
+        "nasdaq100": 106,
+        "utilities": 102.27
+      },
+      {
+        "date": "2025-09-24",
+        "hunter": 110.35,
+        "sp500": 104.5,
+        "nasdaq100": 105.63,
+        "utilities": 103
+      },
+      {
+        "date": "2025-09-25",
+        "hunter": 107.54,
+        "sp500": 104.01,
+        "nasdaq100": 105.17,
+        "utilities": 102
+      },
+      {
+        "date": "2025-09-26",
+        "hunter": 107.71,
+        "sp500": 104.61,
+        "nasdaq100": 105.6,
+        "utilities": 103.66
+      },
+      {
+        "date": "2025-09-29",
+        "hunter": 107.94,
+        "sp500": 104.9,
+        "nasdaq100": 106.09,
+        "utilities": 103.95
+      },
+      {
+        "date": "2025-09-30",
+        "hunter": 107.97,
+        "sp500": 105.3,
+        "nasdaq100": 106.38,
+        "utilities": 104.15
+      },
+      {
+        "date": "2025-10-01",
+        "hunter": 112.08,
+        "sp500": 105.66,
+        "nasdaq100": 106.89,
+        "utilities": 105.15
+      },
+      {
+        "date": "2025-10-02",
+        "hunter": 113.35,
+        "sp500": 105.78,
+        "nasdaq100": 107.33,
+        "utilities": 104.95
+      },
+      {
+        "date": "2025-10-03",
+        "hunter": 113.99,
+        "sp500": 105.78,
+        "nasdaq100": 106.88,
+        "utilities": 106.17
+      },
+      {
+        "date": "2025-10-06",
+        "hunter": 116.47,
+        "sp500": 106.16,
+        "nasdaq100": 107.68,
+        "utilities": 107.19
+      },
+      {
+        "date": "2025-10-07",
+        "hunter": 115.63,
+        "sp500": 105.76,
+        "nasdaq100": 107.12,
+        "utilities": 107.68
+      },
+      {
+        "date": "2025-10-08",
+        "hunter": 118.01,
+        "sp500": 106.39,
+        "nasdaq100": 108.34,
+        "utilities": 108.44
+      },
+      {
+        "date": "2025-10-09",
+        "hunter": 118.24,
+        "sp500": 106.09,
+        "nasdaq100": 108.21,
+        "utilities": 108.14
+      },
+      {
+        "date": "2025-10-10",
+        "hunter": 115.42,
+        "sp500": 103.22,
+        "nasdaq100": 104.45,
+        "utilities": 107.71
+      },
+      {
+        "date": "2025-10-13",
+        "hunter": 122.44,
+        "sp500": 104.8,
+        "nasdaq100": 106.67,
+        "utilities": 108.53
+      },
+      {
+        "date": "2025-10-14",
+        "hunter": 125.83,
+        "sp500": 104.67,
+        "nasdaq100": 105.96,
+        "utilities": 109.51
+      },
+      {
+        "date": "2025-10-15",
+        "hunter": 130.1,
+        "sp500": 105.14,
+        "nasdaq100": 106.71,
+        "utilities": 110.92
+      },
+      {
+        "date": "2025-10-16",
+        "hunter": 126.08,
+        "sp500": 104.42,
+        "nasdaq100": 106.32,
+        "utilities": 109.73
+      },
+      {
+        "date": "2025-10-17",
+        "hunter": 123.35,
+        "sp500": 105.02,
+        "nasdaq100": 107.01,
+        "utilities": 109.34
+      },
+      {
+        "date": "2025-10-20",
+        "hunter": 123.83,
+        "sp500": 106.11,
+        "nasdaq100": 108.36,
+        "utilities": 109.31
+      },
+      {
+        "date": "2025-10-21",
+        "hunter": 119.5,
+        "sp500": 106.11,
+        "nasdaq100": 108.33,
+        "utilities": 108.19
+      },
+      {
+        "date": "2025-10-22",
+        "hunter": 114.39,
+        "sp500": 105.55,
+        "nasdaq100": 107.29,
+        "utilities": 107.95
+      },
+      {
+        "date": "2025-10-23",
+        "hunter": 117.18,
+        "sp500": 106.18,
+        "nasdaq100": 108.19,
+        "utilities": 107.85
+      },
+      {
+        "date": "2025-10-24",
+        "hunter": 122.7,
+        "sp500": 107.05,
+        "nasdaq100": 109.35,
+        "utilities": 109.12
+      },
+      {
+        "date": "2025-10-27",
+        "hunter": 122.74,
+        "sp500": 108.31,
+        "nasdaq100": 111.29,
+        "utilities": 109.44
+      },
+      {
+        "date": "2025-10-28",
+        "hunter": 122.21,
+        "sp500": 108.6,
+        "nasdaq100": 112.15,
+        "utilities": 107.63
+      },
+      {
+        "date": "2025-10-29",
+        "hunter": 126.38,
+        "sp500": 108.65,
+        "nasdaq100": 112.66,
+        "utilities": 107.58
+      },
+      {
+        "date": "2025-10-30",
+        "hunter": 122.46,
+        "sp500": 107.46,
+        "nasdaq100": 110.93,
+        "utilities": 107.14
+      },
+      {
+        "date": "2025-10-31",
+        "hunter": 123.22,
+        "sp500": 107.81,
+        "nasdaq100": 111.47,
+        "utilities": 106.39
+      },
+      {
+        "date": "2025-11-03",
+        "hunter": 122.48,
+        "sp500": 108.01,
+        "nasdaq100": 112,
+        "utilities": 106.46
+      },
+      {
+        "date": "2025-11-04",
+        "hunter": 117.3,
+        "sp500": 106.73,
+        "nasdaq100": 109.73,
+        "utilities": 106.07
+      },
+      {
+        "date": "2025-11-05",
+        "hunter": 120.86,
+        "sp500": 107.1,
+        "nasdaq100": 110.44,
+        "utilities": 106.1
+      },
+      {
+        "date": "2025-11-06",
+        "hunter": 116.31,
+        "sp500": 105.95,
+        "nasdaq100": 108.38,
+        "utilities": 105.63
+      },
+      {
+        "date": "2025-11-07",
+        "hunter": 117.92,
+        "sp500": 106.05,
+        "nasdaq100": 108.04,
+        "utilities": 107.1
+      },
+      {
+        "date": "2025-11-10",
+        "hunter": 118.91,
+        "sp500": 107.71,
+        "nasdaq100": 110.43,
+        "utilities": 107.07
+      },
+      {
+        "date": "2025-11-11",
+        "hunter": 116.35,
+        "sp500": 107.96,
+        "nasdaq100": 110.14,
+        "utilities": 107.12
+      },
+      {
+        "date": "2025-11-12",
+        "hunter": 115.65,
+        "sp500": 108.02,
+        "nasdaq100": 110.05,
+        "utilities": 107.36
+      },
+      {
+        "date": "2025-11-13",
+        "hunter": 109.43,
+        "sp500": 106.22,
+        "nasdaq100": 107.81,
+        "utilities": 105.9
+      },
+      {
+        "date": "2025-11-14",
+        "hunter": 110.63,
+        "sp500": 106.21,
+        "nasdaq100": 107.89,
+        "utilities": 106
+      },
+      {
+        "date": "2025-11-17",
+        "hunter": 109.26,
+        "sp500": 105.22,
+        "nasdaq100": 106.96,
+        "utilities": 106.95
+      },
+      {
+        "date": "2025-11-18",
+        "hunter": 109.28,
+        "sp500": 104.33,
+        "nasdaq100": 105.66,
+        "utilities": 106.53
+      },
+      {
+        "date": "2025-11-19",
+        "hunter": 109.44,
+        "sp500": 104.74,
+        "nasdaq100": 106.29,
+        "utilities": 105.63
+      },
+      {
+        "date": "2025-11-20",
+        "hunter": 105.06,
+        "sp500": 103.14,
+        "nasdaq100": 103.78,
+        "utilities": 105.1
+      },
+      {
+        "date": "2025-11-21",
+        "hunter": 104.72,
+        "sp500": 104.17,
+        "nasdaq100": 104.56,
+        "utilities": 105.27
+      },
+      {
+        "date": "2025-11-24",
+        "hunter": 107.45,
+        "sp500": 105.7,
+        "nasdaq100": 107.23,
+        "utilities": 106.46
+      },
+      {
+        "date": "2025-11-25",
+        "hunter": 108.19,
+        "sp500": 106.7,
+        "nasdaq100": 107.89,
+        "utilities": 106.05
+      },
+      {
+        "date": "2025-11-26",
+        "hunter": 111.21,
+        "sp500": 107.43,
+        "nasdaq100": 108.84,
+        "utilities": 107.46
+      },
+      {
+        "date": "2025-11-28",
+        "hunter": 113.2,
+        "sp500": 108.02,
+        "nasdaq100": 109.73,
+        "utilities": 108.22
+      },
+      {
+        "date": "2025-12-01",
+        "hunter": 110.53,
+        "sp500": 107.53,
+        "nasdaq100": 109.36,
+        "utilities": 105.68
+      },
+      {
+        "date": "2025-12-02",
+        "hunter": 111.45,
+        "sp500": 107.72,
+        "nasdaq100": 110.22,
+        "utilities": 104.95
+      },
+      {
+        "date": "2025-12-03",
+        "hunter": 111.6,
+        "sp500": 108.1,
+        "nasdaq100": 110.48,
+        "utilities": 104.61
+      },
+      {
+        "date": "2025-12-04",
+        "hunter": 116.27,
+        "sp500": 108.18,
+        "nasdaq100": 110.38,
+        "utilities": 104.39
+      },
+      {
+        "date": "2025-12-05",
+        "hunter": 115.41,
+        "sp500": 108.38,
+        "nasdaq100": 110.83,
+        "utilities": 103.41
+      },
+      {
+        "date": "2025-12-08",
+        "hunter": 114.16,
+        "sp500": 108.06,
+        "nasdaq100": 110.62,
+        "utilities": 102.02
+      },
+      {
+        "date": "2025-12-09",
+        "hunter": 114.46,
+        "sp500": 107.96,
+        "nasdaq100": 110.75,
+        "utilities": 102.1
+      },
+      {
+        "date": "2025-12-10",
+        "hunter": 115.79,
+        "sp500": 108.68,
+        "nasdaq100": 111.21,
+        "utilities": 102.05
+      },
+      {
+        "date": "2025-12-11",
+        "hunter": 118.82,
+        "sp500": 108.93,
+        "nasdaq100": 110.85,
+        "utilities": 102.78
+      },
+      {
+        "date": "2025-12-12",
+        "hunter": 111.44,
+        "sp500": 107.76,
+        "nasdaq100": 108.73,
+        "utilities": 102.29
+      },
+      {
+        "date": "2025-12-15",
+        "hunter": 110.24,
+        "sp500": 107.6,
+        "nasdaq100": 108.18,
+        "utilities": 103.22
+      },
+      {
+        "date": "2025-12-16",
+        "hunter": 110.05,
+        "sp500": 107.3,
+        "nasdaq100": 108.4,
+        "utilities": 102.78
+      },
+      {
+        "date": "2025-12-17",
+        "hunter": 104.36,
+        "sp500": 106.12,
+        "nasdaq100": 106.39,
+        "utilities": 102.12
+      },
+      {
+        "date": "2025-12-18",
+        "hunter": 106.74,
+        "sp500": 106.92,
+        "nasdaq100": 107.93,
+        "utilities": 103.12
+      },
+      {
+        "date": "2025-12-19",
+        "hunter": 107.75,
+        "sp500": 107.89,
+        "nasdaq100": 109.34,
+        "utilities": 101.8
+      },
+      {
+        "date": "2025-12-22",
+        "hunter": 108.96,
+        "sp500": 108.56,
+        "nasdaq100": 109.86,
+        "utilities": 102.19
+      },
+      {
+        "date": "2025-12-23",
+        "hunter": 108.52,
+        "sp500": 109.06,
+        "nasdaq100": 110.38,
+        "utilities": 102.56
+      },
+      {
+        "date": "2025-12-24",
+        "hunter": 108.82,
+        "sp500": 109.45,
+        "nasdaq100": 110.7,
+        "utilities": 103
+      },
+      {
+        "date": "2025-12-26",
+        "hunter": 108.46,
+        "sp500": 109.43,
+        "nasdaq100": 110.69,
+        "utilities": 102.93
+      },
+      {
+        "date": "2025-12-29",
+        "hunter": 107.57,
+        "sp500": 109.04,
+        "nasdaq100": 110.16,
+        "utilities": 103.12
+      },
+      {
+        "date": "2025-12-30",
+        "hunter": 107.05,
+        "sp500": 108.91,
+        "nasdaq100": 109.9,
+        "utilities": 103.37
+      },
+      {
+        "date": "2025-12-31",
+        "hunter": 106.13,
+        "sp500": 108.1,
+        "nasdaq100": 108.99,
+        "utilities": 102.71
+      },
+      {
+        "date": "2026-01-02",
+        "hunter": 112.12,
+        "sp500": 108.3,
+        "nasdaq100": 108.78,
+        "utilities": 103.9
+      },
+      {
+        "date": "2026-01-05",
+        "hunter": 112.93,
+        "sp500": 109.02,
+        "nasdaq100": 109.64,
+        "utilities": 102.73
+      },
+      {
+        "date": "2026-01-06",
+        "hunter": 114.13,
+        "sp500": 109.67,
+        "nasdaq100": 110.61,
+        "utilities": 103.24
+      },
+      {
+        "date": "2026-01-07",
+        "hunter": 111.06,
+        "sp500": 109.32,
+        "nasdaq100": 110.71,
+        "utilities": 100.76
+      },
+      {
+        "date": "2026-01-08",
+        "hunter": 109.95,
+        "sp500": 109.31,
+        "nasdaq100": 110.09,
+        "utilities": 101.02
+      },
+      {
+        "date": "2026-01-09",
+        "hunter": 113.57,
+        "sp500": 110.03,
+        "nasdaq100": 111.18,
+        "utilities": 102.29
+      },
+      {
+        "date": "2026-01-12",
+        "hunter": 114.62,
+        "sp500": 110.2,
+        "nasdaq100": 111.27,
+        "utilities": 102.46
+      },
+      {
+        "date": "2026-01-13",
+        "hunter": 115.99,
+        "sp500": 109.98,
+        "nasdaq100": 111.11,
+        "utilities": 103.1
+      },
+      {
+        "date": "2026-01-14",
+        "hunter": 115.39,
+        "sp500": 109.44,
+        "nasdaq100": 109.92,
+        "utilities": 103.88
+      },
+      {
+        "date": "2026-01-15",
+        "hunter": 118,
+        "sp500": 109.74,
+        "nasdaq100": 110.32,
+        "utilities": 104.93
+      },
+      {
+        "date": "2026-01-16",
+        "hunter": 120.03,
+        "sp500": 109.65,
+        "nasdaq100": 110.23,
+        "utilities": 104.41
+      },
+      {
+        "date": "2026-01-20",
+        "hunter": 117.4,
+        "sp500": 107.42,
+        "nasdaq100": 107.88,
+        "utilities": 103.37
+      },
+      {
+        "date": "2026-01-21",
+        "hunter": 118.07,
+        "sp500": 108.66,
+        "nasdaq100": 109.34,
+        "utilities": 103.51
+      },
+      {
+        "date": "2026-01-22",
+        "hunter": 118.27,
+        "sp500": 109.22,
+        "nasdaq100": 110.14,
+        "utilities": 102.76
+      },
+      {
+        "date": "2026-01-23",
+        "hunter": 117.37,
+        "sp500": 109.26,
+        "nasdaq100": 110.48,
+        "utilities": 102.41
+      },
+      {
+        "date": "2026-01-26",
+        "hunter": 117,
+        "sp500": 109.82,
+        "nasdaq100": 110.97,
+        "utilities": 103.15
+      },
+      {
+        "date": "2026-01-27",
+        "hunter": 119.89,
+        "sp500": 110.26,
+        "nasdaq100": 111.98,
+        "utilities": 104.49
+      },
+      {
+        "date": "2026-01-28",
+        "hunter": 122.42,
+        "sp500": 110.25,
+        "nasdaq100": 112.35,
+        "utilities": 104.27
+      },
+      {
+        "date": "2026-01-29",
+        "hunter": 122.27,
+        "sp500": 110.03,
+        "nasdaq100": 111.68,
+        "utilities": 104.27
+      },
+      {
+        "date": "2026-01-30",
+        "hunter": 119.78,
+        "sp500": 109.7,
+        "nasdaq100": 110.33,
+        "utilities": 104.07
+      },
+      {
+        "date": "2026-02-02",
+        "hunter": 119.03,
+        "sp500": 110.24,
+        "nasdaq100": 111.09,
+        "utilities": 102.56
+      },
+      {
+        "date": "2026-02-03",
+        "hunter": 121.63,
+        "sp500": 109.31,
+        "nasdaq100": 109.38,
+        "utilities": 104.05
+      },
+      {
+        "date": "2026-02-04",
+        "hunter": 117.76,
+        "sp500": 108.78,
+        "nasdaq100": 107.47,
+        "utilities": 103.66
+      },
+      {
+        "date": "2026-02-05",
+        "hunter": 111.06,
+        "sp500": 107.42,
+        "nasdaq100": 105.93,
+        "utilities": 103.71
+      },
+      {
+        "date": "2026-02-06",
+        "hunter": 116.17,
+        "sp500": 109.48,
+        "nasdaq100": 108.16,
+        "utilities": 104.32
+      },
+      {
+        "date": "2026-02-09",
+        "hunter": 116.92,
+        "sp500": 110.01,
+        "nasdaq100": 108.99,
+        "utilities": 104.61
+      },
+      {
+        "date": "2026-02-10",
+        "hunter": 116.47,
+        "sp500": 109.72,
+        "nasdaq100": 108.49,
+        "utilities": 106.34
+      },
+      {
+        "date": "2026-02-11",
+        "hunter": 118.74,
+        "sp500": 109.7,
+        "nasdaq100": 108.78,
+        "utilities": 107.29
+      },
+      {
+        "date": "2026-02-12",
+        "hunter": 118.42,
+        "sp500": 108,
+        "nasdaq100": 106.57,
+        "utilities": 108.88
+      },
+      {
+        "date": "2026-02-13",
+        "hunter": 120.72,
+        "sp500": 108.08,
+        "nasdaq100": 106.79,
+        "utilities": 111.88
+      },
+      {
+        "date": "2026-02-17",
+        "hunter": 120.5,
+        "sp500": 108.25,
+        "nasdaq100": 106.68,
+        "utilities": 111.61
+      },
+      {
+        "date": "2026-02-18",
+        "hunter": 118.86,
+        "sp500": 108.8,
+        "nasdaq100": 107.48,
+        "utilities": 109.75
+      },
+      {
+        "date": "2026-02-19",
+        "hunter": 119.76,
+        "sp500": 108.51,
+        "nasdaq100": 107.07,
+        "utilities": 110.95
+      },
+      {
+        "date": "2026-02-20",
+        "hunter": 119.68,
+        "sp500": 109.29,
+        "nasdaq100": 108.02,
+        "utilities": 111.49
+      },
+      {
+        "date": "2026-02-23",
+        "hunter": 118.83,
+        "sp500": 108.18,
+        "nasdaq100": 106.7,
+        "utilities": 112.31
+      },
+      {
+        "date": "2026-02-24",
+        "hunter": 122.07,
+        "sp500": 108.97,
+        "nasdaq100": 107.85,
+        "utilities": 113.56
+      },
+      {
+        "date": "2026-02-25",
+        "hunter": 122.66,
+        "sp500": 109.88,
+        "nasdaq100": 109.41,
+        "utilities": 113.95
+      },
+      {
+        "date": "2026-02-26",
+        "hunter": 121.91,
+        "sp500": 109.27,
+        "nasdaq100": 108.09,
+        "utilities": 113.51
+      },
+      {
+        "date": "2026-02-27",
+        "hunter": 120.67,
+        "sp500": 108.75,
+        "nasdaq100": 107.75,
+        "utilities": 114.85
+      },
+      {
+        "date": "2026-03-02",
+        "hunter": 120.97,
+        "sp500": 108.81,
+        "nasdaq100": 107.89,
+        "utilities": 113.97
+      },
+      {
+        "date": "2026-03-03",
+        "hunter": 117.43,
+        "sp500": 107.85,
+        "nasdaq100": 106.73,
+        "utilities": 113.27
+      },
+      {
+        "date": "2026-03-04",
+        "hunter": 118.8,
+        "sp500": 108.61,
+        "nasdaq100": 108.36,
+        "utilities": 113.73
+      },
+      {
+        "date": "2026-03-05",
+        "hunter": 117.85,
+        "sp500": 108.01,
+        "nasdaq100": 108.03,
+        "utilities": 112.85
+      },
+      {
+        "date": "2026-03-06",
+        "hunter": 115.31,
+        "sp500": 106.59,
+        "nasdaq100": 106.41,
+        "utilities": 112.46
+      },
+      {
+        "date": "2026-03-09",
+        "hunter": 118.71,
+        "sp500": 107.53,
+        "nasdaq100": 107.83,
+        "utilities": 112.73
+      },
+      {
+        "date": "2026-03-10",
+        "hunter": 119.2,
+        "sp500": 107.35,
+        "nasdaq100": 107.83,
+        "utilities": 112.02
+      },
+      {
+        "date": "2026-03-11",
+        "hunter": 118.36,
+        "sp500": 107.22,
+        "nasdaq100": 107.82,
+        "utilities": 111.09
+      },
+      {
+        "date": "2026-03-12",
+        "hunter": 117.69,
+        "sp500": 105.59,
+        "nasdaq100": 105.97,
+        "utilities": 111.88
+      },
+      {
+        "date": "2026-03-13",
+        "hunter": 117.08,
+        "sp500": 104.99,
+        "nasdaq100": 105.34,
+        "utilities": 113
+      },
+      {
+        "date": "2026-03-16",
+        "hunter": 119.09,
+        "sp500": 106.06,
+        "nasdaq100": 106.52,
+        "utilities": 113.7
+      },
+      {
+        "date": "2026-03-17",
+        "hunter": 119.64,
+        "sp500": 106.34,
+        "nasdaq100": 107.04,
+        "utilities": 113.41
+      },
+      {
+        "date": "2026-03-18",
+        "hunter": 118.43,
+        "sp500": 104.86,
+        "nasdaq100": 105.55,
+        "utilities": 112.44
+      },
+      {
+        "date": "2026-03-19",
+        "hunter": 119.1,
+        "sp500": 104.6,
+        "nasdaq100": 105.21,
+        "utilities": 111.97
+      },
+      {
+        "date": "2026-03-20",
+        "hunter": 113.88,
+        "sp500": 103.1,
+        "nasdaq100": 103.27,
+        "utilities": 107.44
+      },
+      {
+        "date": "2026-03-23",
+        "hunter": 116.41,
+        "sp500": 104.18,
+        "nasdaq100": 104.45,
+        "utilities": 108.51
+      },
+      {
+        "date": "2026-03-24",
+        "hunter": 118.67,
+        "sp500": 103.83,
+        "nasdaq100": 103.74,
+        "utilities": 109.24
+      },
+      {
+        "date": "2026-03-25",
+        "hunter": 120.47,
+        "sp500": 104.41,
+        "nasdaq100": 104.42,
+        "utilities": 109.63
+      },
+      {
+        "date": "2026-03-26",
+        "hunter": 115.14,
+        "sp500": 102.54,
+        "nasdaq100": 101.93,
+        "utilities": 109.83
+      },
+      {
+        "date": "2026-03-27",
+        "hunter": 114.57,
+        "sp500": 100.8,
+        "nasdaq100": 99.94,
+        "utilities": 110.46
+      },
+      {
+        "date": "2026-03-30",
+        "hunter": 110.88,
+        "sp500": 100.46,
+        "nasdaq100": 99.18,
+        "utilities": 111.27
+      },
+      {
+        "date": "2026-03-31",
+        "hunter": 114.67,
+        "sp500": 103.38,
+        "nasdaq100": 102.53,
+        "utilities": 111.19
+      },
+      {
+        "date": "2026-04-01",
+        "hunter": 115.8,
+        "sp500": 104.16,
+        "nasdaq100": 103.8,
+        "utilities": 111.73
+      },
+      {
+        "date": "2026-04-02",
+        "hunter": 116.01,
+        "sp500": 104.25,
+        "nasdaq100": 103.92,
+        "utilities": 112.29
+      },
+      {
+        "date": "2026-04-06",
+        "hunter": 116.12,
+        "sp500": 104.75,
+        "nasdaq100": 104.54,
+        "utilities": 111.88
+      },
+      {
+        "date": "2026-04-07",
+        "hunter": 117.27,
+        "sp500": 104.79,
+        "nasdaq100": 104.56,
+        "utilities": 112.12
+      },
+      {
+        "date": "2026-04-08",
+        "hunter": 121.83,
+        "sp500": 107.46,
+        "nasdaq100": 107.67,
+        "utilities": 113.34
+      },
+      {
+        "date": "2026-04-09",
+        "hunter": 123.72,
+        "sp500": 108.08,
+        "nasdaq100": 108.4,
+        "utilities": 114.24
+      },
+      {
+        "date": "2026-04-10",
+        "hunter": 124.38,
+        "sp500": 108.01,
+        "nasdaq100": 108.55,
+        "utilities": 113.78
+      },
+      {
+        "date": "2026-04-13",
+        "hunter": 124.87,
+        "sp500": 109.06,
+        "nasdaq100": 109.68,
+        "utilities": 112.41
+      },
+      {
+        "date": "2026-04-14",
+        "hunter": 127.25,
+        "sp500": 110.39,
+        "nasdaq100": 111.67,
+        "utilities": 112.58
+      },
+      {
+        "date": "2026-04-15",
+        "hunter": 126.56,
+        "sp500": 111.26,
+        "nasdaq100": 113.23,
+        "utilities": 111.51
+      },
+      {
+        "date": "2026-04-16",
+        "hunter": 126.27,
+        "sp500": 111.54,
+        "nasdaq100": 113.78,
+        "utilities": 112.31
+      },
+      {
+        "date": "2026-04-17",
+        "hunter": 127.47,
+        "sp500": 112.89,
+        "nasdaq100": 115.27,
+        "utilities": 111.85
+      },
+      {
+        "date": "2026-04-20",
+        "hunter": 126.6,
+        "sp500": 112.66,
+        "nasdaq100": 114.9,
+        "utilities": 110.85
+      },
+      {
+        "date": "2026-04-21",
+        "hunter": 124.64,
+        "sp500": 111.92,
+        "nasdaq100": 114.46,
+        "utilities": 108.9
+      },
+      {
+        "date": "2026-04-22",
+        "hunter": 127.35,
+        "sp500": 113.06,
+        "nasdaq100": 116.38,
+        "utilities": 108.71
+      },
+      {
+        "date": "2026-04-23",
+        "hunter": 130.78,
+        "sp500": 112.62,
+        "nasdaq100": 115.72,
+        "utilities": 111.68
+      },
+      {
+        "date": "2026-04-24",
+        "hunter": 130.7,
+        "sp500": 113.49,
+        "nasdaq100": 117.94,
+        "utilities": 111.9
+      },
+      {
+        "date": "2026-04-27",
+        "hunter": 131.37,
+        "sp500": 113.69,
+        "nasdaq100": 118,
+        "utilities": 111.92
+      },
+      {
+        "date": "2026-04-28",
+        "hunter": 128.18,
+        "sp500": 113.13,
+        "nasdaq100": 116.81,
+        "utilities": 112.07
+      },
+      {
+        "date": "2026-04-29",
+        "hunter": 125.98,
+        "sp500": 113.11,
+        "nasdaq100": 117.52,
+        "utilities": 110.68
+      },
+      {
+        "date": "2026-04-30",
+        "hunter": 132.2,
+        "sp500": 114.24,
+        "nasdaq100": 118.62,
+        "utilities": 113.51
+      },
+      {
+        "date": "2026-05-01",
+        "hunter": 131.56,
+        "sp500": 114.56,
+        "nasdaq100": 119.76,
+        "utilities": 112.78
+      },
+      {
+        "date": "2026-05-04",
+        "hunter": 131.41,
+        "sp500": 114.14,
+        "nasdaq100": 119.53,
+        "utilities": 112.36
+      },
+      {
+        "date": "2026-05-05",
+        "hunter": 133.58,
+        "sp500": 115.05,
+        "nasdaq100": 121.08,
+        "utilities": 112.36
+      },
+      {
+        "date": "2026-05-06",
+        "hunter": 137.19,
+        "sp500": 116.65,
+        "nasdaq100": 123.6,
+        "utilities": 110.75
+      },
+      {
+        "date": "2026-05-07",
+        "hunter": 134.57,
+        "sp500": 116.29,
+        "nasdaq100": 123.45,
+        "utilities": 109.31
+      },
+      {
+        "date": "2026-05-08",
+        "hunter": 136.87,
+        "sp500": 117.25,
+        "nasdaq100": 126.35,
+        "utilities": 108.36
+      },
+      {
+        "date": "2026-05-11",
+        "hunter": 141.24,
+        "sp500": 117.52,
+        "nasdaq100": 126.71,
+        "utilities": 109.36
+      },
+      {
+        "date": "2026-05-12",
+        "hunter": 136.98,
+        "sp500": 117.34,
+        "nasdaq100": 125.64,
+        "utilities": 109.49
+      },
+      {
+        "date": "2026-05-13",
+        "hunter": 135.99,
+        "sp500": 118,
+        "nasdaq100": 126.96,
+        "utilities": 108.24
+      },
+      {
+        "date": "2026-05-14",
+        "hunter": 136.03,
+        "sp500": 118.93,
+        "nasdaq100": 127.87,
+        "utilities": 108.78
+      },
+      {
+        "date": "2026-05-15",
+        "hunter": 132.89,
+        "sp500": 117.5,
+        "nasdaq100": 125.94,
+        "utilities": 106.29
+      },
+      {
+        "date": "2026-05-18",
+        "hunter": 127.66,
+        "sp500": 117.42,
+        "nasdaq100": 125.4,
+        "utilities": 106.46
+      },
+      {
+        "date": "2026-05-19",
+        "hunter": 125.31,
+        "sp500": 116.64,
+        "nasdaq100": 124.62,
+        "utilities": 107.44
+      },
+      {
+        "date": "2026-05-20",
+        "hunter": 127.87,
+        "sp500": 117.83,
+        "nasdaq100": 126.69,
+        "utilities": 107.85
+      },
+      {
+        "date": "2026-05-21",
+        "hunter": 129.98,
+        "sp500": 118.06,
+        "nasdaq100": 126.93,
+        "utilities": 109.02
+      },
+      {
+        "date": "2026-05-22",
+        "hunter": 132.44,
+        "sp500": 118.53,
+        "nasdaq100": 127.47,
+        "utilities": 109.88
+      },
+      {
+        "date": "2026-05-26",
+        "hunter": 134.52,
+        "sp500": 119.32,
+        "nasdaq100": 129.73,
+        "utilities": 109.83
+      },
+      {
+        "date": "2026-05-27",
+        "hunter": 133.55,
+        "sp500": 119.29,
+        "nasdaq100": 129.58,
+        "utilities": 109.36
+      },
+      {
+        "date": "2026-05-28",
+        "hunter": 132,
+        "sp500": 119.95,
+        "nasdaq100": 130.68,
+        "utilities": 108.14
+      },
+      {
+        "date": "2026-05-29",
+        "hunter": 129.47,
+        "sp500": 120.25,
+        "nasdaq100": 131.16,
+        "utilities": 107.63
+      },
+      {
+        "date": "2026-06-01",
+        "hunter": 132.14,
+        "sp500": 120.58,
+        "nasdaq100": 131.94,
+        "utilities": 104.44
+      },
+      {
+        "date": "2026-06-02",
+        "hunter": 135.82,
+        "sp500": 120.74,
+        "nasdaq100": 132.55,
+        "utilities": 106.36
+      },
+      {
+        "date": "2026-06-03",
+        "hunter": 132.77,
+        "sp500": 119.9,
+        "nasdaq100": 132.21,
+        "utilities": 105.9
+      },
+      {
+        "date": "2026-06-04",
+        "hunter": 134.23,
+        "sp500": 120.35,
+        "nasdaq100": 131.57,
+        "utilities": 106.46
+      },
+      {
+        "date": "2026-06-05",
+        "hunter": 127.96,
+        "sp500": 117.24,
+        "nasdaq100": 125.25,
+        "utilities": 107.46
+      },
+      {
+        "date": "2026-06-08",
+        "hunter": 128.68,
+        "sp500": 117.51,
+        "nasdaq100": 127.21,
+        "utilities": 105.44
+      },
+      {
+        "date": "2026-06-09",
+        "hunter": 127.38,
+        "sp500": 117.16,
+        "nasdaq100": 125.74,
+        "utilities": 106.56
+      },
+      {
+        "date": "2026-06-10",
+        "hunter": 122.28,
+        "sp500": 115.32,
+        "nasdaq100": 123.23,
+        "utilities": 106.61
+      },
+      {
+        "date": "2026-06-11",
+        "hunter": 128.1,
+        "sp500": 117.28,
+        "nasdaq100": 127.39,
+        "utilities": 106.73
+      },
+      {
+        "date": "2026-06-12",
+        "hunter": 129.31,
+        "sp500": 117.91,
+        "nasdaq100": 128.14,
+        "utilities": 107.9
+      },
+      {
+        "date": "2026-06-15",
+        "hunter": 132.29,
+        "sp500": 119.99,
+        "nasdaq100": 132.17,
+        "utilities": 108.41
+      },
+      {
+        "date": "2026-06-16",
+        "hunter": 131.33,
+        "sp500": 119.27,
+        "nasdaq100": 129.66,
+        "utilities": 109.17
+      },
+      {
+        "date": "2026-06-17",
+        "hunter": 132.19,
+        "sp500": 117.78,
+        "nasdaq100": 128.35,
+        "utilities": 107.73
+      },
+      {
+        "date": "2026-06-18",
+        "hunter": 135.38,
+        "sp500": 118.7,
+        "nasdaq100": 131.57,
+        "utilities": 108.46
+      },
+      {
+        "date": "2026-06-22",
+        "hunter": 138.48,
+        "sp500": 118.33,
+        "nasdaq100": 131.24,
+        "utilities": 109.05
+      },
+      {
+        "date": "2026-06-23",
+        "hunter": 131.87,
+        "sp500": 116.61,
+        "nasdaq100": 126.92,
+        "utilities": 109.9
+      },
+      {
+        "date": "2026-06-24",
+        "hunter": 131.48,
+        "sp500": 116.56,
+        "nasdaq100": 126.38,
+        "utilities": 111.05
+      },
+      {
+        "date": "2026-06-25",
+        "hunter": 133.5,
+        "sp500": 116.73,
+        "nasdaq100": 127.4,
+        "utilities": 111.8
+      },
+      {
+        "date": "2026-06-26",
+        "hunter": 129.62,
+        "sp500": 115.88,
+        "nasdaq100": 125.65,
+        "utilities": 112.66
+      },
+      {
+        "date": "2026-06-29",
+        "hunter": 130.32,
+        "sp500": 117.79,
+        "nasdaq100": 128.77,
+        "utilities": 112.22
+      },
+      {
+        "date": "2026-06-30",
+        "hunter": 132.54,
+        "sp500": 118.71,
+        "nasdaq100": 130.96,
+        "utilities": 110.56
+      },
+      {
+        "date": "2026-07-01",
+        "hunter": 127.36,
+        "sp500": 118.55,
+        "nasdaq100": 128.96,
+        "utilities": 109.17
+      },
+      {
+        "date": "2026-07-02",
+        "hunter": 125.14,
+        "sp500": 118.39,
+        "nasdaq100": 126.73,
+        "utilities": 111.58
+      },
+      {
+        "date": "2026-07-06",
+        "hunter": 126.93,
+        "sp500": 119.43,
+        "nasdaq100": 128.55,
+        "utilities": 110.46
+      },
+      {
+        "date": "2026-07-07",
+        "hunter": 122.7,
+        "sp500": 118.86,
+        "nasdaq100": 126.17,
+        "utilities": 111.44
+      },
+      {
+        "date": "2026-07-08",
+        "hunter": 122.15,
+        "sp500": 118.49,
+        "nasdaq100": 126.52,
+        "utilities": 110.61
+      },
+      {
+        "date": "2026-07-09",
+        "hunter": 123.82,
+        "sp500": 119.49,
+        "nasdaq100": 128.63,
+        "utilities": 110.05
+      },
+      {
+        "date": "2026-07-10",
+        "hunter": 123.35,
+        "sp500": 120.01,
+        "nasdaq100": 129.03,
+        "utilities": 110.73
+      },
+      {
+        "date": "2026-07-13",
+        "hunter": 120.68,
+        "sp500": 119.09,
+        "nasdaq100": 126.58,
+        "utilities": 111.49
+      },
+      {
+        "date": "2026-07-14",
+        "hunter": 122.07,
+        "sp500": 119.51,
+        "nasdaq100": 127.99,
+        "utilities": 111.41
+      },
+      {
+        "date": "2026-07-15",
+        "hunter": 121.85,
+        "sp500": 119.99,
+        "nasdaq100": 127.64,
+        "utilities": 110.27
+      },
+      {
+        "date": "2026-07-16",
+        "hunter": 119.04,
+        "sp500": 119.34,
+        "nasdaq100": 125.55,
+        "utilities": 110.88
+      },
+      {
+        "date": "2026-07-17",
+        "hunter": 118.26,
+        "sp500": 118.16,
+        "nasdaq100": 123.66,
+        "utilities": 110.14
+      },
+      {
+        "date": "2026-07-20",
+        "hunter": 118.27,
+        "sp500": 117.96,
+        "nasdaq100": 123.79,
+        "utilities": 109.58
+      },
+      {
+        "date": "2026-07-21",
+        "hunter": 121,
+        "sp500": 118.95,
+        "nasdaq100": 126.08,
+        "utilities": 109.53
+      },
+      {
+        "date": "2026-07-22",
+        "hunter": 120.82,
+        "sp500": 118.81,
+        "nasdaq100": 125.44,
+        "utilities": 112
+      },
+      {
+        "date": "2026-07-23",
+        "hunter": 122.11,
+        "sp500": 117.34,
+        "nasdaq100": 123.06,
+        "utilities": 112.63
+      },
+      {
+        "date": "2026-07-24",
+        "hunter": 119.25,
+        "sp500": 117.46,
+        "nasdaq100": 121.68,
+        "utilities": 112.87
+      }
+    ],
+    "constituents": [
+      {
+        "ticker": "GEV",
+        "companyName": "GE Vernova Inc.",
+        "chineseName": "通用电气维诺瓦",
+        "sector": "电力设备",
+        "weight": 0.05,
+        "latestPrice": 1014.75,
+        "dailyReturn": -1.59,
+        "oneMonthReturn": -4.06,
+        "threeMonthReturn": -11.68,
+        "oneYearReturn": 63,
+        "contributionOneYear": 3.15,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "ETN",
+        "companyName": "Eaton Corporation plc",
+        "chineseName": "伊顿",
+        "sector": "电力设备",
+        "weight": 0.05,
+        "latestPrice": 404.07,
+        "dailyReturn": -2.66,
+        "oneMonthReturn": -0.13,
+        "threeMonthReturn": -4.55,
+        "oneYearReturn": 6.19,
+        "contributionOneYear": 0.31,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "HUBB",
+        "companyName": "Hubbell Incorporated",
+        "chineseName": "哈贝尔",
+        "sector": "电网设备",
+        "weight": 0.05,
+        "latestPrice": 486.09,
+        "dailyReturn": -0.47,
+        "oneMonthReturn": -6.19,
+        "threeMonthReturn": -12.6,
+        "oneYearReturn": 12.45,
+        "contributionOneYear": 0.62,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "PWR",
+        "companyName": "Quanta Services, Inc.",
+        "chineseName": "广达服务",
+        "sector": "电网建设",
+        "weight": 0.05,
+        "latestPrice": 625.84,
+        "dailyReturn": -4.28,
+        "oneMonthReturn": -10.82,
+        "threeMonthReturn": -1.18,
+        "oneYearReturn": 53.82,
+        "contributionOneYear": 2.69,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "POWL",
+        "companyName": "Powell Industries, Inc.",
+        "chineseName": "鲍威尔工业",
+        "sector": "电网设备",
+        "weight": 0.05,
+        "latestPrice": 232.21,
+        "dailyReturn": -4.23,
+        "oneMonthReturn": -21.15,
+        "threeMonthReturn": -7.89,
+        "oneYearReturn": 190.84,
+        "contributionOneYear": 9.54,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "VRT",
+        "companyName": "Vertiv Holdings Co",
+        "chineseName": "维谛技术",
+        "sector": "数据中心电力",
+        "weight": 0.05,
+        "latestPrice": 290.36,
+        "dailyReturn": -4.5,
+        "oneMonthReturn": -8.24,
+        "threeMonthReturn": -9.74,
+        "oneYearReturn": 122.11,
+        "contributionOneYear": 6.11,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "CEG",
+        "companyName": "Constellation Energy",
+        "chineseName": "星座能源",
+        "sector": "核能与发电",
+        "weight": 0.05,
+        "latestPrice": 274.35,
+        "dailyReturn": -0.45,
+        "oneMonthReturn": 2.38,
+        "threeMonthReturn": -6.15,
+        "oneYearReturn": -14.26,
+        "contributionOneYear": -0.71,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "VST",
+        "companyName": "Vistra Corp.",
+        "chineseName": "维斯特拉能源",
+        "sector": "核能与发电",
+        "weight": 0.05,
+        "latestPrice": 163.38,
+        "dailyReturn": -3.31,
+        "oneMonthReturn": 0.31,
+        "threeMonthReturn": 4.31,
+        "oneYearReturn": -16.31,
+        "contributionOneYear": -0.82,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "NEE",
+        "companyName": "NextEra Energy, Inc.",
+        "chineseName": "新纪元能源",
+        "sector": "公用事业",
+        "weight": 0.05,
+        "latestPrice": 89.78,
+        "dailyReturn": -0.01,
+        "oneMonthReturn": 2.47,
+        "threeMonthReturn": -6.04,
+        "oneYearReturn": 28.35,
+        "contributionOneYear": 1.42,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "DUK",
+        "companyName": "Duke Energy Corporation",
+        "chineseName": "杜克能源",
+        "sector": "公用事业",
+        "weight": 0.05,
+        "latestPrice": 130.52,
+        "dailyReturn": 0.97,
+        "oneMonthReturn": 3.15,
+        "threeMonthReturn": 2.82,
+        "oneYearReturn": 12.8,
+        "contributionOneYear": 0.64,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "SO",
+        "companyName": "The Southern Company",
+        "chineseName": "南方电力",
+        "sector": "公用事业",
+        "weight": 0.05,
+        "latestPrice": 97.25,
+        "dailyReturn": 0.67,
+        "oneMonthReturn": 1.53,
+        "threeMonthReturn": 4.41,
+        "oneYearReturn": 5.72,
+        "contributionOneYear": 0.29,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "EXC",
+        "companyName": "Exelon Corporation",
+        "chineseName": "爱克斯龙电力",
+        "sector": "公用事业",
+        "weight": 0.05,
+        "latestPrice": 47.53,
+        "dailyReturn": 0.53,
+        "oneMonthReturn": 1.34,
+        "threeMonthReturn": 2.63,
+        "oneYearReturn": 12.6,
+        "contributionOneYear": 0.63,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "AEP",
+        "companyName": "American Electric Power",
+        "chineseName": "美国电力",
+        "sector": "公用事业",
+        "weight": 0.05,
+        "latestPrice": 135.54,
+        "dailyReturn": 0.46,
+        "oneMonthReturn": 0.43,
+        "threeMonthReturn": 1.07,
+        "oneYearReturn": 28.32,
+        "contributionOneYear": 1.42,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "XEL",
+        "companyName": "Xcel Energy Inc.",
+        "chineseName": "埃克西尔能源",
+        "sector": "公用事业",
+        "weight": 0.05,
+        "latestPrice": 81.67,
+        "dailyReturn": 1.11,
+        "oneMonthReturn": 0.25,
+        "threeMonthReturn": 3.52,
+        "oneYearReturn": 15.68,
+        "contributionOneYear": 0.78,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "NRG",
+        "companyName": "NRG Energy, Inc.",
+        "chineseName": "NRG能源",
+        "sector": "独立发电商",
+        "weight": 0.05,
+        "latestPrice": 141.03,
+        "dailyReturn": -1.37,
+        "oneMonthReturn": -0.83,
+        "threeMonthReturn": -8.46,
+        "oneYearReturn": -9.7,
+        "contributionOneYear": -0.48,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "BWXT",
+        "companyName": "BWX Technologies, Inc.",
+        "chineseName": "BWX技术",
+        "sector": "核能设备",
+        "weight": 0.05,
+        "latestPrice": 174.52,
+        "dailyReturn": -1.22,
+        "oneMonthReturn": -15.14,
+        "threeMonthReturn": -22.51,
+        "oneYearReturn": 22.01,
+        "contributionOneYear": 1.1,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "SMR",
+        "companyName": "NuScale Power Corporation",
+        "chineseName": "纽斯凯尔电力",
+        "sector": "先进核能",
+        "weight": 0.05,
+        "latestPrice": 8.09,
+        "dailyReturn": -8.17,
+        "oneMonthReturn": -20.76,
+        "threeMonthReturn": -36.4,
+        "oneYearReturn": -84.15,
+        "contributionOneYear": -4.21,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "OKLO",
+        "companyName": "Oklo Inc.",
+        "chineseName": "奥克洛",
+        "sector": "先进核能",
+        "weight": 0.05,
+        "latestPrice": 40.25,
+        "dailyReturn": -8.52,
+        "oneMonthReturn": -25.55,
+        "threeMonthReturn": -47.36,
+        "oneYearReturn": -46.04,
+        "contributionOneYear": -2.3,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "FLNC",
+        "companyName": "Fluence Energy, Inc.",
+        "chineseName": "弗鲁恩斯能源",
+        "sector": "储能",
+        "weight": 0.05,
+        "latestPrice": 13.44,
+        "dailyReturn": -6.8,
+        "oneMonthReturn": -31.95,
+        "threeMonthReturn": -0.59,
+        "oneYearReturn": 43.59,
+        "contributionOneYear": 2.18,
+        "dataStatus": "complete"
+      },
+      {
+        "ticker": "STEM",
+        "companyName": "Stem, Inc.",
+        "chineseName": "Stem智能储能",
+        "sector": "储能",
+        "weight": 0.05,
+        "latestPrice": 5.49,
+        "dailyReturn": -5.51,
+        "oneMonthReturn": -26.31,
+        "threeMonthReturn": -51.33,
+        "oneYearReturn": -61.98,
+        "contributionOneYear": -3.1,
+        "dataStatus": "complete"
+      }
+    ],
+    "sectors": [
+      {
+        "sector": "电网设备",
+        "count": 2,
+        "equalWeight": 10,
+        "averageOneYearReturn": 101.64,
+        "contribution": 10.16
+      },
+      {
+        "sector": "数据中心电力",
+        "count": 1,
+        "equalWeight": 5,
+        "averageOneYearReturn": 122.11,
+        "contribution": 6.11
+      },
+      {
+        "sector": "公用事业",
+        "count": 6,
+        "equalWeight": 30,
+        "averageOneYearReturn": 17.25,
+        "contribution": 5.18
+      },
+      {
+        "sector": "电力设备",
+        "count": 2,
+        "equalWeight": 10,
+        "averageOneYearReturn": 34.59,
+        "contribution": 3.46
+      },
+      {
+        "sector": "电网建设",
+        "count": 1,
+        "equalWeight": 5,
+        "averageOneYearReturn": 53.82,
+        "contribution": 2.69
+      },
+      {
+        "sector": "核能设备",
+        "count": 1,
+        "equalWeight": 5,
+        "averageOneYearReturn": 22.01,
+        "contribution": 1.1
+      },
+      {
+        "sector": "独立发电商",
+        "count": 1,
+        "equalWeight": 5,
+        "averageOneYearReturn": -9.7,
+        "contribution": -0.48
+      },
+      {
+        "sector": "储能",
+        "count": 2,
+        "equalWeight": 10,
+        "averageOneYearReturn": -9.19,
+        "contribution": -0.92
+      },
+      {
+        "sector": "核能与发电",
+        "count": 2,
+        "equalWeight": 10,
+        "averageOneYearReturn": -15.29,
+        "contribution": -1.53
+      },
+      {
+        "sector": "先进核能",
+        "count": 2,
+        "equalWeight": 10,
+        "averageOneYearReturn": -65.09,
+        "contribution": -6.51
+      }
+    ],
+    "warnings": []
+  }
+}

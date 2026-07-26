@@ -1,4 +1,5 @@
 import { constituents, type Constituent } from "@/data/constituents";
+import persistedSnapshotFile from "@/data/hunter-power-snapshot.json";
 import {
   calculateHunterIndex,
   type AdjustedPricePoint,
@@ -67,6 +68,11 @@ interface LoadedTicker {
   quote: ProviderQuote;
   provider: MarketDataProvider;
 }
+
+const persistedSnapshot = persistedSnapshotFile as {
+  generatedAt: string | null;
+  data: MarketSnapshot | null;
+};
 
 const INDEX_TICKERS = [...constituents.map((item) => item.ticker), "SPY", "QQQ", "XLU"];
 const round = (value: number, digits = 2) => Number(value.toFixed(digits));
@@ -270,6 +276,11 @@ function buildDevelopmentSimulation(): MarketSnapshot {
 }
 
 export async function getMarketSnapshot(options: { bypassCache?: boolean } = {}): Promise<MarketSnapshot> {
+  // Production reads the last verified snapshot generated from a single fixed-IP
+  // machine. This prevents serverless deployments from contacting Market Data
+  // from rotating outbound IP addresses.
+  if (persistedSnapshot.data) return persistedSnapshot.data;
+
   const load = async () => {
     let chain: MarketDataProvider[];
     try {

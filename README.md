@@ -56,14 +56,38 @@ FMP_API_KEY=your_fmp_key
 COINGECKO_DEMO_API_KEY=optional_demo_key
 ```
 
-HPI 使用 `marketdata` 作为主数据源。免费账户有每日 credits、一年历史、延迟和单一 IP 限制，单次完整刷新会覆盖 20 只成分股及基准标的。Vercel Serverless 的出口 IP 可能变化，因此正式自动更新应通过固定出口 IP 的刷新任务写入持久化快照；备用股票供应商仍支持 `twelvedata`、`polygon`、`fmp`、`finnhub`。跨资产数据按品类路由；GLD 始终明确标注为“Gold ETF”，不会冒充黄金现货；FRED 美元广义指数也不会冒充 ICE DXY。适配器位于 `lib/market-data/providers/`：
+HPI 使用 `marketdata` 作为主数据源。免费账户有每日 credits、一年历史、延迟和单一 IP 限制，单次完整刷新会覆盖 20 只成分股及 SPY/QQQ/XLU 三个基准标的。MarketData Token 只保存在固定出口 IP 的更新电脑中，Vercel 只读取 `data/hunter-power-snapshot.json`，不会直接请求 MarketData。备用股票供应商仍支持 `twelvedata`、`polygon`、`fmp`、`finnhub`。跨资产数据按品类路由；GLD 始终明确标注为“Gold ETF”，不会冒充黄金现货；FRED 美元广义指数也不会冒充 ICE DXY。适配器位于 `lib/market-data/providers/`：
 
 - `getQuote(symbol)` / `getQuotes(symbols)`
 - `getHistoricalPrices(symbol, range)`
 - `getMarketStatus()`
 - `getFundamentals(symbol)`（供应商不支持时返回明确错误）
 
-服务端已有请求超时、三次重试、并发约束、20小时缓存、API Route 限速、HPI 股票供应商 fallback 和数据时间戳。MarketData 免费日线至少延迟 24 小时，因此 Vercel Cron 在每周一至周六 UTC 16:30（北京时间次日 00:30）检查并载入最新可用美股交易日。`ALLOW_MOCK_MARKET_DATA=true` 只用于本地开发，生产环境永不启用。
+服务端已有请求超时、重试、缓存、HPI 股票供应商 fallback 和数据时间戳。MarketData 免费日线至少延迟 24 小时，因此固定 IP 电脑应在每周二至周六北京时间 23:30 检查最新可用美股交易日。`ALLOW_MOCK_MARKET_DATA=true` 只用于本地开发，生产环境永不启用。
+
+### 固定 IP 电脑更新 Hunter Power Index
+
+确认 `.env.local` 中存在真实 `MARKETDATA_TOKEN`，然后先手动测试：
+
+```powershell
+cd "C:\Users\ROG\Documents\Codex\2026-07-20\hunter-taotalk-finance-finance-ficc-finance"
+npm.cmd run refresh:hunter
+```
+
+成功后，`data/hunter-power-snapshot.json` 会保存真实快照。需要同时提交并触发 Vercel 部署时运行：
+
+```powershell
+npm.cmd run refresh:hunter:auto
+```
+
+Windows 任务计划程序可在每周二至周六 23:30 执行：
+
+```text
+程序：powershell.exe
+参数：-NoProfile -ExecutionPolicy Bypass -File "C:\Users\ROG\Documents\Codex\2026-07-20\hunter-taotalk-finance-finance-ficc-finance\scripts\refresh-hunter.ps1"
+```
+
+勾选“错过计划后尽快运行”。更新失败时脚本不会覆盖上次有效快照。MarketData Token 不得配置在 Vercel，也不得提交 `.env.local`。
 
 ## 发布研究文章
 
@@ -129,8 +153,9 @@ npx prisma migrate dev
 1. 将仓库导入 Vercel；Framework 选择 Next.js。
 2. 在 Project Settings → Environment Variables 中添加 `.env.example` 所需真实值。
 3. 设置 `NEXT_PUBLIC_SITE_URL` 为正式域名。
-4. 生成至少 32 字符的 `CRON_SECRET`，用于 `app/api/cron/refresh-market-data`。
-5. Build Command 使用 `npm run build:vercel`；完成后检查 `/markets`、`/indices/hunter-power` 和 API 缺省状态。
+4. 不要在 Vercel 配置 `MARKETDATA_TOKEN`；HPI 由固定 IP 电脑生成并提交快照。
+5. 生成至少 32 字符的 `CRON_SECRET`，供其他受保护任务使用。
+6. Build Command 使用 `npm run build:vercel`；完成后检查 `/markets`、`/indices/hunter-power` 和 API 缺省状态。
 
 不要提交 `.env.local`、API Key、数据库密码、微信私有素材或未获授权的市场数据。
 

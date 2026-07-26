@@ -11,6 +11,8 @@
     "build": "vinext build",
     "build:cloudbase": "node scripts/build-cloudbase.mjs",
     "build:vercel": "prisma generate && next build",
+    "refresh:hunter": "node scripts/refresh-hunter-snapshot.mjs",
+    "refresh:hunter:auto": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/refresh-hunter.ps1",
     "start": "vinext start",
     "test": "vinext build && node --test tests/*.test.mjs",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next --ignore-pattern .next-stale-*",

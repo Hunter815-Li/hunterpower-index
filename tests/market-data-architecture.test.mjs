@@ -6,8 +6,10 @@ const root = new URL("../", import.meta.url);
 const read = (file) => readFile(new URL(file, root), "utf8");
 
 test("preserves the Hunter constituents and server-side index engine", async () => {
-  const [constituents, calculator, definition, route] = await Promise.all([read("data/constituents.ts"), read("lib/calculateHunterIndex.ts"), read("data/indices/hunter-power.ts"), read("app/api/indices/[slug]/route.ts")]);
-  assert.equal((constituents.match(/\{ ticker:/g) ?? []).length, 20);
+  const [constituentJson, calculator, definition, route] = await Promise.all([read("data/hunter-power-constituents.json"), read("lib/calculateHunterIndex.ts"), read("data/indices/hunter-power.ts"), read("app/api/indices/[slug]/route.ts")]);
+  const constituents = JSON.parse(constituentJson);
+  assert.equal(constituents.length, 20);
+  assert.deepEqual(constituents.map((item) => item.ticker), ["GEV", "ETN", "HUBB", "PWR", "POWL", "VRT", "CEG", "VST", "NEE", "DUK", "SO", "EXC", "AEP", "XEL", "NRG", "BWXT", "SMR", "OKLO", "FLNC", "STEM"]);
   assert.match(calculator, /normalizedValues/);
   assert.match(definition, /ticker: "HPI"/);
   assert.match(route, /calculateIndexStatistics/);
