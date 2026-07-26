@@ -225,6 +225,15 @@ async function loadTicker(ticker: string, chain: MarketDataProvider[], warnings:
       return { ticker, history, quote, provider };
     } catch (error) {
       lastError = error;
+      console.warn(JSON.stringify({
+        level: "warn",
+        event: "market_data_provider_failed",
+        provider: provider.name,
+        ticker,
+        code: error instanceof MarketDataError ? error.code : "UNKNOWN",
+        message: error instanceof Error ? error.message : String(error),
+        timestamp: new Date().toISOString(),
+      }));
       warnings.push(`${provider.label} 获取 ${ticker} 失败，正在尝试备用数据源`);
     }
   }

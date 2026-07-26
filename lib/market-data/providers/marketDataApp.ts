@@ -33,7 +33,9 @@ export class MarketDataAppProvider extends BaseMarketDataProvider implements Mar
   async getHistory(ticker: string): Promise<AdjustedPricePoint[]> {
     return withMemoryCache(`${this.name}:history:${ticker}`, DAILY_CACHE_MS, async () => {
       const url = new URL(`https://api.marketdata.app/v1/stocks/candles/D/${encodeURIComponent(ticker)}/`);
-      url.searchParams.set("countback", "280");
+      // Free Forever accounts are limited to one year of history. Request one
+      // trading year so the API does not reject the entire series as too old.
+      url.searchParams.set("countback", "252");
       // The public research edition intentionally stops at least one calendar day
       // before today; non-trading days naturally resolve to the latest prior candle.
       url.searchParams.set("to", easternDate(Date.now() - 86_400_000));

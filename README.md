@@ -48,22 +48,22 @@ Market Data Free Forever 每日 100 credits，且股票行情至少延迟24小�
 所有第三方密钥必须保存在 `.env.local` 或部署平台的 Secret 中，绝不能使用 `NEXT_PUBLIC_` 前缀。
 
 ```env
-MARKET_DATA_PROVIDER=fmp
-MARKET_DATA_FALLBACKS=marketdata,twelvedata,polygon,finnhub
+MARKET_DATA_PROVIDER=marketdata
+MARKET_DATA_FALLBACKS=twelvedata,polygon,fmp,finnhub
 MARKETDATA_TOKEN=your_server_side_token
 FRED_API_KEY=your_fred_key
 FMP_API_KEY=your_fmp_key
 COINGECKO_DEMO_API_KEY=optional_demo_key
 ```
 
-HPI 在 Vercel 等 serverless 环境中推荐使用 `fmp`；`marketdata` 受单一 IP 政策限制，更适合本地或固定 IP 服务。备用股票供应商仍支持 `marketdata`、`polygon`、`twelvedata`、`finnhub`。跨资产数据按品类路由；GLD 始终明确标注为“Gold ETF”，不会冒充黄金现货；FRED 美元广义指数也不会冒充 ICE DXY。适配器位于 `lib/market-data/providers/`：
+HPI 使用 `marketdata` 作为主数据源。免费账户有每日 credits、一年历史、延迟和单一 IP 限制，单次完整刷新会覆盖 20 只成分股及基准标的。Vercel Serverless 的出口 IP 可能变化，因此正式自动更新应通过固定出口 IP 的刷新任务写入持久化快照；备用股票供应商仍支持 `twelvedata`、`polygon`、`fmp`、`finnhub`。跨资产数据按品类路由；GLD 始终明确标注为“Gold ETF”，不会冒充黄金现货；FRED 美元广义指数也不会冒充 ICE DXY。适配器位于 `lib/market-data/providers/`：
 
 - `getQuote(symbol)` / `getQuotes(symbols)`
 - `getHistoricalPrices(symbol, range)`
 - `getMarketStatus()`
 - `getFundamentals(symbol)`（供应商不支持时返回明确错误）
 
-服务端已有请求超时、三次重试、并发约束、20小时缓存、API Route 限速、HPI 股票供应商 fallback 和数据时间戳。由于免费股票行情至少延迟24小时，Vercel Cron 在北京时间周三至周日 10:00 检查并载入最新可用美股交易日。`ALLOW_MOCK_MARKET_DATA=true` 只用于本地开发，生产环境永不启用。
+服务端已有请求超时、三次重试、并发约束、20小时缓存、API Route 限速、HPI 股票供应商 fallback 和数据时间戳。MarketData 免费日线至少延迟 24 小时，因此 Vercel Cron 在每周一至周六 UTC 16:30（北京时间次日 00:30）检查并载入最新可用美股交易日。`ALLOW_MOCK_MARKET_DATA=true` 只用于本地开发，生产环境永不启用。
 
 ## 发布研究文章
 
