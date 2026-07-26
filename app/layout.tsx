@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: { default: `${siteConfig.name} / ${siteConfig.nameZh}`, template: `%s | ${siteConfig.name}` },
   description: siteConfig.description,
-  keywords: ["Global Macro", "Equities", "FICC", "Thematic Indices", "全球宏观", "权益研究", "电力指数"],
+  keywords: ["Global Macro", "Cross Asset", "Options", "Thematic Indices", "全球宏观", "期权市场", "电力指数"],
   icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
   openGraph: { title: siteConfig.name, description: siteConfig.description, type: "website", locale: "zh_CN", siteName: siteConfig.name, images: [{ url: "/og.png", width: 1792, height: 921, alt: "Global Finance Intelligence / 滔" }] },
   twitter: { card: "summary_large_image", title: siteConfig.name, description: siteConfig.description, images: ["/og.png"] },

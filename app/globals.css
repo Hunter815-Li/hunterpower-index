@@ -157,3 +157,21 @@ html[data-theme="dark"]{--ink:#e4eaf0;--paper:#0f161d;--paper-2:#131d26;--line:#
 @media(max-width:520px){
   .macro-metric-card,.macro-market-card{min-height:230px}
 }
+
+/* Dedicated options terminal */
+.options-page{padding-bottom:90px}
+.options-hero h1{display:flex;align-items:baseline;gap:18px}
+.options-hero h1 .lang-en{font-size:.58em;color:#8293a2}
+.options-stack{display:grid;gap:18px;padding-top:25px}
+.options-intro{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line-dark);background:var(--terminal-2)}
+.options-intro>div{min-height:145px;padding:22px;border-right:1px solid var(--line-dark)}
+.options-intro>div:last-child{border-right:0}
+.options-intro span{display:block;color:var(--amber-bright);font:700 9px var(--mono);letter-spacing:.08em}
+.options-intro b{display:block;margin-top:20px;font:500 21px var(--serif)}
+.options-intro p{margin:8px 0 0;max-width:33ch;color:#8798a7;font-size:11px;line-height:1.65}
+
+@media(max-width:900px){
+  .options-intro{grid-template-columns:1fr}
+  .options-intro>div{min-height:0;border-right:0;border-bottom:1px solid var(--line-dark)}
+  .options-intro>div:last-child{border-bottom:0}
+}

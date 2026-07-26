@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { KzgOptionsSnapshot } from "@/components/market/KzgOptionsSnapshot";
 import { MarketBoard } from "@/components/market/MarketBoard";
 import { MarketComparison } from "@/components/market/MarketComparison";
 import { BilingualText } from "@/components/ui/BilingualText";
@@ -59,7 +58,6 @@ export default async function MarketsPage() {
           </section>
         ))}
 
-        <KzgOptionsSnapshot />
         <MarketComparison />
       </div>
     </main>

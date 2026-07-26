@@ -19,8 +19,8 @@ export default async function HomePage() {
             <span className="eyebrow">GLOBAL FINANCE INTELLIGENCE</span>
             <h1 className="hero-intelligence"><span>Global Finance</span><em>Intelligence</em></h1>
             <div className="hero-signature"><span className="hero-signature-seal">滔</span><small>DESIGNED BY <b>李邦滔</b></small></div>
-            <p className="hero-lede"><BilingualText zh="以全球宏观为坐标，以产业研究为纵深，连接权益、FICC 与大类资产。" en="Connecting equities, FICC and cross-asset research through a global macro and industry lens." /></p>
-            <p className="hero-subtitle">Global Macro · Equities · FICC · Thematic Indices</p>
+            <p className="hero-lede"><BilingualText zh="以全球宏观为坐标，以产业研究为纵深，连接跨资产市场、期权与主题指数。" en="Connecting cross-asset markets, options and thematic indices through a global macro and industry lens." /></p>
+            <p className="hero-subtitle">Global Macro · Cross Asset · Options · Thematic Indices</p>
             <div className="button-row">
               <Link className="button button-primary" href="/markets"><BilingualText zh="进入市场终端" en="Open Markets" /></Link>
               <Link className="button button-secondary" href="/indices"><BilingualText zh="查看主题指数" en="View Indices" /></Link>
