@@ -47,7 +47,7 @@ export function MacroGlobalMarkets() {
   return (
     <section className="macro-block">
       <div className="macro-section-heading">
-        <div><span className="section-kicker">04 / GLOBAL MARKETS</span><h2><BilingualText zh="全球市场定价" en="Global Markets" /></h2></div>
+        <div><span className="section-kicker">03 / GLOBAL MARKETS</span><h2><BilingualText zh="全球市场定价" en="Global Markets" /></h2></div>
         <p><BilingualText zh="用于交叉验证美元、商品、加密资产与波动率所反映的宏观定价。" en="Cross-asset pricing signals for the dollar, commodities, crypto and volatility." /></p>
       </div>
       {state === "loading" && <div className="macro-calendar-loading"><BilingualText zh="正在同步市场数据…" en="SYNCING MARKET DATA…" /></div>}

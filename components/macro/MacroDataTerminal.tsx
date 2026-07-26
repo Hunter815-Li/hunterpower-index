@@ -62,8 +62,8 @@ export function MacroDataTerminal() {
         {state === "error" && <BilingualText zh="官方数据请求失败；页面不会显示替代数字。" en="Official source request failed. No substitute values are shown." />}
         {state === "ready" && <><BilingualText zh="官方数据同步完成" en="OFFICIAL DATA SYNCED" /> · <BilingualText zh="更新" en="UPDATED" /> {updatedAt ?? "—"}</>}
       </div>
-      <MacroDashboardSection index="02 / CHINA" title="中国" titleEn="China" metrics={china} groups={chinaGroups} />
-      <MacroDashboardSection index="03 / UNITED STATES" title="美国" titleEn="United States" metrics={us} groups={usGroups} />
+      <MacroDashboardSection country="CN" index="01 / CHINA" title="中国" titleEn="China" metrics={china} groups={chinaGroups} />
+      <MacroDashboardSection country="US" index="02 / UNITED STATES" title="美国" titleEn="United States" metrics={us} groups={usGroups} />
     </>
   );
 }

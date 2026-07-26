@@ -61,7 +61,7 @@ export function MacroCalendar({ events }: { events: MacroEvent[] }) {
   return (
     <section className="macro-block">
       <div className="macro-section-heading">
-        <div><span className="section-kicker">05 / ECONOMIC CALENDAR</span><h2><BilingualText zh="未来14天重要事件" en="14-Day Economic Calendar" /></h2></div>
+        <div><span className="section-kicker">04 / ECONOMIC CALENDAR</span><h2><BilingualText zh="未来14天重要事件" en="14-Day Economic Calendar" /></h2></div>
         <p><BilingualText zh="仅保留央行、通胀、就业、PMI与GDP等高投资相关性发布。" en="Only market-relevant central-bank, inflation, employment, PMI and GDP releases." /></p>
       </div>
       <div className="macro-filters" role="group" aria-label="Calendar filters">

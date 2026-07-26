@@ -69,7 +69,7 @@ export function MacroHistoricalCharts() {
   ], [metrics]);
   return (
     <section className="macro-block">
-      <div className="macro-section-heading"><div><span className="section-kicker">06 / HISTORICAL CHARTS</span><h2><BilingualText zh="历史趋势与中美对比" en="Historical Trends & Comparisons" /></h2></div><p><BilingualText zh="仅绘制已验证的历史观测值。" en="Only verified observations are charted." /></p></div>
+      <div className="macro-section-heading"><div><span className="section-kicker">05 / HISTORICAL CHARTS</span><h2><BilingualText zh="历史趋势与中美对比" en="Historical Trends & Comparisons" /></h2></div><p><BilingualText zh="仅绘制已验证的历史观测值。" en="Only verified observations are charted." /></p></div>
       {state === "loading" && <div className="macro-calendar-loading"><BilingualText zh="正在加载真实历史序列…" en="LOADING VERIFIED HISTORY…" /></div>}
       {state === "error" && <div className="macro-calendar-loading macro-calendar-error"><BilingualText zh="历史数据请求失败" en="Historical data unavailable" /></div>}
       <div className="macro-history-grid">{panels.map((panel) => <HistoricalPanel key={panel.titleEn} {...panel} />)}</div>

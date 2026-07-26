@@ -10,12 +10,14 @@ export interface MacroMetricGroup {
 }
 
 export function MacroDashboardSection({
+  country,
   index,
   title,
   titleEn,
   metrics,
   groups,
 }: {
+  country: "CN" | "US";
   index: string;
   title: string;
   titleEn: string;
@@ -26,8 +28,20 @@ export function MacroDashboardSection({
 
   return (
     <section className="macro-block">
-      <div className="macro-section-heading">
-        <div><span className="section-kicker">{index}</span><h2><BilingualText zh={title} en={titleEn} /></h2></div>
+      <div className="macro-section-heading macro-country-heading">
+        <div className="macro-country-title">
+          <span
+            aria-label={`${titleEn} flag`}
+            className={`macro-country-flag macro-country-flag-${country.toLowerCase()}`}
+            role="img"
+          >
+            {country === "CN" ? <i>★</i> : <i aria-hidden="true">•••<br />•••</i>}
+          </span>
+          <div className="macro-country-copy">
+            <span className="section-kicker">{index}</span>
+            <h2><BilingualText zh={title} en={titleEn} /></h2>
+          </div>
+        </div>
         <p><BilingualText zh="只保留对增长、通胀、利率与流动性判断最重要的官方指标。" en="A focused set of official indicators with direct relevance to growth, inflation, rates and liquidity." /></p>
       </div>
       {groups.map((group) => {

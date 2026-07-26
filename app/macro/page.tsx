@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { BilingualText } from "@/components/ui/BilingualText";
-import { MacroRegime } from "@/components/macro/MacroRegime";
 import { MacroDataTerminal } from "@/components/macro/MacroDataTerminal";
 import { MacroCalendar } from "@/components/macro/MacroCalendar";
 import { MacroGlobalMarkets } from "@/components/macro/MacroGlobalMarkets";
@@ -25,7 +24,6 @@ export default function MacroPage() {
         </div>
       </header>
       <div className="shell macro-stack">
-        <MacroRegime />
         <MacroDataTerminal />
         <MacroGlobalMarkets />
         <MacroCalendar events={[]} />
