@@ -1,0 +1,51 @@
+name: Refresh KZG option snapshot
+
+on:
+  schedule:
+    # 00:10 Asia/Shanghai (UTC+8)
+    - cron: "10 16 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-kzg-option-snapshot
+  cancel-in-progress: false
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install browser runtime
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Capture source report
+        env:
+          KZG_SOURCE_URL: https://kzg-option-house.netlify.app/
+        run: node scripts/capture-kzg-option-house.mjs
+
+      - name: Commit a changed snapshot
+        shell: bash
+        run: |
+          if git diff --quiet -- public/data/kzg-option-daily.png public/data/kzg-option-daily.json; then
+            echo "The source report has not changed."
+            exit 0
+          fi
+          git config user.name "taotalk-data-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add public/data/kzg-option-daily.png public/data/kzg-option-daily.json
+          git commit -m "data: refresh KZG option snapshot"
+          git push

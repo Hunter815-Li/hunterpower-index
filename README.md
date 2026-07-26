@@ -43,6 +43,23 @@ npm test
 
 Market Data Free Forever 每日 100 credits，且股票行情至少延迟24小时；本站每个计划刷新周期约使用 24 credits（HPI/基准 23、GLD 1），留有余量。FRED 只在服务端调用官方 observations API，BTC 明确标注为 Coinbase Bitcoin via FRED。页面逐项显示来源和数据日期。
 
+### KZG 美股期权每日截图
+
+`/markets` 的“美股期权分钟数据”区块展示 KZG Option House 的来源保留型截图。页面明确显示数据日期、抓取时间、来源和原站链接，不通过 OCR 重建数字。初始图片和元数据位于：
+
+```text
+public/data/kzg-option-daily.png
+public/data/kzg-option-daily.json
+```
+
+GitHub Actions 工作流 `.github/workflows/refresh-kzg-option-snapshot.yml` 每天北京时间 00:10 运行 `scripts/capture-kzg-option-house.mjs`。脚本只在找到并验证完整报告区域后覆盖快照；失败时保留上一张有效图片，不生成替代数据。也可以在 Actions 页面手动运行 `Refresh KZG option snapshot`，本地已安装 Playwright 时可执行：
+
+```bash
+npm run capture:kzg
+```
+
+自动发布第三方截图前，应确认已获得页面所有者授权，并保留 KZG 来源标识和原站链接。若未来获得稳定 JSON 接口，优先改为经过字段校验的响应式表格。
+
 ## 环境变量与数据源切换
 
 所有第三方密钥必须保存在 `.env.local` 或部署平台的 Secret 中，绝不能使用 `NEXT_PUBLIC_` 前缀。
