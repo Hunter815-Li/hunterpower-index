@@ -34,8 +34,8 @@ export default function IndicesPage() {
           >
             <div>
               <span>CWW · EXTERNAL</span>
-              <h2><BilingualText zh="中国与非中国存储指数" en="China & Ex-China Storage Index" /></h2>
-              <p><BilingualText zh="CWW Index 独立指数站点。" en="Independent CWW Index website." /></p>
+              <h2>Hunter Memory Chips Index</h2>
+              <p><BilingualText zh="中国与非中国存储指数 · CWW Index 独立指数站点。" en="China & Ex-China Memory Chips Index · Independent CWW Index website." /></p>
             </div>
             <dl>
               <div><dt>Index</dt><dd>CWW</dd></div>
