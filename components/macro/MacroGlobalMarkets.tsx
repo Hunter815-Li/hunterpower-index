@@ -14,7 +14,7 @@ interface MarketView {
 
 const marketViews: readonly MarketView[] = [
   { key: "dxy", nameZh: "美元指数", nameEn: "DXY", noteZh: "免费数据口径：美元广义指数代理", noteEn: "Free-data proxy: Broad U.S. Dollar Index" },
-  { key: "gold", nameZh: "黄金", nameEn: "Gold", noteZh: "免费数据口径：GLD ETF", noteEn: "Free-data proxy: GLD ETF" },
+  { key: "gold", nameZh: "国际金价", nameEn: "Gold · USD/oz", noteZh: "国际黄金期货参考价 · 美元/盎司", noteEn: "International gold futures reference · USD/oz" },
   { key: "wti", nameZh: "WTI原油", nameEn: "WTI Oil", noteZh: "现货日线", noteEn: "Daily spot series" },
   { key: "btc", nameZh: "比特币", nameEn: "Bitcoin", noteZh: "Coinbase BTC/USD", noteEn: "Coinbase BTC/USD" },
   { key: "vix", nameZh: "VIX波动率", nameEn: "VIX", noteZh: "CBOE收盘指数", noteEn: "CBOE closing index" },

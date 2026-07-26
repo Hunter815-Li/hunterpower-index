@@ -36,12 +36,13 @@ npm test
 
 | 数据 | 来源 | 更新 | 所需配置 |
 | --- | --- | --- | --- |
-| HPI 20只成分股、SPY/QQQ/XLU基准、GLD黄金ETF | Market Data Stocks | 至少24小时延迟 EOD | `MARKETDATA_TOKEN` |
+| HPI 20只成分股、SPY/QQQ/XLU基准 | Market Data Stocks | 至少24小时延迟 EOD | `MARKETDATA_TOKEN` |
+| 国际黄金参考价（GCUSD，美元/盎司） | Financial Modeling Prep Commodities | 日线 EOD | `FMP_API_KEY` |
 | S&P 500、Nasdaq 100、US 10Y、美元广义指数、WTI、VIX | FRED | 官方日线发布后 | `FRED_API_KEY` |
 | BTC/USD | Coinbase Bitcoin via FRED (`CBBTCUSD`) | FRED 最新日线 | `FRED_API_KEY` |
 | MOVE | 暂无已配置的合规免费日线源 | Data unavailable | 不生成替代或模拟数据 |
 
-Market Data Free Forever 每日 100 credits，且股票行情至少延迟24小时；本站每个计划刷新周期约使用 24 credits（HPI/基准 23、GLD 1），留有余量。FRED 只在服务端调用官方 observations API，BTC 明确标注为 Coinbase Bitcoin via FRED。页面逐项显示来源和数据日期。
+Market Data Free Forever 每日 100 credits，且股票行情至少延迟24小时；本站每个计划刷新周期约使用 23 credits（HPI/基准），留有余量。国际黄金使用 FMP 的 GCUSD 商品日线并显示为美元/盎司，不再使用 GLD ETF。FRED 只在服务端调用官方 observations API，BTC 明确标注为 Coinbase Bitcoin via FRED。页面逐项显示来源和数据日期。
 
 ### KZG 美股期权每日截图
 
@@ -73,7 +74,7 @@ FMP_API_KEY=your_fmp_key
 COINGECKO_DEMO_API_KEY=optional_demo_key
 ```
 
-HPI 使用 `marketdata` 作为主数据源。免费账户有每日 credits、一年历史、延迟和单一 IP 限制，单次完整刷新会覆盖 20 只成分股及 SPY/QQQ/XLU 三个基准标的。MarketData Token 只保存在固定出口 IP 的更新电脑中，Vercel 只读取 `data/hunter-power-snapshot.json`，不会直接请求 MarketData。备用股票供应商仍支持 `twelvedata`、`polygon`、`fmp`、`finnhub`。跨资产数据按品类路由；GLD 始终明确标注为“Gold ETF”，不会冒充黄金现货；FRED 美元广义指数也不会冒充 ICE DXY。适配器位于 `lib/market-data/providers/`：
+HPI 使用 `marketdata` 作为主数据源。免费账户有每日 credits、一年历史、延迟和单一 IP 限制，单次完整刷新会覆盖 20 只成分股及 SPY/QQQ/XLU 三个基准标的。MarketData Token 只保存在固定出口 IP 的更新电脑中，Vercel 只读取 `data/hunter-power-snapshot.json`，不会直接请求 MarketData。备用股票供应商仍支持 `twelvedata`、`polygon`、`fmp`、`finnhub`。跨资产数据按品类路由；国际黄金使用 FMP 的 GCUSD 商品日线并以美元/盎司展示，不使用 GLD ETF；FRED 美元广义指数也不会冒充 ICE DXY。适配器位于 `lib/market-data/providers/`：
 
 - `getQuote(symbol)` / `getQuotes(symbols)`
 - `getHistoricalPrices(symbol, range)`

@@ -2,12 +2,13 @@ import type { DailySeries, DailySeriesProvider } from "@/lib/market-data/daily-s
 import { MarketDataError } from "@/lib/market-data/errors";
 import { CoinGeckoProvider } from "@/lib/market-data/providers/coingecko";
 import { FredProvider } from "@/lib/market-data/providers/fred";
+import { FmpCommoditiesProvider } from "@/lib/market-data/providers/fmpCommodities";
 import { MarketDataStocksProvider } from "@/lib/market-data/providers/marketDataStocks";
 import type { HistoricalRange } from "@/lib/market-data/types";
 import { verifiedManualMarketSeries } from "@/lib/market-data/manual-snapshots";
 
 export type AssetGroup = "Equities" | "Rates" | "FX & Commodities" | "Alternative Assets" | "Volatility";
-type SourceProvider = "marketdata-stocks" | "fred" | "coingecko" | "manual" | "unavailable";
+type SourceProvider = "marketdata-stocks" | "fmp-commodities" | "fred" | "coingecko" | "manual" | "unavailable";
 type ChangeKind = "percent" | "basisPoints";
 
 export interface MarketInstrument {
@@ -38,7 +39,7 @@ export const marketInstruments: MarketInstrument[] = [
   { key: "nasdaq100", name: "Nasdaq 100", symbol: "NDX", sourceSymbol: "NASDAQ100", provider: "fred", group: "Equities", decimals: 2, changeKind: "percent" },
   { key: "us10y", name: "US 10Y", symbol: "DGS10", sourceSymbol: "DGS10", provider: "fred", group: "Rates", decimals: 2, changeKind: "basisPoints" },
   { key: "dxy", name: "USD Broad Index", symbol: "DTWEXBGS", sourceSymbol: "DTWEXBGS", provider: "fred", group: "FX & Commodities", decimals: 2, changeKind: "percent" },
-  { key: "gold", name: "Gold ETF", symbol: "GLD", sourceSymbol: "GLD", provider: "marketdata-stocks", group: "FX & Commodities", decimals: 2, changeKind: "percent" },
+  { key: "gold", name: "Gold · USD/oz", symbol: "GCUSD", sourceSymbol: "GCUSD", provider: "fmp-commodities", group: "FX & Commodities", decimals: 2, changeKind: "percent" },
   { key: "wti", name: "WTI", symbol: "WTI Spot", sourceSymbol: "DCOILWTICO", provider: "fred", group: "FX & Commodities", decimals: 2, changeKind: "percent" },
   { key: "btc", name: "BTC", symbol: "BTC/USD", sourceSymbol: "CBBTCUSD", provider: "fred", group: "Alternative Assets", decimals: 0, changeKind: "percent" },
   { key: "vix", name: "VIX", symbol: "VIX", sourceSymbol: "VIXCLS", provider: "fred", group: "Volatility", decimals: 2, changeKind: "percent" },
@@ -47,6 +48,7 @@ export const marketInstruments: MarketInstrument[] = [
 
 const providers: Record<SourceProvider, DailySeriesProvider> = {
   "marketdata-stocks": new MarketDataStocksProvider(),
+  "fmp-commodities": new FmpCommoditiesProvider(),
   fred: new FredProvider(),
   coingecko: new CoinGeckoProvider(),
   manual: {

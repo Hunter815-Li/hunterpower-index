@@ -16,13 +16,13 @@ test("preserves the Hunter constituents and server-side index engine", async () 
 });
 
 test("uses a server-only provider chain with retries, cache, rate limiting and explicit mock opt-in", async () => {
-  const [types, providers, http, cache, limiter, facade, board, fred, coinGecko, marketDataStocks] = await Promise.all([read("lib/market-data/types.ts"), read("lib/market-data/providers/index.ts"), read("lib/market-data/http.ts"), read("lib/market-data/cache.ts"), read("lib/market-data/rate-limit.ts"), read("lib/marketData.ts"), read("lib/market-data/market-board.ts"), read("lib/market-data/providers/fred.ts"), read("lib/market-data/providers/coingecko.ts"), read("lib/market-data/providers/marketDataStocks.ts")]);
+  const [types, providers, http, cache, limiter, facade, board, fred, coinGecko, marketDataStocks, fmpCommodities] = await Promise.all([read("lib/market-data/types.ts"), read("lib/market-data/providers/index.ts"), read("lib/market-data/http.ts"), read("lib/market-data/cache.ts"), read("lib/market-data/rate-limit.ts"), read("lib/marketData.ts"), read("lib/market-data/market-board.ts"), read("lib/market-data/providers/fred.ts"), read("lib/market-data/providers/coingecko.ts"), read("lib/market-data/providers/marketDataStocks.ts"), read("lib/market-data/providers/fmpCommodities.ts")]);
   assert.match(types, /getQuotes/); assert.match(types, /getHistoricalPrices/); assert.match(types, /getFundamentals/);
   assert.match(providers, /MARKET_DATA_PROVIDER/); assert.match(providers, /MARKET_DATA_FALLBACKS/);
   assert.match(http, /MAX_RETRIES = 3/); assert.match(cache, /withMemoryCache/); assert.match(limiter, /takeRateLimitToken/);
   assert.match(facade, /ALLOW_MOCK_MARKET_DATA === "true" && process\.env\.NODE_ENV !== "production"/);
-  assert.match(board, /sourceSymbol: "SP500"/); assert.match(board, /sourceSymbol: "NASDAQ100"/); assert.match(board, /sourceSymbol: "VIXCLS"/); assert.match(board, /sourceSymbol: "DTWEXBGS"/); assert.match(board, /sourceSymbol: "CBBTCUSD"/); assert.match(board, /provider: "marketdata-stocks"/);
-  assert.match(fred, /api\.stlouisfed\.org\/fred\/series\/observations/); assert.match(coinGecko, /api\.coingecko\.com\/api\/v3/); assert.match(marketDataStocks, /MarketDataAppProvider/);
+  assert.match(board, /sourceSymbol: "SP500"/); assert.match(board, /sourceSymbol: "NASDAQ100"/); assert.match(board, /sourceSymbol: "VIXCLS"/); assert.match(board, /sourceSymbol: "DTWEXBGS"/); assert.match(board, /sourceSymbol: "CBBTCUSD"/); assert.match(board, /sourceSymbol: "GCUSD"/); assert.match(board, /provider: "marketdata-stocks"/); assert.doesNotMatch(board, /sourceSymbol: "GLD"/);
+  assert.match(fred, /api\.stlouisfed\.org\/fred\/series\/observations/); assert.match(coinGecko, /api\.coingecko\.com\/api\/v3/); assert.match(marketDataStocks, /MarketDataAppProvider/); assert.match(fmpCommodities, /FmpProvider/);
   assert.doesNotMatch(`${types}${providers}${http}${facade}`, /NEXT_PUBLIC_.*API_KEY/);
 });
 
