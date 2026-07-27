@@ -38,10 +38,10 @@ export default async function HomePage() {
         </div>
         <div className="asset-grid">
           {[
-            ["01", "Equities", "全球股指、行业与风格因子的风险偏好温度。", "Global indices, sectors and style factors as gauges of risk appetite."],
-            ["02", "Rates", "美债曲线、实际利率与期限溢价的宏观信号。", "Macro signals from the Treasury curve, real rates and term premium."],
-            ["03", "FX & Commodities", "美元、黄金、原油与全球流动性的交叉验证。", "Cross-checking the dollar, gold, oil and global liquidity."],
-            ["04", "Alternative Assets", "加密资产与波动率指标的边际变化。", "Marginal changes in crypto assets and volatility indicators."],
+            ["01", "Equities｜股票", "全球股指、行业与风格因子的风险偏好温度。", "Global indices, sectors and style factors as gauges of risk appetite."],
+            ["02", "Rates｜利率", "美债曲线、实际利率与期限溢价的宏观信号。", "Macro signals from the Treasury curve, real rates and term premium."],
+            ["03", "FX & Commodities｜外汇与商品", "美元、黄金、原油与全球流动性的交叉验证。", "Cross-checking the dollar, gold, oil and global liquidity."],
+            ["04", "Alternative Assets｜另类资产", "加密资产与波动率指标的边际变化。", "Marginal changes in crypto assets and volatility indicators."],
           ].map(([number, title, copyZh, copyEn]) => <article className="asset-card" key={title}><span>{number}</span><h3>{title}</h3><p><BilingualText zh={copyZh} en={copyEn} /></p></article>)}
         </div>
       </section>
@@ -49,11 +49,15 @@ export default async function HomePage() {
       <section className="section section-muted">
         <div className="shell">
           <div className="section-heading"><div><span className="eyebrow dark">ORIGINAL INDEX RESEARCH</span><h2><BilingualText zh="Hunter 原创主题指数" en="Hunter Original Indices" /></h2></div></div>
-          <div className="index-grid index-grid-single">
+          <div className="index-grid index-grid-home">
             <Link className="index-feature" href="/indices/hunter-power">
               <div><span className="status status-live">LIVE · HPI</span><h3>Hunter Power Index</h3><p><BilingualText zh="追踪美国电力设备、电网建设、公用事业、核能、储能及数据中心电力基础设施。" en="Tracking US power equipment, grids, utilities, nuclear, storage and data-center power infrastructure." /></p></div>
               <div className="index-meta"><span>Base 100</span><span>Equal Weight</span><span>Quarterly</span></div>
             </Link>
+            <a className="index-feature index-feature-external" href="https://cwwindex.today/#trend" target="_blank" rel="noopener noreferrer">
+              <div><span className="status status-live">LIVE · CWW</span><h3>Hunter Memory Chips Index</h3><p><BilingualText zh="中国与非中国存储指数，追踪全球存储芯片产业链的区域表现。" en="China & Ex-China Memory Chips Index tracking the regional performance of the global memory-chip value chain." /></p></div>
+              <div className="index-meta"><span>CWW</span><span>China / Ex-China</span><span>External</span></div>
+            </a>
           </div>
         </div>
       </section>

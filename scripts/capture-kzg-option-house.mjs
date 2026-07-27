@@ -60,10 +60,27 @@ try {
     throw new Error("KZG report validation failed; the page structure may have changed.");
   }
 
-  await target.screenshot({
+  const targetBox = await target.boundingBox();
+  if (!targetBox) {
+    throw new Error("KZG report bounds could not be measured.");
+  }
+
+  const etfHeading = page.getByText(/ETF.*Top10/i).first();
+  const etfBox = await etfHeading.boundingBox().catch(() => null);
+  const cropHeight = etfBox
+    ? Math.max(320, etfBox.y - targetBox.y - 12)
+    : targetBox.height;
+
+  await page.screenshot({
     path: temporaryPath,
     type: "png",
     animations: "disabled",
+    clip: {
+      x: targetBox.x,
+      y: targetBox.y,
+      width: targetBox.width,
+      height: Math.min(targetBox.height, cropHeight),
+    },
   });
 
   const heading = (await title.textContent()) ?? "";

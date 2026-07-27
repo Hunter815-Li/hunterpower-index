@@ -33,6 +33,7 @@ export function KzgOptionsSnapshot() {
       <div className="kzg-options-body">
         <figure>
           <a
+            className="kzg-report-crop"
             href={snapshot.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
@@ -40,8 +41,8 @@ export function KzgOptionsSnapshot() {
           >
             <Image
               src={snapshot.imagePath}
-              width={834}
-              height={949}
+              width={761}
+              height={2334}
               sizes="(max-width: 820px) calc(100vw - 56px), 860px"
               alt={`KZG Option House 美股期权分钟数据，数据日期 ${snapshot.dataDate}`}
               priority={false}
