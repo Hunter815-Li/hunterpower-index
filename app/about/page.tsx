@@ -23,12 +23,10 @@ export default function AboutPage() {
               GitHub ↗
             </a>
             <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
-            {siteConfig.resumeUrl ? (
+            {siteConfig.resumeUrl && (
               <a href={siteConfig.resumeUrl} target="_blank" rel="noopener noreferrer">
                 <BilingualText zh="下载简历" en="Resume" /> ↗
               </a>
-            ) : (
-              <span><BilingualText zh="简历 · 待配置" en="Resume · Not configured" /></span>
             )}
           </div>
         </div>

@@ -18,7 +18,10 @@ export default async function HomePage() {
           <div className="hero-copy">
             <span className="eyebrow">GLOBAL FINANCE INTELLIGENCE</span>
             <h1 className="hero-intelligence"><span>Global Finance</span><em>Intelligence</em></h1>
-            <div className="hero-signature"><span className="hero-signature-seal">滔</span><small>DESIGNED BY <b>李邦滔</b></small></div>
+            <div className="hero-signature" style={{ gap: 14 }}>
+              <span className="hero-signature-seal" style={{ width: 38, height: 38, fontSize: 22 }}>滔</span>
+              <small style={{ fontSize: 11 }}>DESIGNED BY <b>李邦滔</b></small>
+            </div>
             <p className="hero-lede"><BilingualText zh="以全球宏观为坐标，以产业研究为纵深，连接跨资产市场、期权与主题指数。" en="Connecting cross-asset markets, options and thematic indices through a global macro and industry lens." /></p>
             <p className="hero-subtitle">Global Macro · Cross Asset · Options · Thematic Indices</p>
             <div className="button-row">
