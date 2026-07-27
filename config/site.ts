@@ -7,7 +7,6 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://taotalk.finance",
   github: "https://github.com/Hunter815-Li/hunterpower-index",
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "libangtao0815@gmail.com",
-  resumeUrl: process.env.NEXT_PUBLIC_RESUME_URL || "",
   wechatQrImage: process.env.NEXT_PUBLIC_WECHAT_QR || "/wechat-qr.jpg",
 } as const;
 
