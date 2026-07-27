@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { siteConfig } from "@/config/site";
 import { BilingualText } from "@/components/ui/BilingualText";
+import styles from "./about.module.css";
 
 export const metadata: Metadata = {
   title: "关于我",
@@ -24,6 +25,7 @@ export default function AboutPage() {
             </a>
             <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
           </div>
+          <p className={styles.signoff}>ALWAYS EXPLORING</p>
         </div>
         <div className="about-portrait">
           <Image
